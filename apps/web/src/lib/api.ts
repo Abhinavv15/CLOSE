@@ -181,8 +181,8 @@ export const api = {
   },
 
   // Run Reconciliation Close
-  async runReconciliation(batchId = "batch_close_2026_09") {
-    return fetchWithFallback<BatchSummary>(
+  async runReconciliation(batchId = "batch_close_2026_09"): Promise<BatchSummary> {
+    const res = await fetchWithFallback<any>(
       "/api/reconciliation/run",
       {
         batch_id: batchId,
@@ -196,6 +196,13 @@ export const api = {
       },
       { method: "POST", body: JSON.stringify({ batch_id: batchId, auto_investigate: true }) }
     );
+    if (res?.data?.batch_id) {
+      return res.data as BatchSummary;
+    }
+    if (res?.batch_id) {
+      return res as BatchSummary;
+    }
+    return await api.getBatchSummary(batchId);
   },
 
   // Get Batch Summary

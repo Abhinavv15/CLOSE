@@ -147,8 +147,8 @@ export default function ReconciliationPage() {
   }, []);
 
   const filteredRecords = records.filter((r) => {
-    if (filterMethod !== "ALL" && r.method.toUpperCase() !== filterMethod) return false;
-    if (filterStatus !== "ALL" && r.status.toUpperCase() !== filterStatus) return false;
+    if (filterMethod !== "ALL" && (r.method || "").toUpperCase() !== filterMethod) return false;
+    if (filterStatus !== "ALL" && (r.status || "").toUpperCase() !== filterStatus) return false;
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       const matchDesc = (r.description || "").toLowerCase().includes(q);
@@ -304,9 +304,9 @@ export default function ReconciliationPage() {
                 </tr>
               ) : (
                 filteredRecords.map((r) => {
-                  const isReconciled = r.status.toUpperCase() === "RECONCILED";
-                  const isReview = r.status.toUpperCase() === "REVIEW";
-                  const isUnresolved = r.status.toUpperCase() === "UNRESOLVED";
+                  const isReconciled = (r.status || "").toUpperCase() === "RECONCILED";
+                  const isReview = (r.status || "").toUpperCase() === "REVIEW";
+                  const isUnresolved = (r.status || "").toUpperCase() === "UNRESOLVED";
 
                   return (
                     <tr
@@ -317,7 +317,7 @@ export default function ReconciliationPage() {
                       }`}
                     >
                       <td className="py-3 px-4 font-bold text-white whitespace-nowrap">
-                        {r.id.replace("match_", "TXN-")}
+                        {(r.id || "match_000").replace("match_", "TXN-")}
                       </td>
                       <td className="py-3 px-4">
                         <div className="font-semibold text-zinc-100">{r.description}</div>

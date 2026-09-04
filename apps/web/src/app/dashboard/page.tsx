@@ -204,7 +204,10 @@ export default function DashboardPage() {
 
     try {
       const runResult = await api.runReconciliation("batch_close_2026_09");
-      if (runResult) setBatch(runResult);
+      if (runResult) {
+        const cleanBatch = (runResult as any)?.data?.batch_id ? (runResult as any).data : runResult;
+        if (cleanBatch?.batch_id) setBatch(cleanBatch);
+      }
     } catch {
       // Keep optimistic batch state
     }
@@ -221,10 +224,10 @@ export default function DashboardPage() {
             <div className="flex items-center space-x-2">
               <h1 className="text-xl font-bold tracking-tight text-white">September 2026 Close</h1>
               <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-300 border border-zinc-700">
-                Batch #{batch.batch_id.toUpperCase()}
+                Batch #{(batch?.batch_id || "batch_close_2026_09").toUpperCase()}
               </span>
               <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950/40 border border-emerald-800/60 text-emerald-400">
-                STATUS: {batch.status}
+                STATUS: {(batch?.status || "COMPLETED").toUpperCase()}
               </span>
             </div>
             <p className="text-xs text-zinc-400 mt-1">
@@ -477,7 +480,7 @@ export default function DashboardPage() {
                                   : "bg-amber-950/40 border-amber-800/60 text-amber-300"
                               }`}
                             >
-                              ₹{ex.difference > 0 ? ex.difference.toLocaleString() : ex.amount.toLocaleString()} {ex.type.toLowerCase().replace("_", " ")}
+                              ₹{ex.difference > 0 ? ex.difference.toLocaleString() : ex.amount.toLocaleString()} {(ex.type || "EXCEPTION").toLowerCase().replace("_", " ")}
                             </span>
                           </div>
                           <div className="text-[11px] text-zinc-400 mt-0.5 truncate max-w-xs sm:max-w-md">
