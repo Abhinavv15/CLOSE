@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-context";
 import { TourProvider } from "@/lib/tour-context";
 import { InteractiveTourModal } from "@/components/tour/interactive-tour-modal";
+import { CinematicIntro } from "@/components/brand/cinematic-intro";
 
 export const metadata: Metadata = {
   title: "CLOSE — AI Finance Controller",
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className="bg-zinc-950 text-zinc-100 min-h-screen transition-colors duration-200" suppressHydrationWarning>
         <ThemeProvider>
           <TourProvider>
+            <CinematicIntro />
             {children}
             <InteractiveTourModal />
           </TourProvider>
