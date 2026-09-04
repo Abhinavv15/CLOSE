@@ -18,7 +18,8 @@ import {
   Shield,
   Download,
   Flame,
-  ArrowRight
+  ArrowRight,
+  LogOut
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 
@@ -27,7 +28,7 @@ export function CommandPalette() {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const router = useRouter();
-  const { switchPersona, user } = useAuth();
+  const { switchPersona, logout, user } = useAuth();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -99,6 +100,15 @@ export function CommandPalette() {
       icon: Flame, 
       path: "/cash-position", 
       section: "Quick Actions" 
+    },
+    { 
+      name: "Sign Out of Session (Logout)", 
+      icon: LogOut, 
+      action: async () => {
+        await logout();
+        router.push("/login");
+      }, 
+      section: "Session Management" 
     },
   ];
 

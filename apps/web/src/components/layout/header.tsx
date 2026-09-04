@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Search, Shield, ChevronDown, Check, Eye, UserCheck, ShieldAlert, Menu } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Search, Shield, ChevronDown, Check, Eye, UserCheck, ShieldAlert, Menu, LogOut } from "lucide-react";
 import { useAuth, PRESET_PERSONAS } from "@/lib/auth-context";
 
 interface HeaderProps {
@@ -9,7 +10,8 @@ interface HeaderProps {
 }
 
 export function Header({ onToggleMobileMenu }: HeaderProps) {
-  const { user, switchPersona, isAuditor } = useAuth();
+  const router = useRouter();
+  const { user, switchPersona, logout, isAuditor } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -160,6 +162,20 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
                   </button>
                 );
               })}
+
+              <div className="pt-2 mt-1.5 border-t border-zinc-900">
+                <button
+                  onClick={async () => {
+                    setDropdownOpen(false);
+                    await logout();
+                    router.push("/login");
+                  }}
+                  className="w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-red-400 hover:bg-red-950/40 hover:text-red-300 transition-colors text-xs font-mono"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Sign Out of Session</span>
+                </button>
+              </div>
             </div>
           )}
         </div>
