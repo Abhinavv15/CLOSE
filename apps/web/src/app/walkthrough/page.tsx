@@ -271,47 +271,7 @@ export default function WalkthroughPage() {
               </Link>
             </div>
 
-            {/* Step-by-Step Where & How Guide */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
-              <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center space-x-2 text-emerald-400 font-bold text-xs uppercase mb-1.5">
-                    <span className="h-5 w-5 rounded-full bg-emerald-950 border border-emerald-800/80 flex items-center justify-center text-[10px]">1</span>
-                    <span>Where to Upload</span>
-                  </div>
-                  <p className="text-[11px] text-zinc-300 leading-relaxed">
-                    Open <Link href="/batches" className="text-white underline font-semibold hover:text-emerald-400">Operations &rarr; Batches</Link> in the sidebar navigation or click the button above.
-                  </p>
-                </div>
-                <div className="mt-2 text-[10px] font-mono text-zinc-500">Route: /batches</div>
-              </div>
 
-              <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center space-x-2 text-blue-400 font-bold text-xs uppercase mb-1.5">
-                    <span className="h-5 w-5 rounded-full bg-blue-950 border border-blue-800/80 flex items-center justify-center text-[10px]">2</span>
-                    <span>Select Source Card</span>
-                  </div>
-                  <p className="text-[11px] text-zinc-300 leading-relaxed">
-                    Click on the source card you want to ingest: <strong>Bank</strong>, <strong>Processor</strong>, <strong>Ledger</strong>, or <strong>Invoices</strong>.
-                  </p>
-                </div>
-                <div className="mt-2 text-[10px] font-mono text-zinc-500">Auto-detects required schema</div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center space-x-2 text-purple-400 font-bold text-xs uppercase mb-1.5">
-                    <span className="h-5 w-5 rounded-full bg-purple-950 border border-purple-800/80 flex items-center justify-center text-[10px]">3</span>
-                    <span>Drop & Reconcile</span>
-                  </div>
-                  <p className="text-[11px] text-zinc-300 leading-relaxed">
-                    Drag your CSV into the dropzone. Headers are verified instantly, then click <strong>"Ingest"</strong> or <strong>"Run 5-Pass Close"</strong>.
-                  </p>
-                </div>
-                <div className="mt-2 text-[10px] font-mono text-zinc-500">Live column header audit</div>
-              </div>
-            </div>
 
             {/* How the 4 CSVs Connect Across the Finance Graph */}
             <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-xs mb-6">

@@ -20,7 +20,6 @@ import {
   TrendingUp,
   Clock,
   RotateCw,
-  Compass,
 } from "lucide-react";
 import {
   AreaChart,
@@ -219,28 +218,6 @@ export default function DashboardPage() {
       <div className="relative">
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
 
-        {/* Walkthrough & CSV Guide Banner */}
-        <div className="mb-4 p-3 sm:p-3.5 rounded-xl bg-gradient-to-r from-blue-950/40 via-zinc-900/60 to-zinc-900/40 border border-blue-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-sm">
-          <div className="flex items-center space-x-2.5">
-            <div className="h-7 w-7 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0">
-              <Compass className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="font-semibold text-zinc-100">Product Tour & CSV Guide:</span>{" "}
-              <span className="text-zinc-400">
-                Learn how CLOSE reconciles 4 sources in 5 passes, diagnoses AI exceptions, and where to upload custom CSV statements.
-              </span>
-            </div>
-          </div>
-          <Link
-            href="/walkthrough"
-            className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 hover:text-white font-mono text-xs transition-colors shrink-0 self-start sm:self-auto"
-          >
-            <span>Explore Walkthrough</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
         {/* Title & Command Bar (Section 10) */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
           <div>
@@ -254,7 +231,7 @@ export default function DashboardPage() {
               </span>
             </div>
             <p className="text-xs text-zinc-400 mt-1">
-              AI Finance Controller — Reconcile the books. Explain the exceptions. Know your cash position.
+              Continuous multi-source close cycle across Bank, Gateway, Ledger, and Invoices.
             </p>
           </div>
 

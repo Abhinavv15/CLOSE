@@ -67,7 +67,7 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
           title="Interactive Product Tour & CSV Schema Guide"
         >
           <Compass className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-          <span>Walkthrough & CSV Guide</span>
+          <span>Tour & Guide</span>
         </Link>
         {/* Search / Command trigger */}
         <button
