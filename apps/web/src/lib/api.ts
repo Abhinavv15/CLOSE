@@ -335,4 +335,105 @@ export const api = {
       },
     });
   },
+
+  // Get Exception Detail
+  async getExceptionDetail(exceptionId: string) {
+    return fetchWithFallback<any>(`/api/exceptions/${exceptionId}`, {
+      exception_id: exceptionId,
+      batch_id: "batch_close_2026_09",
+      type: exceptionId === "EX-108" ? "MISSING_RECORD" : "AMOUNT_MISMATCH",
+      status: exceptionId === "EX-108" ? "UNRESOLVED" : "REVIEW",
+      amounts: {
+        expected: exceptionId === "EX-108" ? 0.0 : 31800.0,
+        actual: exceptionId === "EX-108" ? 72400.0 : 31750.0,
+        difference: exceptionId === "EX-108" ? 72400.0 : 50.0,
+      },
+      ai_investigation: {
+        classification: exceptionId === "EX-108" ? "UNBACKED_DEPOSIT" : "PROCESSOR_FEE_VARIANCE",
+        confidence: exceptionId === "EX-108" ? 0.38 : 0.94,
+        explanation: exceptionId === "EX-108"
+          ? "Unrecognized bank credit deposit with zero corroborating invoice or settlement record."
+          : "Discrepancy of ₹50 matches standard 1.5% - 2.0% gateway settlement fee.",
+        recommended_action: exceptionId === "EX-108"
+          ? "Escalate to human finance controller for manual statement review."
+          : "Approve ₹50 as gateway transaction processing fee.",
+      },
+      evidence: [
+        {
+          source: "Bank Transaction",
+          id: "BT-88421",
+          amount: exceptionId === "EX-108" ? 72400.0 : 31750.0,
+          date: "2026-09-04",
+          description: exceptionId === "EX-108" ? "RTGS DEPOSIT UNKNOWN ORIGIN" : "STRIPE PAYOUT #5521",
+        },
+        ...(exceptionId !== "EX-108" ? [
+          {
+            source: "Processor Settlement",
+            id: "SET-5521",
+            amount: 31750.0,
+            fee: 50.0,
+            date: "2026-09-04",
+            description: "Stripe payout settlement",
+          },
+          {
+            source: "Customer Invoice",
+            id: "INV-1022",
+            amount: 31800.0,
+            date: "2026-09-01",
+            description: "Enterprise subscription billing",
+          }
+        ] : [])
+      ],
+      resolution: {
+        resolved_by: null,
+        resolution_note: null,
+        resolved_at: null,
+      },
+    });
+  },
+
+  // Approve Exception
+  async approveException(exceptionId: string, payload?: { user?: string; note?: string }) {
+    return fetchWithFallback<{ success: boolean; status: string }>(
+      `/api/exceptions/${exceptionId}/approve`,
+      { success: true, status: "APPROVED" },
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user: payload?.user || "Controller Abhinav",
+          note: payload?.note || "Approved as processor fee variance.",
+        }),
+      }
+    );
+  },
+
+  // Reject Exception
+  async rejectException(exceptionId: string, payload?: { user?: string; note?: string }) {
+    return fetchWithFallback<{ success: boolean; status: string }>(
+      `/api/exceptions/${exceptionId}/reject`,
+      { success: true, status: "REJECTED" },
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user: payload?.user || "Controller Abhinav",
+          note: payload?.note || "Rejected resolution recommendation.",
+        }),
+      }
+    );
+  },
+
+  // Mark Unresolved
+  async unresolveException(exceptionId: string, payload?: { user?: string; note?: string }) {
+    return fetchWithFallback<{ success: boolean; status: string }>(
+      `/api/exceptions/${exceptionId}/unresolve`,
+      { success: true, status: "UNRESOLVED" },
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user: payload?.user || "Controller Abhinav",
+          note: payload?.note || "Marked unresolved due to missing evidence.",
+        }),
+      }
+    );
+  },
 };
