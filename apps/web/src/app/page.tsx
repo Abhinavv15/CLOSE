@@ -17,10 +17,15 @@ import {
   Sparkles,
   FileCheck2,
   Lock,
-  Compass
+  Compass,
+  Sun,
+  Moon
 } from "lucide-react";
+import { useTheme } from "@/lib/theme-context";
 
 export default function LandingPage() {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <BackgroundGrid pattern="grid" className="min-h-screen text-zinc-100 selection:bg-zinc-800">
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
@@ -51,6 +56,18 @@ export default function LandingPage() {
           >
             Ground-Truth Benchmark
           </a>
+          <button
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors flex items-center justify-center shrink-0"
+          >
+            {theme === "dark" ? (
+              <Sun className="w-4 h-4 text-amber-400" />
+            ) : (
+              <Moon className="w-4 h-4 text-blue-500" />
+            )}
+          </button>
           <a
             href="/dashboard"
             className="text-xs px-3 sm:px-3.5 py-1.5 rounded-lg bg-white text-zinc-950 font-semibold hover:bg-zinc-200 transition-all shadow-sm shrink-0"

@@ -19,9 +19,12 @@ import {
   Download,
   Flame,
   ArrowRight,
-  LogOut
+  LogOut,
+  Sun,
+  Moon
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
+import { useTheme } from "@/lib/theme-context";
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
@@ -29,6 +32,7 @@ export function CommandPalette() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const router = useRouter();
   const { switchPersona, logout, user } = useAuth();
+  const { theme, toggleTheme, setTheme } = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -101,6 +105,27 @@ export function CommandPalette() {
       path: "/cash-position", 
       section: "Quick Actions" 
     },
+    // Appearance & Theme
+    { 
+      name: `Toggle Theme (Currently ${theme === "light" ? "Light Mode" : "Dark Mode"})`, 
+      icon: theme === "light" ? Moon : Sun, 
+      action: () => toggleTheme(), 
+      section: "Appearance" 
+    },
+    { 
+      name: "Switch to Light Mode (Institutional Slate)", 
+      icon: Sun, 
+      action: () => setTheme("light"), 
+      section: "Appearance" 
+    },
+    { 
+      name: "Switch to Dark Mode (Fintech Terminal)", 
+      icon: Moon, 
+      action: () => setTheme("dark"), 
+      section: "Appearance" 
+    },
+
+    // Session Management
     { 
       name: "Sign Out of Session (Logout)", 
       icon: LogOut, 

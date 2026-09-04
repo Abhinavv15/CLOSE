@@ -88,3 +88,167 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
+
+/* ==========================================================================
+   LIGHT MODE DESIGN SYSTEM
+   Institutional Crisp Monochrome: #f8fafc canvas, #ffffff surfaces,
+   slate-900 typography, subtle slate-200 borders, high-contrast financial tags.
+   ========================================================================== */
+
+html.light {
+  color-scheme: light;
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+
+  /* Tailwind v4 color remapping */
+  --color-zinc-950: #f8fafc;
+  --color-zinc-900: #ffffff;
+  --color-zinc-800: #e2e8f0;
+  --color-zinc-700: #cbd5e1;
+  --color-zinc-600: #94a3b8;
+  --color-zinc-500: #64748b;
+  --color-zinc-400: #475569;
+  --color-zinc-300: #334155;
+  --color-zinc-200: #1e293b;
+  --color-zinc-100: #0f172a;
+}
+
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Base surface overrides in light mode */
+html.light .bg-zinc-950 {
+  background-color: #f8fafc !important;
+}
+
+html.light .bg-zinc-950\/80,
+html.light .bg-zinc-950\/90,
+html.light .bg-zinc-950\/95 {
+  background-color: rgba(248, 250, 252, 0.92) !important;
+}
+
+html.light .bg-zinc-900,
+html.light .bg-zinc-900\/40,
+html.light .bg-zinc-900\/50,
+html.light .bg-zinc-900\/60,
+html.light .bg-zinc-900\/70,
+html.light .bg-zinc-900\/80 {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-zinc-800,
+html.light .bg-zinc-800\/60,
+html.light .bg-zinc-800\/80 {
+  background-color: #f1f5f9 !important;
+}
+
+/* Borders */
+html.light .border-zinc-900,
+html.light .border-zinc-800,
+html.light .border-zinc-800\/60,
+html.light .border-zinc-800\/80 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light .border-zinc-700 {
+  border-color: #cbd5e1 !important;
+}
+
+/* Typography */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-zinc-100 {
+  color: #0f172a !important;
+}
+
+html.light .text-zinc-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-zinc-300 {
+  color: #334155 !important;
+}
+
+html.light .text-zinc-400 {
+  color: #64748b !important;
+}
+
+html.light .text-zinc-500 {
+  color: #94a3b8 !important;
+}
+
+/* Hovers */
+html.light .hover\:bg-zinc-900:hover,
+html.light .hover\:bg-zinc-900\/60:hover {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .hover\:bg-zinc-800:hover,
+html.light .hover\:bg-zinc-800\/30:hover {
+  background-color: #e2e8f0 !important;
+}
+
+html.light .hover\:text-white:hover {
+  color: #0f172a !important;
+}
+
+/* Invert solid white action buttons in light mode to solid dark */
+html.light button.bg-white,
+html.light a.bg-white {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+html.light button.bg-white:hover,
+html.light a.bg-white:hover {
+  background-color: #1e293b !important;
+}
+
+/* Financial Accent Badges in Light Mode */
+html.light .bg-emerald-950\/40,
+html.light .bg-emerald-950\/50,
+html.light .bg-emerald-950\/30,
+html.light .bg-emerald-950\/20 {
+  background-color: #ecfdf5 !important;
+  color: #047857 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html.light .bg-amber-950\/40,
+html.light .bg-amber-950\/30 {
+  background-color: #fffbeb !important;
+  color: #b45309 !important;
+  border-color: #fde68a !important;
+}
+
+html.light .bg-blue-950\/30,
+html.light .bg-blue-950\/40 {
+  background-color: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border-color: #bfdbfe !important;
+}
+
+html.light .bg-rose-950\/40,
+html.light .bg-rose-950\/30 {
+  background-color: #fff1f2 !important;
+  color: #e11d48 !important;
+  border-color: #fecdd3 !important;
+}
+
+/* Scrollbar in light mode */
+html.light ::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

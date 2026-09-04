@@ -3,8 +3,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Shield, ChevronDown, Check, Eye, UserCheck, ShieldAlert, Menu, LogOut, Compass } from "lucide-react";
+import { Search, Shield, ChevronDown, Check, Eye, UserCheck, ShieldAlert, Menu, LogOut, Compass, Sun, Moon } from "lucide-react";
 import { useAuth, PRESET_PERSONAS } from "@/lib/auth-context";
+import { useTheme } from "@/lib/theme-context";
 
 interface HeaderProps {
   onToggleMobileMenu?: () => void;
@@ -13,6 +14,7 @@ interface HeaderProps {
 export function Header({ onToggleMobileMenu }: HeaderProps) {
   const router = useRouter();
   const { user, switchPersona, logout, isAuditor } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -93,6 +95,20 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
           <span className="text-zinc-400">ENGINE:</span>
           <span className="text-zinc-200">ONLINE</span>
         </div>
+
+        {/* Theme Toggle (Dark / Light) */}
+        <button
+          onClick={toggleTheme}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors flex items-center justify-center shrink-0"
+        >
+          {theme === "dark" ? (
+            <Sun className="w-4 h-4 text-amber-400" />
+          ) : (
+            <Moon className="w-4 h-4 text-blue-500" />
+          )}
+        </button>
 
         {/* Persona Switcher Dropdown */}
         <div className="relative pl-1 sm:pl-2 border-l border-zinc-800" ref={dropdownRef}>
