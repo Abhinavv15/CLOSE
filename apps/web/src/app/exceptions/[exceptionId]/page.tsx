@@ -62,7 +62,7 @@ export default function ExceptionDetailPage({
     setSubmitting(true);
     try {
       await api.approveException(exceptionId, {
-        user: "Senior Controller Abhinav",
+        user: user?.name || "Senior Controller Abhinav V",
         note: reason || "Approved processor settlement fee variance.",
       });
       setCurrentStatus("APPROVED");
@@ -79,7 +79,7 @@ export default function ExceptionDetailPage({
     setSubmitting(true);
     try {
       await api.rejectException(exceptionId, {
-        user: "Senior Controller Abhinav",
+        user: user?.name || "Senior Controller Abhinav V",
         note: reason || "Rejected AI recommendation. Sent for manual investigation.",
       });
       setCurrentStatus("REJECTED");
@@ -96,7 +96,7 @@ export default function ExceptionDetailPage({
     setSubmitting(true);
     try {
       await api.unresolveException(exceptionId, {
-        user: "Senior Controller Abhinav",
+        user: user?.name || "Senior Controller Abhinav V",
         note: reason || "Marked as unresolvable due to absence of counterpart records.",
       });
       setCurrentStatus("UNRESOLVED");
@@ -159,22 +159,22 @@ export default function ExceptionDetailPage({
         </div>
 
         {/* Amount Summary Trio (Section 26) */}
-        <div className="flex items-center space-x-4 p-3 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-xs">
-          <div>
-            <div className="text-[10px] text-zinc-400 uppercase">Expected Amount</div>
-            <div className="text-sm font-bold text-white font-tabular">
-              {isUnresolvedExample ? "₹0.00 (Unknown)" : "₹31,800.00"}
+        <div className="grid grid-cols-3 divide-x divide-zinc-800 p-2.5 sm:p-3 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-xs text-center sm:text-left">
+          <div className="px-1.5 sm:px-2">
+            <div className="text-[9px] sm:text-[10px] text-zinc-400 uppercase truncate">Expected</div>
+            <div className="text-xs sm:text-sm font-bold text-white font-tabular truncate">
+              {isUnresolvedExample ? "₹0.00" : "₹31,800.00"}
             </div>
           </div>
-          <div className="border-l border-zinc-800 pl-4">
-            <div className="text-[10px] text-zinc-400 uppercase">Actual Received</div>
-            <div className="text-sm font-bold text-white font-tabular">
+          <div className="px-1.5 sm:px-3">
+            <div className="text-[9px] sm:text-[10px] text-zinc-400 uppercase truncate">Received</div>
+            <div className="text-xs sm:text-sm font-bold text-white font-tabular truncate">
               {isUnresolvedExample ? "₹72,400.00" : "₹31,750.00"}
             </div>
           </div>
-          <div className="border-l border-zinc-800 pl-4">
-            <div className="text-[10px] text-zinc-400 uppercase">Difference</div>
-            <div className="text-sm font-bold text-amber-400 font-tabular">
+          <div className="px-1.5 sm:px-3">
+            <div className="text-[9px] sm:text-[10px] text-zinc-400 uppercase truncate">Difference</div>
+            <div className="text-xs sm:text-sm font-bold text-amber-400 font-tabular truncate">
               {isUnresolvedExample ? "₹72,400.00" : "-₹50.00"}
             </div>
           </div>
@@ -196,7 +196,7 @@ export default function ExceptionDetailPage({
       <div className="grid lg:grid-cols-2 gap-6 font-mono text-xs">
         {/* Left Column: Visual 3-Tier Connected Evidence (Section 26 & 28) */}
         <div className="space-y-4">
-          <div className="p-5 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-4">
+          <div className="p-4 sm:p-5 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-4">
             <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
               <div className="flex items-center space-x-2">
                 <Layers className="w-4 h-4 text-zinc-300" />
@@ -215,10 +215,10 @@ export default function ExceptionDetailPage({
                   <span className="uppercase font-bold text-zinc-300">1. Customer Invoice</span>
                   <span>Due: Sep 1, 2026</span>
                 </div>
-                <div className="text-sm font-bold text-white">
+                <div className="text-sm font-bold text-white break-words">
                   {isUnresolvedExample ? "NO CORROBORATING INVOICE FOUND" : "INV-1022 (Nexus Retail Solutions)"}
                 </div>
-                <div className="text-[11px] text-zinc-400">
+                <div className="text-[11px] text-zinc-400 break-words">
                   {isUnresolvedExample
                     ? "Zero billed receivables match this deposit."
                     : "Billed amount: ₹31,800.00 · Status: PARTIAL"}
@@ -236,10 +236,10 @@ export default function ExceptionDetailPage({
                   <span className="uppercase font-bold text-zinc-300">2. Gateway Settlement</span>
                   <span>Settled: Sep 4, 2026</span>
                 </div>
-                <div className="text-sm font-bold text-white">
+                <div className="text-sm font-bold text-white break-words">
                   {isUnresolvedExample ? "NO CORROBORATING PROCESSOR SETTLEMENT" : "Stripe Settlement #SET-5521"}
                 </div>
-                <div className="text-[11px] text-zinc-400">
+                <div className="text-[11px] text-zinc-400 break-words">
                   {isUnresolvedExample
                     ? "Neither Stripe nor Razorpay logs recorded this incoming funds transfer."
                     : "Gross: ₹31,800.00 · Fee: ₹50.00 · Net Payout: ₹31,750.00"}
@@ -257,10 +257,10 @@ export default function ExceptionDetailPage({
                   <span className="uppercase font-bold text-zinc-300">3. Verified Bank Credit</span>
                   <span>Cleared: Sep 4, 2026</span>
                 </div>
-                <div className="text-sm font-bold text-white">
+                <div className="text-sm font-bold text-white break-words">
                   {isUnresolvedExample ? "BANK-88421 (RTGS DEPOSIT)" : "BANK-88421 (STRIPE PAYOUT)"}
                 </div>
-                <div className="text-[11px] text-zinc-400">
+                <div className="text-[11px] text-zinc-400 break-words">
                   {isUnresolvedExample
                     ? "Credited amount: ₹72,400.00 · Unknown sender reference."
                     : "Credited amount: ₹31,750.00 · Perfectly matches net payout."}

@@ -16,11 +16,12 @@ from app.models import (
     Invoice,
     ReconciliationBatch,
 )
+from app.core.security import hash_password
 from app.services.synthetic_generator import SyntheticDataGenerator
 
 
 def seed_demo_dataset(db: Session, count: int = 127) -> Dict[str, Any]:
-    """Seed demo company, accounts, and 127 synthetic financial records into database."""
+    """Seed demo company, accounts, users, and 127 synthetic financial records into PostgreSQL."""
     init_db()
 
     # 1. Demo Company
@@ -35,17 +36,58 @@ def seed_demo_dataset(db: Session, count: int = 127) -> Dict[str, Any]:
         db.add(company)
         db.flush()
 
-    # 2. Demo User
-    user = db.query(User).filter_by(email="controller@democorp.internal").first()
-    if not user:
-        user = User(
-            id="usr_demo_001",
-            company_id=company.id,
-            email="controller@democorp.internal",
-            full_name="Abhinav V (Controller)",
-            role="CONTROLLER",
-        )
-        db.add(user)
+    # 2. Demo Users with Real Cryptographic Passwords
+    users_to_seed = [
+        {
+            "id": "usr_controller_01",
+            "email": "abhinav@democorp.internal",
+            "full_name": "Abhinav V",
+            "role": "CONTROLLER",
+            "title": "Senior Financial Controller",
+            "avatar": "AV",
+            "password": "Abhinav@2026!",
+        },
+        {
+            "id": "usr_auditor_02",
+            "email": "sarah.auditor@kpmg-audit.internal",
+            "full_name": "Sarah Jenkins",
+            "role": "AUDITOR",
+            "title": "Lead Statutory Auditor",
+            "avatar": "SJ",
+            "password": "Auditor@2026!",
+        },
+        {
+            "id": "usr_admin_03",
+            "email": "admin@democorp.internal",
+            "full_name": "Vikram Malhotra",
+            "role": "ADMIN",
+            "title": "VP Finance Operations",
+            "avatar": "VM",
+            "password": "Admin@2026!",
+        },
+    ]
+
+    for u_data in users_to_seed:
+        existing = db.query(User).filter_by(email=u_data["email"]).first()
+        if not existing:
+            db.add(User(
+                id=u_data["id"],
+                company_id=company.id,
+                email=u_data["email"],
+                full_name=u_data["full_name"],
+                role=u_data["role"],
+                title=u_data["title"],
+                avatar=u_data["avatar"],
+                hashed_password=hash_password(u_data["password"]),
+                is_active=True,
+            ))
+        else:
+            existing.full_name = u_data["full_name"]
+            existing.role = u_data["role"]
+            existing.title = u_data["title"]
+            existing.avatar = u_data["avatar"]
+            existing.hashed_password = hash_password(u_data["password"])
+    db.flush()
 
     # 3. Bank Account
     account = db.query(BankAccount).filter_by(company_id=company.id).first()

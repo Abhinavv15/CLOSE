@@ -9,7 +9,15 @@ class Settings(BaseSettings):
     DEBUG: bool = os.getenv("APP_ENV", "development") == "development"
 
     # Database
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./close.db")
+    DATABASE_URL: str = os.getenv(
+        "DATABASE_URL", 
+        "postgresql://postgres:postgres@localhost:5432/close"
+    )
+
+    # Authentication & JWT Session Management
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "close_production_secret_key_2026_987a65c43b21")
+    JWT_ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days session
 
     # AI Controller
     AI_MODE: str = os.getenv("AI_MODE", "mock")  # 'mock' or 'live'

@@ -19,7 +19,7 @@ def test_get_current_user_controller():
     assert response.status_code == 200
     data = response.json()
     assert data["role"] == "CONTROLLER"
-    assert data["name"] == "Abhinav Verma"
+    assert data["name"] == "Abhinav V"
     assert "reconciliation:run" in data["permissions"]
 
 def test_get_current_user_auditor():
