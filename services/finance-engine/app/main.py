@@ -49,7 +49,10 @@ app.add_middleware(
 
 # Register API routers
 from app.api.endpoints.data import router as data_router
+from app.api.endpoints.reconciliation import router as reconciliation_router
+
 app.include_router(data_router)
+app.include_router(reconciliation_router)
 
 
 # Request timing and structured audit logging middleware
