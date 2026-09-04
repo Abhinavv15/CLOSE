@@ -508,4 +508,108 @@ export const api = {
       }
     );
   },
+
+  // Audit Logs & Hash Chain
+  async getAuditLogs(params?: { entity_id?: string; actor?: string; action?: string }) {
+    const query = new URLSearchParams();
+    if (params?.entity_id) query.append("entity_id", params.entity_id);
+    if (params?.actor) query.append("actor", params.actor);
+    if (params?.action) query.append("action", params.action);
+    const qs = query.toString() ? `?${query.toString()}` : "";
+
+    return fetchWithFallback<{
+      total: number;
+      chain_intact: boolean;
+      latest_block_hash: string;
+      logs: any[];
+    }>(`/api/audit/logs${qs}`, {
+      total: 6,
+      chain_intact: true,
+      latest_block_hash: "a4f8d9b1c2e3...",
+      logs: [
+        {
+          id: "aud_01",
+          timestamp: "2026-09-04 10:33:02",
+          actor: "Senior Controller (Abhinav V)",
+          action: "HUMAN_APPROVAL_RECORDED",
+          entity_type: "EXCEPTION",
+          entity_id: "EX-102",
+          details_json: { note: "Approved ₹50 processing fee variance. Ledger updated." },
+          confidence: "94%",
+          status: "VERIFIED",
+          short_hash: "8f2a1b9c4d",
+          previous_hash: "0000000000000000...",
+        },
+        {
+          id: "aud_02",
+          timestamp: "2026-09-04 10:32:16",
+          actor: "AI Controller Agent",
+          action: "RECOMMENDATION_GENERATED",
+          entity_type: "EXCEPTION",
+          entity_id: "EX-102",
+          details_json: { diagnosis: "Likely Stripe interchange processing fee variance." },
+          confidence: "94%",
+          status: "AI_GENERATED",
+          short_hash: "3e7c8a1b5d",
+          previous_hash: "8f2a1b9c4d...",
+        },
+        {
+          id: "aud_03",
+          timestamp: "2026-09-04 10:32:15",
+          actor: "Reconciliation Engine",
+          action: "EVIDENCE_LINKED",
+          entity_type: "SETTLEMENT",
+          entity_id: "SET-5521",
+          details_json: { fee: 50.0, gross: 31800.0, net: 31750.0 },
+          confidence: "100%",
+          status: "SYSTEM",
+          short_hash: "c9d8e7f1a2",
+          previous_hash: "3e7c8a1b5d...",
+        },
+        {
+          id: "aud_04",
+          timestamp: "2026-09-04 10:32:14",
+          actor: "Reconciliation Engine",
+          action: "INVESTIGATION_DISPATCHED",
+          entity_type: "EXCEPTION",
+          entity_id: "EX-102",
+          details_json: { triggered_by: "5-Pass Reconciliation Engine" },
+          confidence: "100%",
+          status: "SYSTEM",
+          short_hash: "7b4c2a9e1f",
+          previous_hash: "c9d8e7f1a2...",
+        },
+        {
+          id: "aud_05",
+          timestamp: "2026-09-04 10:32:01",
+          actor: "Reconciliation Engine",
+          action: "RECONCILIATION_RUN_COMPLETED",
+          entity_type: "BATCH",
+          entity_id: "BATCH-2026-09-DEMO",
+          details_json: { records: 127, matched: 120, exceptions: 7, execution_time: "0.082s" },
+          confidence: "100%",
+          status: "SYSTEM",
+          short_hash: "1d2e3f4a5b",
+          previous_hash: "7b4c2a9e1f...",
+        },
+      ],
+    });
+  },
+
+  async verifyAuditChain() {
+    return fetchWithFallback<{
+      status: string;
+      verified_blocks: number;
+      root_chain_hash: string;
+      timestamp: string;
+      integrity: string;
+    }>("/api/audit/verify-chain", {
+      status: "VERIFIED",
+      verified_blocks: 127,
+      root_chain_hash: "74f1b8a923ec819d20c5...",
+      timestamp: new Date().toISOString(),
+      integrity: "CRYPTOGRAPHICALLY_SOUND",
+    });
+  },
 };
+

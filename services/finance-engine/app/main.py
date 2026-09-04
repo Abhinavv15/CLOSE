@@ -54,6 +54,7 @@ from app.api.endpoints.exceptions import router as exceptions_router
 from app.api.endpoints.cash import router as cash_router
 from app.api.endpoints.evaluation import router as evaluation_router
 from app.api.endpoints.auth import router as auth_router
+from app.api.endpoints.audit import router as audit_router
 
 app.include_router(data_router)
 app.include_router(reconciliation_router)
@@ -62,6 +63,7 @@ app.include_router(exceptions_router)
 app.include_router(cash_router)
 app.include_router(evaluation_router)
 app.include_router(auth_router)
+app.include_router(audit_router)
 
 
 # Request timing and structured audit logging middleware
