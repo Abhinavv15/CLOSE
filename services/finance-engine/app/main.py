@@ -1,9 +1,12 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from contextlib import asynccontextmanager
 import time
 import logging
+from sqlalchemy.orm import Session
 from app.core.config import settings
+from app.core.database import init_db, check_db_connection, get_db
 
 # Setup logging (Section 60)
 logging.basicConfig(
@@ -12,12 +15,27 @@ logging.basicConfig(
 )
 logger = logging.getLogger("close.finance_engine")
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize database tables on startup
+    logger.info("Initializing database tables...")
+    try:
+        init_db()
+        logger.info("Database initialized successfully.")
+    except Exception as e:
+        logger.error(f"Error during database initialization: {e}", exc_info=True)
+    yield
+    logger.info("Shutting down CLOSE finance engine...")
+
+
 app = FastAPI(
     title=settings.APP_NAME,
     description="Deterministic Financial Reconciliation & AI Finance Controller Engine",
     version="0.1.0",
     docs_url="/docs",
     redoc_url="/redoc",
+    lifespan=lifespan,
 )
 
 # CORS middleware for Next.js frontend
@@ -60,21 +78,30 @@ async def global_exception_handler(request: Request, exc: Exception):
 @app.get("/health", tags=["System"])
 @app.get("/api/health", tags=["System"])
 async def health_check():
+    db_ok = check_db_connection()
     return {
-        "status": "ok",
+        "status": "ok" if db_ok else "degraded",
         "service": "close-finance-engine",
         "version": "0.1.0",
         "ai_mode": settings.AI_MODE,
-        "database": settings.DATABASE_URL.split(":")[0],
+        "database": {
+            "engine": settings.DATABASE_URL.split(":")[0],
+            "connected": db_ok,
+        },
     }
 
 
 @app.get("/api/status", tags=["System"])
-async def system_status():
+async def system_status(db: Session = Depends(get_db)):
+    db_ok = check_db_connection()
     return {
-        "status": "ready",
+        "status": "ready" if db_ok else "degraded",
         "batch_engine": "online",
         "ai_controller": "online" if settings.AI_MODE == "live" else "mock_fallback",
+        "database": {
+            "status": "connected" if db_ok else "disconnected",
+            "type": settings.DATABASE_URL.split(":")[0],
+        },
         "confidence_thresholds": {
             "auto_resolve": settings.CONFIDENCE_THRESHOLD_AUTO_RESOLVE,
             "recommend": settings.CONFIDENCE_THRESHOLD_RECOMMEND,
