@@ -150,7 +150,7 @@ export default function AuditLogPage() {
               </span>
             </div>
             <div className="text-[11px] font-mono text-zinc-400 mt-0.5">
-              Root Merkle Hash: <span className="text-zinc-300 font-bold">{chainStatus.root_chain_hash}</span>
+              Root Merkle Hash: <span className="text-zinc-300 font-bold break-all">{chainStatus.root_chain_hash}</span>
             </div>
           </div>
         </div>
@@ -168,8 +168,8 @@ export default function AuditLogPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
-        <div className="relative w-full md:w-80">
+      <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+        <div className="relative w-full md:w-80 shrink-0">
           <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-2.5" />
           <input
             type="text"
@@ -180,7 +180,7 @@ export default function AuditLogPage() {
           />
         </div>
 
-        <div className="flex items-center space-x-2 w-full md:w-auto">
+        <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 w-full md:w-auto">
           {/* Actor Filter */}
           <select
             value={actorFilter}
@@ -210,7 +210,7 @@ export default function AuditLogPage() {
 
       {/* Audit Log Table with Cryptographic Chain (Section 30) */}
       <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 overflow-x-auto shadow-xl">
-        <table className="w-full text-left text-xs font-mono">
+        <table className="w-full min-w-[760px] text-left text-xs font-mono">
           <thead className="bg-zinc-950/80 text-zinc-400 uppercase text-[10px] tracking-wider border-b border-zinc-800">
             <tr>
               <th className="py-3 px-4">Chain Hash</th>

@@ -196,28 +196,28 @@ export default function ReconciliationPage() {
       </div>
 
       {/* 5-Pass Pipeline Summary Banner (Section 17 & 19) */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 font-mono text-xs">
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 font-mono text-xs">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
           <span className="text-[10px] text-zinc-400 uppercase block">Pass 1: Duplicates</span>
           <span className="text-white font-bold text-base mt-0.5 block">1 Flagged</span>
           <span className="text-[10px] text-zinc-400">Hash cluster check</span>
         </div>
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
           <span className="text-[10px] text-zinc-400 uppercase block">Pass 2: Exact Match</span>
           <span className="text-emerald-400 font-bold text-base mt-0.5 block">108 Matches</span>
           <span className="text-[10px] text-zinc-400">Amount & Ref hash</span>
         </div>
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
           <span className="text-[10px] text-zinc-400 uppercase block">Pass 3: Fee Variance</span>
           <span className="text-amber-400 font-bold text-base mt-0.5 block">4 Investigated</span>
           <span className="text-[10px] text-zinc-400">Gateway fee check</span>
         </div>
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
           <span className="text-[10px] text-zinc-400 uppercase block">Pass 4: Fuzzy / Timing</span>
           <span className="text-zinc-200 font-bold text-base mt-0.5 block">4 Matches</span>
           <span className="text-[10px] text-zinc-400">±3-day date window</span>
         </div>
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800 col-span-2 sm:col-span-1">
           <span className="text-[10px] text-zinc-400 uppercase block">Pass 5: Unresolved</span>
           <span className="text-rose-400 font-bold text-base mt-0.5 block">{batch.unresolved} Exceptions</span>
           <span className="text-[10px] text-zinc-400">Honest escalation</span>
@@ -225,9 +225,9 @@ export default function ReconciliationPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-3 font-mono text-xs">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 font-mono text-xs">
         {/* Search */}
-        <div className="relative w-full md:w-80">
+        <div className="relative w-full md:w-80 shrink-0">
           <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-zinc-400" />
           <input
             type="text"
@@ -239,15 +239,15 @@ export default function ReconciliationPage() {
         </div>
 
         {/* Method & Status Filters */}
-        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 max-w-full w-full md:w-auto">
           {/* Method Filter */}
-          <div className="flex items-center space-x-1 p-1 bg-zinc-900 rounded-lg border border-zinc-800">
+          <div className="flex items-center space-x-1 p-1 bg-zinc-900 rounded-lg border border-zinc-800 shrink-0">
             <span className="text-[10px] uppercase text-zinc-400 px-2">Method:</span>
             {["ALL", "EXACT", "AI", "RULE", "FUZZY"].map((m) => (
               <button
                 key={m}
                 onClick={() => setFilterMethod(m)}
-                className={`px-2 py-0.5 rounded text-[11px] transition-colors ${
+                className={`px-2 py-0.5 rounded text-[11px] transition-colors whitespace-nowrap ${
                   filterMethod === m
                     ? "bg-zinc-800 text-white font-bold"
                     : "text-zinc-400 hover:text-zinc-200"
@@ -259,13 +259,13 @@ export default function ReconciliationPage() {
           </div>
 
           {/* Status Filter */}
-          <div className="flex items-center space-x-1 p-1 bg-zinc-900 rounded-lg border border-zinc-800">
+          <div className="flex items-center space-x-1 p-1 bg-zinc-900 rounded-lg border border-zinc-800 shrink-0">
             <span className="text-[10px] uppercase text-zinc-400 px-2">Status:</span>
             {["ALL", "RECONCILED", "REVIEW", "UNRESOLVED"].map((s) => (
               <button
                 key={s}
                 onClick={() => setFilterStatus(s)}
-                className={`px-2 py-0.5 rounded text-[11px] transition-colors ${
+                className={`px-2 py-0.5 rounded text-[11px] transition-colors whitespace-nowrap ${
                   filterStatus === s
                     ? "bg-zinc-800 text-white font-bold"
                     : "text-zinc-400 hover:text-zinc-200"
@@ -281,7 +281,7 @@ export default function ReconciliationPage() {
       {/* Main Reconciliation Table (Section 18) */}
       <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 overflow-hidden font-mono text-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full min-w-[840px] text-left border-collapse">
             <thead>
               <tr className="border-b border-zinc-800 bg-zinc-900/80 text-[10px] uppercase text-zinc-400">
                 <th className="py-3 px-4">Record ID</th>
@@ -406,7 +406,7 @@ export default function ReconciliationPage() {
       {/* Record Inspector Drawer / Slideover (Section 18 & 26) */}
       {selectedMatch && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-md bg-zinc-950 border-l border-zinc-800 p-6 flex flex-col justify-between shadow-2xl overflow-y-auto">
+          <div className="w-full sm:max-w-md max-w-full bg-zinc-950 border-l border-zinc-800 p-4 sm:p-6 flex flex-col justify-between shadow-2xl overflow-y-auto">
             <div className="space-y-5">
               {/* Drawer Header */}
               <div className="flex items-center justify-between border-b border-zinc-800 pb-4">

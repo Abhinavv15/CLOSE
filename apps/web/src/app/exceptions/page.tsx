@@ -185,40 +185,40 @@ export default function ExceptionsPage() {
       </div>
 
       {/* 4 Category Metric Cards (Section 25) */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 font-mono text-xs">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
           <div className="text-[10px] uppercase text-zinc-400">Total Exceptions</div>
-          <div className="text-2xl font-bold text-white mt-1 font-tabular">{exceptions.length}</div>
+          <div className="text-xl sm:text-2xl font-bold text-white mt-1 font-tabular">{exceptions.length}</div>
           <div className="text-[10px] text-zinc-400 mt-0.5">Across 127 records</div>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
           <div className="text-[10px] uppercase text-zinc-400">Critical / Escalated</div>
-          <div className="text-2xl font-bold text-rose-400 mt-1 font-tabular">
+          <div className="text-xl sm:text-2xl font-bold text-rose-400 mt-1 font-tabular">
             {exceptions.filter(e => e.type === "MISSING_RECORD" || e.confidence < 0.6).length}
           </div>
           <div className="text-[10px] text-zinc-400 mt-0.5">Missing counterpart</div>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
           <div className="text-[10px] uppercase text-zinc-400">Review Required</div>
-          <div className="text-2xl font-bold text-amber-400 mt-1 font-tabular">
+          <div className="text-xl sm:text-2xl font-bold text-amber-400 mt-1 font-tabular">
             {exceptions.filter(e => e.status === "REVIEW").length}
           </div>
           <div className="text-[10px] text-zinc-400 mt-0.5">High AI confidence</div>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800">
           <div className="text-[10px] uppercase text-zinc-400">Auto-Resolved</div>
-          <div className="text-2xl font-bold text-emerald-400 mt-1 font-tabular">4</div>
+          <div className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1 font-tabular">4</div>
           <div className="text-[10px] text-zinc-400 mt-0.5">98.7% safety precision</div>
         </div>
       </div>
 
       {/* Filter Tabs & Search Controls */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-3 font-mono text-xs">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 font-mono text-xs">
         {/* Search */}
-        <div className="relative w-full md:w-80">
+        <div className="relative w-full md:w-80 shrink-0">
           <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-zinc-400" />
           <input
             type="text"
@@ -230,12 +230,12 @@ export default function ExceptionsPage() {
         </div>
 
         {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 max-w-full w-full md:w-auto">
           {filterTabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveFilter(tab.id)}
-              className={`px-2.5 py-1 rounded-lg text-xs transition-colors ${
+              className={`px-2.5 py-1 rounded-lg text-xs transition-colors whitespace-nowrap shrink-0 ${
                 activeFilter === tab.id
                   ? "bg-zinc-800 text-white font-bold border border-zinc-700"
                   : "bg-zinc-900/60 text-zinc-400 hover:text-zinc-200 border border-zinc-800"
@@ -250,7 +250,7 @@ export default function ExceptionsPage() {
       {/* Exceptions Table (Section 25) */}
       <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 overflow-hidden font-mono text-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full min-w-[820px] text-left border-collapse">
             <thead>
               <tr className="border-b border-zinc-800 bg-zinc-900/80 text-[10px] uppercase text-zinc-400">
                 <th className="py-3 px-4">Exception ID</th>

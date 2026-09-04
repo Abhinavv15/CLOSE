@@ -99,12 +99,12 @@ export default function BatchesPage() {
       </div>
 
       {/* Multi-Source Ingestion Deck (Section 13) */}
-      <div className="grid md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
         {sources.map((s) => (
           <div
             key={s.id}
             onClick={() => setSelectedSource(s.id)}
-            className={`p-4 rounded-xl border cursor-pointer transition-all ${
+            className={`p-3.5 sm:p-4 rounded-xl border cursor-pointer transition-all ${
               selectedSource === s.id
                 ? "bg-zinc-900 border-zinc-500 shadow-md"
                 : "bg-zinc-900/40 border-zinc-800 hover:border-zinc-700"
@@ -123,7 +123,7 @@ export default function BatchesPage() {
       </div>
 
       {/* Upload Zone / Dropzone */}
-      <div className="p-8 rounded-2xl bg-zinc-900/30 border-2 border-dashed border-zinc-800 hover:border-zinc-700 text-center transition-colors font-mono">
+      <div className="p-6 sm:p-8 rounded-2xl bg-zinc-900/30 border-2 border-dashed border-zinc-800 hover:border-zinc-700 text-center transition-colors font-mono">
         <div className="h-10 w-10 mx-auto rounded-full bg-zinc-800/80 flex items-center justify-center text-zinc-300 mb-3">
           <Upload className="w-5 h-5" />
         </div>
@@ -166,7 +166,7 @@ export default function BatchesPage() {
           {/* Active Batch */}
           <div className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:bg-zinc-800/20 transition-colors">
             <div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 flex-wrap gap-y-1">
                 <span className="font-bold text-white uppercase">{batch.batch_id}</span>
                 <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950/40 border border-emerald-800/60 text-emerald-300">
                   {batch.status}
@@ -180,7 +180,7 @@ export default function BatchesPage() {
               </div>
             </div>
 
-            <div className="flex items-center space-x-6 text-zinc-400 text-right">
+            <div className="flex flex-wrap items-center justify-between sm:justify-end gap-4 text-zinc-400 text-right border-t md:border-t-0 border-zinc-800/60 pt-2 md:pt-0">
               <div>
                 <div className="text-[10px] text-zinc-400 uppercase">Match Rate</div>
                 <div className="text-emerald-400 font-bold">

@@ -98,20 +98,20 @@ export default function EvaluationPage() {
           </span>
         </div>
 
-        <div className="grid md:grid-cols-4 gap-3 font-mono text-xs">
-          <div className="p-3.5 rounded-lg bg-zinc-900 border border-zinc-800">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 font-mono text-xs">
+          <div className="p-3 sm:p-3.5 rounded-lg bg-zinc-900 border border-zinc-800">
             <div className="text-xl font-bold text-white font-tabular">3</div>
             <div className="text-zinc-400 text-[11px] mt-1">Missing source records</div>
           </div>
-          <div className="p-3.5 rounded-lg bg-zinc-900 border border-zinc-800">
+          <div className="p-3 sm:p-3.5 rounded-lg bg-zinc-900 border border-zinc-800">
             <div className="text-xl font-bold text-white font-tabular">2</div>
             <div className="text-zinc-400 text-[11px] mt-1">Ambiguous transactions</div>
           </div>
-          <div className="p-3.5 rounded-lg bg-zinc-900 border border-zinc-800">
+          <div className="p-3 sm:p-3.5 rounded-lg bg-zinc-900 border border-zinc-800">
             <div className="text-xl font-bold text-white font-tabular">1</div>
             <div className="text-zinc-400 text-[11px] mt-1">Suspected duplicate</div>
           </div>
-          <div className="p-3.5 rounded-lg bg-zinc-900 border border-zinc-800">
+          <div className="p-3 sm:p-3.5 rounded-lg bg-zinc-900 border border-zinc-800">
             <div className="text-xl font-bold text-white font-tabular">1</div>
             <div className="text-zinc-400 text-[11px] mt-1">Insufficient evidence</div>
           </div>
@@ -121,13 +121,13 @@ export default function EvaluationPage() {
         <div className="divide-y divide-zinc-800/60 pt-2 font-mono text-xs">
           <a
             href="/exceptions/EX-108"
-            className="py-3 flex items-center justify-between hover:bg-zinc-800/30 rounded px-2 transition-colors block"
+            className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 hover:bg-zinc-800/30 rounded px-2 transition-colors"
           >
             <div>
               <span className="font-bold text-white">EX-108</span>
-              <span className="text-zinc-400 ml-3">₹72,400 deposit with zero invoice or settlement trail</span>
+              <span className="text-zinc-400 ml-0 sm:ml-3 block sm:inline">₹72,400 deposit with zero invoice or settlement trail</span>
             </div>
-            <div className="flex items-center space-x-2 text-rose-400">
+            <div className="flex items-center space-x-2 text-rose-400 text-right shrink-0">
               <span>Unable to resolve</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
@@ -135,13 +135,13 @@ export default function EvaluationPage() {
 
           <a
             href="/exceptions/EX-102"
-            className="py-3 flex items-center justify-between hover:bg-zinc-800/30 rounded px-2 transition-colors block"
+            className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 hover:bg-zinc-800/30 rounded px-2 transition-colors"
           >
             <div>
               <span className="font-bold text-white">EX-102</span>
-              <span className="text-zinc-400 ml-3">₹50 settlement difference (Processor fee)</span>
+              <span className="text-zinc-400 ml-0 sm:ml-3 block sm:inline">₹50 settlement difference (Processor fee)</span>
             </div>
-            <div className="flex items-center space-x-2 text-amber-400">
+            <div className="flex items-center space-x-2 text-amber-400 text-right shrink-0">
               <span>94% confidence · Needs review</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
@@ -149,13 +149,13 @@ export default function EvaluationPage() {
 
           <a
             href="/exceptions/EX-111"
-            className="py-3 flex items-center justify-between hover:bg-zinc-800/30 rounded px-2 transition-colors block"
+            className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 hover:bg-zinc-800/30 rounded px-2 transition-colors"
           >
             <div>
               <span className="font-bold text-white">EX-111</span>
-              <span className="text-zinc-400 ml-3">₹25,000 potential duplicate settlement</span>
+              <span className="text-zinc-400 ml-0 sm:ml-3 block sm:inline">₹25,000 potential duplicate settlement</span>
             </div>
-            <div className="flex items-center space-x-2 text-amber-400">
+            <div className="flex items-center space-x-2 text-amber-400 text-right shrink-0">
               <span>97% duplicate probability</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </div>

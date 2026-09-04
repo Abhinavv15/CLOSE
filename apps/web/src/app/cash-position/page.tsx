@@ -116,12 +116,12 @@ export default function CashPositionPage() {
         </div>
 
         {/* Timeframe Selector Buttons (7, 14, 30, 60, 90 days) */}
-        <div className="flex items-center space-x-1.5 p-1 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono">
+        <div className="flex items-center space-x-1.5 p-1 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono overflow-x-auto no-scrollbar max-w-full">
           {[7, 14, 30, 60, 90].map((days) => (
             <button
               key={days}
               onClick={() => setTimeframe(days)}
-              className={`px-2.5 py-1 rounded transition-colors ${
+              className={`px-2.5 py-1 rounded transition-colors shrink-0 ${
                 timeframe === days
                   ? "bg-zinc-800 text-white font-bold"
                   : "text-zinc-400 hover:text-zinc-200"
@@ -134,42 +134,42 @@ export default function CashPositionPage() {
       </div>
 
       {/* Primary 5 Cash Metrics (Section 12 & 37) */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 font-mono text-xs">
-        <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 font-mono text-xs">
+        <div className="p-3 sm:p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
           <div className="text-[10px] uppercase text-zinc-400">Current Cash</div>
-          <div className="text-2xl font-bold text-white font-tabular mt-1">
+          <div className="text-xl sm:text-2xl font-bold text-white font-tabular mt-1">
             ₹{(position.current_cash / 100000).toFixed(1)}L
           </div>
           <div className="text-[10px] text-zinc-400 mt-1">Reconciled bank ledger</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+        <div className="p-3 sm:p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
           <div className="text-[10px] uppercase text-zinc-400">Expected Receivables</div>
-          <div className="text-2xl font-bold text-emerald-400 font-tabular mt-1">
+          <div className="text-xl sm:text-2xl font-bold text-emerald-400 font-tabular mt-1">
             +₹{(position.expected_receivables / 100000).toFixed(1)}L
           </div>
           <div className="text-[10px] text-zinc-400 mt-1">{position.open_invoice_count} open invoices</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+        <div className="p-3 sm:p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
           <div className="text-[10px] uppercase text-zinc-400">Upcoming Outflows</div>
-          <div className="text-2xl font-bold text-zinc-300 font-tabular mt-1">
+          <div className="text-xl sm:text-2xl font-bold text-zinc-300 font-tabular mt-1">
             -₹{(position.upcoming_expenses / 100000).toFixed(1)}L
           </div>
           <div className="text-[10px] text-zinc-400 mt-1">Payroll & vendors</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+        <div className="p-3 sm:p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
           <div className="text-[10px] uppercase text-zinc-400">Taxes & Statutory</div>
-          <div className="text-2xl font-bold text-zinc-300 font-tabular mt-1">
+          <div className="text-xl sm:text-2xl font-bold text-zinc-300 font-tabular mt-1">
             -₹{(position.taxes / 100000).toFixed(1)}L
           </div>
           <div className="text-[10px] text-zinc-400 mt-1">GST & advance tax</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+        <div className="p-3 sm:p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 col-span-2 sm:col-span-1">
           <div className="text-[10px] uppercase text-zinc-400">Projected {timeframe}-Day Cash</div>
-          <div className="text-2xl font-bold text-white font-tabular mt-1">
+          <div className="text-xl sm:text-2xl font-bold text-white font-tabular mt-1">
             ₹{(position.projected_30d_cash / 100000).toFixed(1)}L
           </div>
           <div className="text-[10px] text-emerald-400 mt-1">
@@ -179,7 +179,7 @@ export default function CashPositionPage() {
       </div>
 
       {/* Main Chart Card (Section 12 & 37: Recharts Monochrome Curve) */}
-      <div className="p-6 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-4">
+      <div className="p-4 sm:p-6 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800/80 pb-3">
           <div>
             <h3 className="text-sm font-semibold text-white">
@@ -201,9 +201,9 @@ export default function CashPositionPage() {
           </div>
         </div>
 
-        <div className="h-72 w-full">
+        <div className="h-72 w-full min-w-0">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
               <defs>
                 <linearGradient id="cashGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#ffffff" stopOpacity={0.25} />

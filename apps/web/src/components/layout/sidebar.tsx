@@ -18,6 +18,7 @@ import {
   ChevronRight,
   ShieldCheck,
   Terminal,
+  X,
 } from "lucide-react";
 
 interface NavItem {
@@ -69,25 +70,54 @@ const NAV_SECTIONS: NavSection[] = [
   },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  mobileOpen?: boolean;
+  onCloseMobile?: () => void;
+}
+
+export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+
+  const handleLinkClick = () => {
+    if (onCloseMobile) {
+      onCloseMobile();
+    }
+  };
 
   return (
     <aside
       className={cn(
-        "relative flex flex-col border-r border-zinc-800/80 bg-zinc-950 text-zinc-300 transition-all duration-300 select-none z-30",
-        collapsed ? "w-16" : "w-64"
+        "relative flex flex-col border-r border-zinc-800/80 bg-zinc-950 text-zinc-300 transition-all duration-300 select-none",
+        // Desktop sizing
+        "lg:static lg:z-30",
+        collapsed ? "lg:w-16" : "lg:w-64",
+        // Mobile / Tablet Slide-over Drawer
+        "fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] shadow-2xl lg:shadow-none",
+        mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       )}
     >
       {/* Brand Header */}
-      <div className="flex h-14 items-center justify-between px-3.5 border-b border-zinc-800/80">
-        <Link href="/dashboard" className="flex items-center space-x-2.5 overflow-hidden group">
+      <div 
+        className={cn(
+          "flex h-14 items-center border-b border-zinc-800/80 transition-all",
+          collapsed && !mobileOpen ? "justify-center px-2" : "justify-between px-3.5"
+        )}
+      >
+        <Link 
+          href="/dashboard" 
+          onClick={handleLinkClick}
+          className={cn(
+            "flex items-center group",
+            collapsed && !mobileOpen ? "justify-center" : "space-x-2.5 overflow-hidden"
+          )}
+          title="CLOSE — AI Finance Controller"
+        >
           <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-800 p-0.5 overflow-hidden group-hover:border-zinc-700 transition-colors shadow-sm">
             <Image src="/icon.png" alt="CLOSE Icon" width={32} height={32} className="w-full h-full object-contain" />
           </div>
 
-          {!collapsed && (
+          {(!collapsed || mobileOpen) && (
             <div className="flex flex-col min-w-0">
               <span className="font-bold text-xs tracking-wider text-white uppercase truncate">
                 CLOSE
@@ -99,21 +129,33 @@ export function Sidebar() {
           )}
         </Link>
 
-
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          className="p-1 rounded text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/60 transition-colors"
-        >
-          {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-        </button>
+        <div className="flex items-center space-x-1">
+          {/* Mobile Close Button */}
+          <button
+            onClick={onCloseMobile}
+            aria-label="Close sidebar menu"
+            className="lg:hidden p-1.5 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
       </div>
+
+      {/* Desktop Floating Border Collapse Toggle */}
+      <button
+        onClick={() => setCollapsed(!collapsed)}
+        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        className="hidden lg:flex absolute -right-3 top-4 z-40 h-6 w-6 items-center justify-center rounded-full bg-zinc-900 border border-zinc-700 text-zinc-400 hover:text-white hover:bg-zinc-800 hover:border-zinc-500 transition-all shadow-md cursor-pointer"
+      >
+        {collapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
+      </button>
 
       {/* Navigation Sections */}
       <div className="flex-1 overflow-y-auto py-3 px-2 space-y-4">
         {NAV_SECTIONS.map((section) => (
           <div key={section.title} className="space-y-1">
-            {!collapsed && (
+            {(!collapsed || mobileOpen) && (
               <div className="px-2.5 py-1 text-[10px] font-semibold tracking-wider text-zinc-400 uppercase font-mono">
                 {section.title}
               </div>
@@ -126,9 +168,11 @@ export function Sidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  title={collapsed ? item.name : undefined}
+                  onClick={handleLinkClick}
+                  title={collapsed && !mobileOpen ? item.name : undefined}
                   className={cn(
-                    "flex items-center rounded-lg px-2.5 py-2 text-xs font-medium transition-all group relative",
+                    "flex items-center rounded-lg text-xs font-medium transition-all group relative",
+                    collapsed && !mobileOpen ? "justify-center h-9 w-9 mx-auto px-0" : "px-2.5 py-2",
                     isActive
                       ? "bg-zinc-800/90 text-white font-semibold shadow-sm border border-zinc-700/60"
                       : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/60"
@@ -136,25 +180,20 @@ export function Sidebar() {
                 >
                   <Icon className={cn("w-4 h-4 shrink-0", isActive ? "text-white" : "text-zinc-400 group-hover:text-zinc-200")} />
 
-                  {!collapsed && (
+                  {(!collapsed || mobileOpen) && (
                     <div className="flex flex-1 items-center justify-between ml-2.5 overflow-hidden">
                       <span className="truncate">{item.name}</span>
                       {item.badge && (
                         <span
                           className={cn(
-                            "ml-auto text-[10px] font-mono px-1.5 py-0.5 rounded border text-zinc-300 bg-zinc-900 border-zinc-800",
-                            item.badgeColor
+                            "ml-auto text-[10px] font-mono px-1.5 py-0.2 rounded border",
+                            item.badgeColor || "text-zinc-400 bg-zinc-900 border-zinc-800"
                           )}
                         >
                           {item.badge}
                         </span>
                       )}
                     </div>
-                  )}
-
-                  {/* Active bar indicator */}
-                  {isActive && (
-                    <div className="absolute left-0 top-1.5 bottom-1.5 w-0.5 bg-white rounded-r" />
                   )}
                 </Link>
               );
@@ -163,27 +202,26 @@ export function Sidebar() {
         ))}
       </div>
 
-      {/* Footer / Environment Status */}
-      <div className="p-2 border-t border-zinc-800/80 bg-zinc-950/40">
-        {!collapsed ? (
-          <div className="p-2 rounded-lg bg-zinc-900/40 border border-zinc-800/60 text-[11px] space-y-1">
-            <div className="flex items-center justify-between text-zinc-400">
-              <span className="flex items-center space-x-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] font-mono">Sep 2026 Close</span>
-              </span>
-              <span className="text-[9px] font-mono text-zinc-400 uppercase">Mock Mode</span>
-            </div>
-            <div className="text-[10px] text-zinc-400 font-mono truncate">
-              Demo Corp · INR (₹)
-            </div>
+      {/* Sidebar Footer Info */}
+      {(!collapsed || mobileOpen) ? (
+        <div className="p-3 border-t border-zinc-800/80 bg-zinc-950 text-[11px] font-mono text-zinc-400 space-y-1.5">
+          <div className="flex items-center justify-between">
+            <span className="text-zinc-400 font-semibold">ENGINE:</span>
+            <span className="flex items-center space-x-1.5 text-zinc-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span>ONLINE</span>
+            </span>
           </div>
-        ) : (
-          <div className="flex justify-center p-1">
-            <span className="h-2 w-2 rounded-full bg-emerald-500" title="Engine Online" />
+          <div className="flex items-center justify-between text-[10px]">
+            <span className="text-zinc-400">MATH:</span>
+            <span className="text-zinc-300 font-bold">18,4 NUMERIC</span>
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="p-2 border-t border-zinc-800/80 bg-zinc-950 flex flex-col items-center justify-center py-3">
+          <span className="h-2 w-2 rounded-full bg-emerald-400" title="Engine Online · 18,4 Numeric" />
+        </div>
+      )}
     </aside>
   );
 }
