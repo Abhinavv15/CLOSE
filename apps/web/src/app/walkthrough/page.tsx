@@ -27,6 +27,8 @@ import {
   Code
 } from "lucide-react";
 
+import { useTour } from "@/lib/tour-context";
+
 type TabKey = "overview" | "csv_guide" | "reconciliation" | "exceptions" | "cash_position" | "audit_trail" | "evaluation";
 
 interface SchemaSpec {
@@ -111,6 +113,7 @@ const SCHEMAS: SchemaSpec[] = [
 ];
 
 export default function WalkthroughPage() {
+  const { startTour, isTourActive } = useTour();
   const [activeTab, setActiveTab] = useState<TabKey>("overview");
 
   React.useEffect(() => {
@@ -143,21 +146,49 @@ export default function WalkthroughPage() {
         </div>
 
         <div className="flex items-center space-x-2.5">
-          <Link
-            href="/batches"
-            className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 hover:border-zinc-500 text-xs font-mono text-zinc-200 transition-colors flex items-center space-x-1.5"
+          <button
+            onClick={() => startTour(0)}
+            className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-all flex items-center space-x-1.5 shadow-md group"
           >
-            <Layers className="w-3.5 h-3.5" />
-            <span>Go to Upload Deck</span>
-          </Link>
+            <Compass className={`w-3.5 h-3.5 ${isTourActive ? "animate-spin" : ""}`} />
+            <span>{isTourActive ? "Resume Live Tour" : "Start Live Tour"}</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+          </button>
           <Link
             href="/dashboard"
-            className="px-3.5 py-1.5 rounded-lg bg-white text-zinc-950 font-semibold text-xs hover:bg-zinc-200 transition-all flex items-center space-x-1.5 shadow-sm"
+            className="px-3.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 hover:border-zinc-500 text-xs font-mono text-zinc-200 transition-colors flex items-center space-x-1.5"
           >
             <span>Open Dashboard</span>
-            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
+      </div>
+
+      {/* Live Interactive Tour Launch Card */}
+      <div className="p-4 rounded-xl bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-purple-950/20 border border-blue-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono">
+        <div className="flex items-start space-x-3 min-w-0">
+          <div className="p-2.5 rounded-xl bg-blue-900/40 border border-blue-700/60 text-blue-400 shrink-0 mt-0.5">
+            <Compass className="w-5 h-5 animate-pulse" />
+          </div>
+          <div>
+            <div className="flex items-center space-x-2">
+              <h2 className="text-sm font-bold text-white">Live Multi-Page Guided Walkthrough</h2>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40">
+                Interactive Popup
+              </span>
+            </div>
+            <p className="text-xs text-zinc-300 mt-1 font-sans">
+              Step through all 7 pages sequentially with a live popup explaining each module, with Before and Next buttons, live table highlights, and automatic page navigation.
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => startTour(0)}
+          className="px-4 py-2 rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 font-bold text-xs transition-all shadow-md flex items-center justify-center space-x-2 shrink-0 group"
+        >
+          <span>{isTourActive ? "Resume Guided Tour" : "Launch Tour (Step 1 to 7)"}</span>
+          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+        </button>
       </div>
 
       {/* Interactive Navigation Pills */}

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-context";
+import { TourProvider } from "@/lib/tour-context";
+import { InteractiveTourModal } from "@/components/tour/interactive-tour-modal";
 
 export const metadata: Metadata = {
   title: "CLOSE — AI Finance Controller",
@@ -21,7 +23,10 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="bg-zinc-950 text-zinc-100 min-h-screen transition-colors duration-200" suppressHydrationWarning>
         <ThemeProvider>
-          {children}
+          <TourProvider>
+            {children}
+            <InteractiveTourModal />
+          </TourProvider>
         </ThemeProvider>
       </body>
     </html>

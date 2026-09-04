@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Search, Shield, ChevronDown, Check, Eye, UserCheck, ShieldAlert, Menu, LogOut, Compass, Sun, Moon } from "lucide-react";
 import { useAuth, PRESET_PERSONAS } from "@/lib/auth-context";
 import { useTheme } from "@/lib/theme-context";
+import { useTour } from "@/lib/tour-context";
 
 interface HeaderProps {
   onToggleMobileMenu?: () => void;
@@ -15,6 +16,7 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
   const router = useRouter();
   const { user, switchPersona, logout, isAuditor } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const { startTour, isTourActive } = useTour();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -62,15 +64,15 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
       </div>
 
       <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
-        {/* Walkthrough & Guide Button */}
-        <Link
-          href="/walkthrough"
-          className="hidden md:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-blue-950/30 hover:bg-blue-900/40 border border-blue-800/60 text-xs font-mono text-blue-300 hover:text-white transition-colors"
-          title="Interactive Product Tour & CSV Schema Guide"
+        {/* Interactive Guided Tour Button */}
+        <button
+          onClick={() => startTour(0)}
+          className="hidden md:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-blue-950/40 hover:bg-blue-900/50 border border-blue-700/60 text-xs font-mono text-blue-300 hover:text-white transition-all shadow-sm"
+          title="Launch Step-by-Step Guided Product Walkthrough"
         >
-          <Compass className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-          <span>Tour & Guide</span>
-        </Link>
+          <Compass className={`w-3.5 h-3.5 text-blue-400 shrink-0 ${isTourActive ? "animate-spin" : ""}`} />
+          <span>{isTourActive ? "Resume Tour" : "Guided Tour"}</span>
+        </button>
         {/* Search / Command trigger */}
         <button
           onClick={() => {

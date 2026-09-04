@@ -21,10 +21,12 @@ import {
   ArrowRight,
   LogOut,
   Sun,
-  Moon
+  Moon,
+  Compass
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "@/lib/theme-context";
+import { useTour } from "@/lib/tour-context";
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
@@ -33,6 +35,7 @@ export function CommandPalette() {
   const router = useRouter();
   const { switchPersona, logout, user } = useAuth();
   const { theme, toggleTheme, setTheme } = useTheme();
+  const { startTour, isTourActive } = useTour();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -58,6 +61,26 @@ export function CommandPalette() {
   }, [open]);
 
   const items = [
+    // Interactive Tour
+    { 
+      name: isTourActive ? "Resume Interactive Guided Tour (Current Step)" : "Start Step-by-Step Interactive Tour (Step 1 to 7)", 
+      icon: Compass, 
+      action: () => startTour(0), 
+      section: "Guided Tour" 
+    },
+    { 
+      name: "Jump to Tour Step 2: Multi-Source Ingestion Deck", 
+      icon: Compass, 
+      action: () => startTour(1), 
+      section: "Guided Tour" 
+    },
+    { 
+      name: "Jump to Tour Step 4: AI Exception Triage Center", 
+      icon: Compass, 
+      action: () => startTour(3), 
+      section: "Guided Tour" 
+    },
+
     // Navigation
     { name: "Command Center Dashboard", icon: Layers, path: "/dashboard", section: "Navigation" },
     { name: "Multi-Source Reconciliation Matrix", icon: GitMerge, path: "/reconciliation", section: "Navigation" },

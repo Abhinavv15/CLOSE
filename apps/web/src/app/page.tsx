@@ -22,9 +22,11 @@ import {
   Moon
 } from "lucide-react";
 import { useTheme } from "@/lib/theme-context";
+import { useTour } from "@/lib/tour-context";
 
 export default function LandingPage() {
   const { theme, toggleTheme } = useTheme();
+  const { startTour } = useTour();
 
   return (
     <BackgroundGrid pattern="grid" className="min-h-screen text-zinc-100 selection:bg-zinc-800">
@@ -112,20 +114,20 @@ export default function LandingPage() {
             </span>
           </ButtonWithMovingBorder>
 
+          <button
+            onClick={() => startTour(0)}
+            className="px-6 py-3 rounded-xl bg-blue-950/40 hover:bg-blue-900/50 border border-blue-700/60 text-blue-200 hover:text-white text-sm font-medium transition-all flex items-center space-x-2 shadow-lg"
+          >
+            <Compass className="w-4 h-4 text-blue-400 animate-pulse" />
+            <span>Start Interactive Guided Tour</span>
+          </button>
+
           <Link
             href="/walkthrough"
-            className="px-6 py-3 rounded-xl bg-blue-950/40 hover:bg-blue-900/50 border border-blue-800/60 text-blue-200 hover:text-white text-sm font-medium transition-all flex items-center space-x-2"
+            className="px-6 py-3 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-sm font-medium transition-all flex items-center space-x-2"
           >
-            <Compass className="w-4 h-4 text-blue-400" />
-            <span>How It Works & CSV Guide</span>
+            <span>Documentation & CSV Spec</span>
           </Link>
-
-          <a
-            href="/evaluation"
-            className="px-6 py-3 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-sm font-medium transition-all"
-          >
-            View Evaluation Metrics
-          </a>
         </div>
 
         {/* Live Controller Benchmark Bar (Section 8) */}

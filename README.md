@@ -107,9 +107,25 @@ CLOSE includes a **dual institutional theme system** tailored for both trading-f
 
 ---
 
+## Interactive Guided Walkthrough & Tour Modal
+
+CLOSE features an **interactive step-by-step popup tour** that automatically navigates through every module of the application:
+- **Sequential Page Navigation**: Moves from page to page (Step 1 through Step 7) in exact operational order.
+- **Floating Institutional Popup**: Displays step badges (`STEP 02 OF 07`), key controller capabilities, live table highlights, and pro-tips.
+- **Before & Next Controls**: Full backward (`← Before`) and forward (`Next →`) navigation with an animated progress bar.
+- **Keyboard Shortcuts**: Press `→` (Next), `←` (Previous), and `Esc` (Exit).
+- **Collapsible / Minimized Pill**: Minimize to a sleek floating dock to click around live tables, then expand back anytime.
+- **4 Ways to Launch the Tour**:
+  1. Click **"Start Interactive Guided Tour"** on the [Landing Page](http://localhost:3000).
+  2. Click **"Guided Tour"** in the top header on any page.
+  3. Press `⌘K` or `Ctrl+K` and select **"Start Step-by-Step Interactive Tour"**.
+  4. Click **"Start Live Tour"** on the [`/walkthrough`](http://localhost:3000/walkthrough) specification page.
+
+---
+
 ## Judge Walkthrough in 7 Steps
 
-Follow this 3-minute evaluation script to experience the full power of CLOSE:
+Follow this 3-minute evaluation script or launch the **Interactive Guided Tour** to experience the full power of CLOSE:
 
 ```
 [1. Landing Page /] ──────────► [2. Interactive Tour /walkthrough]
