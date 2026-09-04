@@ -62,7 +62,7 @@ export default function ExceptionDetailPage({
     setSubmitting(true);
     try {
       await api.approveException(exceptionId, {
-        user: "Senior Controller Abhinav V",
+        user: user?.name || "Senior Controller Abhinav V",
         note: reason || "Approved processor settlement fee variance.",
       });
       setCurrentStatus("APPROVED");
@@ -79,7 +79,7 @@ export default function ExceptionDetailPage({
     setSubmitting(true);
     try {
       await api.rejectException(exceptionId, {
-        user: "Senior Controller Abhinav V",
+        user: user?.name || "Senior Controller Abhinav V",
         note: reason || "Rejected AI recommendation. Sent for manual investigation.",
       });
       setCurrentStatus("REJECTED");
@@ -96,7 +96,7 @@ export default function ExceptionDetailPage({
     setSubmitting(true);
     try {
       await api.unresolveException(exceptionId, {
-        user: "Senior Controller Abhinav V",
+        user: user?.name || "Senior Controller Abhinav V",
         note: reason || "Marked as unresolvable due to absence of counterpart records.",
       });
       setCurrentStatus("UNRESOLVED");

@@ -36,6 +36,10 @@ class User(Base, TimestampMixin):
     email = Column(String(255), unique=True, nullable=False, index=True)
     full_name = Column(String(255), nullable=False)
     role = Column(String(64), default="CONTROLLER", nullable=False)  # CONTROLLER, AUDITOR, ADMIN
+    title = Column(String(255), default="Senior Financial Controller", nullable=False)
+    avatar = Column(String(8), default="AV", nullable=False)
+    hashed_password = Column(String(255), nullable=True)
+    is_active = Column(Boolean, default=True, nullable=False)
 
     # Relationships
     company = relationship("Company", back_populates="users")

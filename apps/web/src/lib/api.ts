@@ -82,12 +82,23 @@ export interface EvaluationData {
   };
 }
 
+function getAuthHeader(): Record<string, string> {
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("close_auth_token");
+    if (token) {
+      return { Authorization: `Bearer ${token}` };
+    }
+  }
+  return {};
+}
+
 async function fetchWithFallback<T>(url: string, fallback: T, options?: RequestInit): Promise<T> {
   try {
     const res = await fetch(`${API_BASE}${url}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
+        ...getAuthHeader(),
         ...(options?.headers || {}),
       },
     });
@@ -101,6 +112,41 @@ async function fetchWithFallback<T>(url: string, fallback: T, options?: RequestI
 }
 
 export const api = {
+  // Real Authentication & Session Management
+  async login(credentials: { email?: string; password?: string; persona_key?: string }) {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: "Invalid corporate credentials" }));
+      throw new Error(err.detail || "Invalid credentials");
+    }
+    return await res.json();
+  },
+
+  async getMe(token?: string) {
+    const authToken = token || (typeof window !== "undefined" ? localStorage.getItem("close_auth_token") : null);
+    const headers: Record<string, string> = {};
+    if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
+    const res = await fetch(`${API_BASE}/api/auth/me`, { headers });
+    if (!res.ok) throw new Error("Unauthorized");
+    return await res.json();
+  },
+
+  async logout() {
+    try {
+      await fetch(`${API_BASE}/api/auth/logout`, {
+        method: "POST",
+        headers: { ...getAuthHeader() },
+      });
+    } catch {}
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("close_auth_token");
+    }
+  },
+
   // Load Demo Data
   async loadDemoData(count = 127) {
     return fetchWithFallback<{ success: boolean; count: number; batch_id: string }>(

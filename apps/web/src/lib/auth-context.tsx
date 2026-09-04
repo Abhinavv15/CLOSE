@@ -83,71 +83,128 @@ export const PRESET_PERSONAS: Record<string, UserProfile> = {
   },
 };
 
-interface AuthContextType {
+import { api } from "@/lib/api";
+
+export interface AuthContextType {
   user: UserProfile;
   personas: UserProfile[];
-  switchPersona: (key: "controller" | "auditor" | "admin") => void;
+  switchPersona: (key: "controller" | "auditor" | "admin") => Promise<void>;
   hasPermission: (permission: string) => boolean;
   isAuditor: boolean;
   isController: boolean;
   isAdmin: boolean;
-  login: (key?: string) => void;
-  logout: () => void;
+  login: (credentials?: { email?: string; password?: string; persona_key?: string } | string) => Promise<void>;
+  logout: () => Promise<void>;
+  loading: boolean;
+  error: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AUTH_STORAGE_KEY = "close_auth_persona";
+const AUTH_TOKEN_KEY = "close_auth_token";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [activePersonaKey, setActivePersonaKey] = useState<string>("controller");
+  const [currentUser, setCurrentUser] = useState<UserProfile>(PRESET_PERSONAS.controller);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
+  // Restore authenticated session from PostgreSQL via JWT token
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(AUTH_STORAGE_KEY);
-      if (stored && PRESET_PERSONAS[stored]) {
-        setActivePersonaKey(stored);
+    async function restoreSession() {
+      try {
+        const token = localStorage.getItem(AUTH_TOKEN_KEY);
+        if (token) {
+          const profile = await api.getMe(token);
+          if (profile && profile.email) {
+            setCurrentUser(profile);
+            setLoading(false);
+            return;
+          }
+        }
+        
+        // Fallback to saved persona
+        const savedPersona = localStorage.getItem(AUTH_STORAGE_KEY);
+        if (savedPersona && PRESET_PERSONAS[savedPersona]) {
+          setCurrentUser(PRESET_PERSONAS[savedPersona]);
+        }
+      } catch {
+        // Safe default
+      } finally {
+        setLoading(false);
       }
-    } catch {
-      // localStorage may not be accessible in all contexts
     }
+    restoreSession();
   }, []);
 
-  const switchPersona = (key: "controller" | "auditor" | "admin") => {
-    setActivePersonaKey(key);
+  const login = async (credentials?: { email?: string; password?: string; persona_key?: string } | string) => {
+    setError(null);
+    setLoading(true);
     try {
-      localStorage.setItem(AUTH_STORAGE_KEY, key);
-    } catch {
-      // ignore
+      let payload: { email?: string; password?: string; persona_key?: string } = {};
+      if (typeof credentials === "string") {
+        payload = { persona_key: credentials };
+      } else if (credentials) {
+        payload = credentials;
+      } else {
+        payload = { persona_key: "controller" };
+      }
+
+      const res = await api.login(payload);
+      if (res && res.token) {
+        localStorage.setItem(AUTH_TOKEN_KEY, res.token);
+        if (payload.persona_key) {
+          localStorage.setItem(AUTH_STORAGE_KEY, payload.persona_key);
+        }
+        setCurrentUser(res.user);
+      }
+    } catch (err: any) {
+      setError(err?.message || "Invalid corporate credentials");
+      throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
-  const login = (key: string = "controller") => {
-    switchPersona(key as "controller" | "auditor" | "admin");
+  const switchPersona = async (key: "controller" | "auditor" | "admin") => {
+    try {
+      await login({ persona_key: key });
+    } catch {
+      // Fallback
+      if (PRESET_PERSONAS[key]) {
+        setCurrentUser(PRESET_PERSONAS[key]);
+        localStorage.setItem(AUTH_STORAGE_KEY, key);
+      }
+    }
   };
 
-  const logout = () => {
-    switchPersona("controller");
+  const logout = async () => {
+    try {
+      await api.logout();
+    } catch {}
+    localStorage.removeItem(AUTH_TOKEN_KEY);
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+    setCurrentUser(PRESET_PERSONAS.controller);
   };
-
-  const user = PRESET_PERSONAS[activePersonaKey] || PRESET_PERSONAS.controller;
 
   const hasPermission = (perm: string) => {
-    return user.permissions.includes(perm);
+    return (currentUser.permissions || []).includes(perm);
   };
 
   return (
     <AuthContext.Provider
       value={{
-        user,
+        user: currentUser,
         personas: Object.values(PRESET_PERSONAS),
         switchPersona,
         hasPermission,
-        isAuditor: user.role === "AUDITOR",
-        isController: user.role === "CONTROLLER",
-        isAdmin: user.role === "ADMIN",
+        isAuditor: currentUser.role === "AUDITOR",
+        isController: currentUser.role === "CONTROLLER",
+        isAdmin: currentUser.role === "ADMIN",
         login,
         logout,
+        loading,
+        error,
       }}
     >
       {children}
