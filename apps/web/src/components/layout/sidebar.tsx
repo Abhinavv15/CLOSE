@@ -71,22 +71,12 @@ interface SidebarProps {
 
 export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
-  const router = useRouter();
-  const { logout } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
 
   const handleLinkClick = () => {
     if (onCloseMobile) {
       onCloseMobile();
     }
-  };
-
-  const handleLogout = async () => {
-    if (onCloseMobile) {
-      onCloseMobile();
-    }
-    await logout();
-    router.push("/login");
   };
 
   return (
@@ -206,37 +196,28 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
         ))}
       </div>
 
-      {/* Sidebar Footer Info & Sign Out */}
+      {/* Sidebar Footer Info */}
       {(!collapsed || mobileOpen) ? (
-        <div className="p-3 border-t border-zinc-800/80 bg-zinc-950 text-[11px] font-mono text-zinc-400 space-y-2">
+        <div className="p-3 border-t border-zinc-800/80 bg-zinc-950 text-[11px] font-mono text-zinc-400 space-y-1.5">
           <div className="flex items-center justify-between">
-            <span className="text-zinc-400 font-semibold">ENGINE:</span>
-            <span className="flex items-center space-x-1.5 text-zinc-200">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <span className="text-zinc-500 font-semibold">ENGINE:</span>
+            <span className="flex items-center space-x-1.5 text-emerald-400 font-bold">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>ONLINE</span>
             </span>
           </div>
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-400 hover:text-red-400 hover:bg-zinc-900 border border-zinc-800/80 transition-colors"
-          >
-            <span className="flex items-center space-x-1.5">
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
-            </span>
-            <span className="text-[9px] font-mono text-zinc-500 uppercase">Exit</span>
-          </button>
+          <div className="flex items-center justify-between text-[10px] text-zinc-500">
+            <span>WORKSPACE:</span>
+            <span className="text-zinc-300 font-sans truncate max-w-[120px]">Demo Technologies</span>
+          </div>
+          <div className="flex items-center justify-between text-[9px] text-zinc-600">
+            <span>AUDIT ROOT:</span>
+            <span className="text-zinc-400 font-mono">SHA-256 VALID</span>
+          </div>
         </div>
       ) : (
-        <div className="p-2 border-t border-zinc-800/80 bg-zinc-950 flex flex-col items-center justify-center py-2.5 space-y-2.5">
-          <span className="h-2 w-2 rounded-full bg-emerald-400" title="Engine Online · 18,4 Numeric" />
-          <button
-            onClick={handleLogout}
-            title="Sign Out"
-            className="h-7 w-7 rounded-lg flex items-center justify-center text-zinc-400 hover:text-red-400 hover:bg-zinc-900 transition-colors"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-          </button>
+        <div className="p-2 border-t border-zinc-800/80 bg-zinc-950 flex flex-col items-center justify-center py-2.5">
+          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" title="Engine Online · Corporate Workspace" />
         </div>
       )}
     </aside>

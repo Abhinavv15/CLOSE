@@ -110,11 +110,9 @@ export default function AuditLogPage() {
             <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 border border-zinc-700 text-zinc-300">
               Append-Only SHA-256
             </span>
-            {isAuditor && (
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/10 border border-amber-500/30 text-amber-400 font-semibold">
-                Auditor View (Sarah Jenkins)
-              </span>
-            )}
+            <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">
+              Corporate Workspace (Demo Technologies)
+            </span>
           </div>
           <p className="text-xs text-zinc-400 mt-1">
             Cryptographic log of all reconciliations, AI actions, and human sign-offs.

@@ -13,13 +13,10 @@ import {
   Settings as SettingsIcon,
   Sparkles,
   X,
-  UserCheck,
-  Eye,
   Shield,
   Download,
   Flame,
   ArrowRight,
-  LogOut,
   Sun,
   Moon,
   Compass
@@ -33,7 +30,7 @@ export function CommandPalette() {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const router = useRouter();
-  const { switchPersona, logout, user } = useAuth();
+  const { user } = useAuth();
   const { theme, toggleTheme, setTheme } = useTheme();
   const { startTour, isTourActive } = useTour();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -95,26 +92,6 @@ export function CommandPalette() {
     { name: "Inspect EX-108 (₹72,400 Unbacked Bank Deposit Anomaly)", icon: AlertCircle, path: "/exceptions/EX-108", section: "Exceptions" },
     { name: "Inspect BATCH-2026-09-DEMO (127 Canonical Records)", icon: GitMerge, path: "/batches/BATCH-2026-09-DEMO", section: "Batches" },
 
-    // Persona Switching
-    { 
-      name: "Switch Persona: Senior Controller (Abhinav V)", 
-      icon: UserCheck, 
-      action: () => switchPersona("controller"), 
-      section: "Persona Switcher" 
-    },
-    { 
-      name: "Switch Persona: Statutory Auditor (Sarah Jenkins — Read Only)", 
-      icon: Eye, 
-      action: () => switchPersona("auditor"), 
-      section: "Persona Switcher" 
-    },
-    { 
-      name: "Switch Persona: VP Finance Ops & Admin (Vikram Malhotra)", 
-      icon: Shield, 
-      action: () => switchPersona("admin"), 
-      section: "Persona Switcher" 
-    },
-
     // Quick Compliance & Operations
     { 
       name: "Download Statutory Audit Trail Export (CSV)", 
@@ -146,17 +123,6 @@ export function CommandPalette() {
       icon: Moon, 
       action: () => setTheme("dark"), 
       section: "Appearance" 
-    },
-
-    // Session Management
-    { 
-      name: "Sign Out of Session (Logout)", 
-      icon: LogOut, 
-      action: async () => {
-        await logout();
-        router.push("/login");
-      }, 
-      section: "Session Management" 
     },
   ];
 

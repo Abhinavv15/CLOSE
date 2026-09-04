@@ -123,10 +123,10 @@ export const TOUR_STEPS: TourStep[] = [
       "Every match, triage decision, and approval is sealed in an append-only SHA-256 Merkle chain for external auditors.",
     keyPoints: [
       "Cryptographic block chain with parent hashes",
-      "Sarah Jenkins (Auditor) Read-Only Mode",
+      "Institutional Immutable Audit Verification",
       "1-Click Statutory CSV download for regulators",
     ],
-    proTip: "Switch persona to Sarah Jenkins in the header.",
+    proTip: "Export certified cryptographic audit reports directly to CSV.",
   },
 ];
 

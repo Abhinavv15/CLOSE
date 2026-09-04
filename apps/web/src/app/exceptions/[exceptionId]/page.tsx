@@ -320,23 +320,11 @@ export default function ExceptionDetailPage({
           {/* Human Decision Controls (Section 29) */}
           <div className="p-5 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-white">Human Controller Decision</h3>
-              {isAuditor && (
-                <span className="flex items-center space-x-1 text-[11px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                  <Lock className="w-3 h-3" />
-                  <span>Auditor Read-Only</span>
-                </span>
-              )}
+              <h3 className="text-sm font-semibold text-white">Corporate Controller Decision</h3>
+              <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                Full Authorization
+              </span>
             </div>
-
-            {isAuditor && (
-              <div className="p-3 rounded-lg bg-zinc-900 border border-amber-500/20 text-xs text-zinc-400 flex items-start space-x-2">
-                <Lock className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                <span>
-                  You are logged in as <strong>{user.name}</strong> ({user.role}). Statutory auditors have read-only inspection rights. Approval and escalation actions are restricted to Controllers.
-                </span>
-              </div>
-            )}
 
             {/* Controller Rationale Note */}
             <div className="space-y-1.5">
@@ -345,11 +333,11 @@ export default function ExceptionDetailPage({
               </label>
               <textarea
                 rows={2}
-                disabled={isAuditor || submitting}
-                placeholder={isAuditor ? "Audit notes cannot be submitted in Auditor mode." : "Enter audit note for permanent record..."}
+                disabled={submitting}
+                placeholder="Enter corporate audit note for permanent Merkle record..."
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
-                className="w-full p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-zinc-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-zinc-600 transition-colors disabled:opacity-50"
               />
             </div>
 
@@ -357,9 +345,9 @@ export default function ExceptionDetailPage({
             <div className="grid grid-cols-3 gap-2.5 pt-1">
               <button
                 onClick={handleApprove}
-                disabled={submitting || isAuditor}
-                className="py-2.5 px-3 rounded-lg bg-white hover:bg-zinc-200 text-zinc-950 font-bold text-xs transition-colors flex items-center justify-center space-x-1 shadow-sm disabled:opacity-40 disabled:cursor-not-allowed"
-                title={isAuditor ? "Disabled for Auditor role" : "Approve Exception"}
+                disabled={submitting}
+                className="py-2.5 px-3 rounded-lg bg-white hover:bg-zinc-200 text-zinc-950 font-bold text-xs transition-colors flex items-center justify-center space-x-1 shadow-sm disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                title="Approve Exception"
               >
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Approve</span>
@@ -367,9 +355,9 @@ export default function ExceptionDetailPage({
 
               <button
                 onClick={handleReject}
-                disabled={submitting || isAuditor}
-                className="py-2.5 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-1 disabled:opacity-40 disabled:cursor-not-allowed"
-                title={isAuditor ? "Disabled for Auditor role" : "Reject Exception"}
+                disabled={submitting}
+                className="py-2.5 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-1 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                title="Reject Exception"
               >
                 <XCircle className="w-3.5 h-3.5 text-rose-400" />
                 <span>Reject</span>
@@ -377,9 +365,9 @@ export default function ExceptionDetailPage({
 
               <button
                 onClick={handleUnresolve}
-                disabled={submitting || isAuditor}
-                className="py-2.5 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-1 disabled:opacity-40 disabled:cursor-not-allowed"
-                title={isAuditor ? "Disabled for Auditor role" : "Escalate Anomaly"}
+                disabled={submitting}
+                className="py-2.5 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-1 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                title="Escalate Anomaly"
               >
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
                 <span>Escalate</span>
