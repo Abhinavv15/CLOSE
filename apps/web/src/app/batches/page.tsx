@@ -20,6 +20,7 @@ import {
   FolderOpen,
   Info,
   FileText,
+  Layers,
 } from "lucide-react";
 import { PipelineStepHeader } from "@/components/layout/pipeline-step-header";
 
