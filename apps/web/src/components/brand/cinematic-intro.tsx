@@ -13,34 +13,42 @@ export function CinematicIntro() {
   const [isComplete, setIsComplete] = useState<boolean>(false);
 
   useEffect(() => {
-    // Only run on fresh arrival
-    if (sessionStorage.getItem("close_intro_completed")) {
-      setIsDismissed(true);
-      return;
+    // Reset state on every mount / page refresh
+    setDisplayedLetters("");
+    setShowSubtitle(false);
+    setIsDismissed(false);
+    setIsComplete(false);
+
+    const timeouts: NodeJS.Timeout[] = [];
+
+    // Staggered letter-by-letter typing sequence
+    // Gives a brief 220ms initial pause so the dark backdrop settles before typing
+    const START_DELAY_MS = 220;
+    const LETTER_INTERVAL_MS = 170;
+
+    for (let i = 1; i <= TARGET_WORD.length; i++) {
+      const delay = START_DELAY_MS + i * LETTER_INTERVAL_MS;
+      const t = setTimeout(() => {
+        setDisplayedLetters(TARGET_WORD.slice(0, i));
+
+        if (i === TARGET_WORD.length) {
+          setIsComplete(true);
+
+          // Subtitle reveal
+          const subT = setTimeout(() => {
+            setShowSubtitle(true);
+          }, 200);
+          timeouts.push(subT);
+
+          // Smooth dismissal after full sequence is admired
+          const dismissT = setTimeout(() => {
+            setIsDismissed(true);
+          }, 2000);
+          timeouts.push(dismissT);
+        }
+      }, delay);
+      timeouts.push(t);
     }
-
-    // Letter-by-letter typing sequence
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      currentIndex++;
-      setDisplayedLetters(TARGET_WORD.slice(0, currentIndex));
-
-      if (currentIndex >= TARGET_WORD.length) {
-        clearInterval(typingInterval);
-        setIsComplete(true);
-
-        // Fade in subtitle
-        setTimeout(() => {
-          setShowSubtitle(true);
-        }, 180);
-
-        // Smoothly dismiss after sequence completes
-        setTimeout(() => {
-          setIsDismissed(true);
-          sessionStorage.setItem("close_intro_completed", "true");
-        }, 1800);
-      }
-    }, TYPING_SPEED_MS);
 
     // Keyboard listener to skip on Escape, Enter, or Space
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -51,14 +59,13 @@ export function CinematicIntro() {
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      clearInterval(typingInterval);
+      timeouts.forEach((t) => clearTimeout(t));
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
   const handleSkip = () => {
     setIsDismissed(true);
-    sessionStorage.setItem("close_intro_completed", "true");
   };
 
   return (
@@ -107,29 +114,31 @@ export function CinematicIntro() {
             </motion.div>
 
             {/* Large Letter-By-Letter CLOSE Title */}
-            <div className="flex items-center justify-center min-h-[5rem] sm:min-h-[7rem]">
-              <h1 className="text-6xl sm:text-8xl md:text-9xl font-black tracking-[0.22em] text-white flex items-center">
-                {displayedLetters.split("").map((char, index) => (
-                  <motion.span
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.6, filter: "blur(4px)" }}
-                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                    transition={{ duration: 0.15, ease: "easeOut" }}
-                    className="inline-block"
-                  >
-                    {char}
-                  </motion.span>
-                ))}
+            <div className="flex items-center justify-center min-h-[6rem] sm:min-h-[8rem] md:min-h-[10rem]">
+              <div className="inline-flex items-center justify-center">
+                <h1 className="text-6xl sm:text-8xl md:text-9xl font-black tracking-[0.22em] text-white flex items-center font-mono select-none">
+                  {displayedLetters.split("").map((char, index) => (
+                    <motion.span
+                      key={`${char}-${index}`}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.12, ease: "easeOut" }}
+                      className="inline-block"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
 
-                {/* Blinking Terminal Cursor */}
-                <motion.span
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ repeat: Infinity, duration: 0.6, ease: "linear" }}
-                  className={`inline-block w-2 sm:w-3 h-12 sm:h-20 bg-white ml-2 sm:ml-4 rounded-xs shadow-[0_0_15px_rgba(255,255,255,0.8)] ${
-                    isComplete && showSubtitle ? "opacity-50" : "opacity-100"
-                  }`}
-                />
-              </h1>
+                  {/* Blinking Terminal Cursor */}
+                  <motion.span
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ repeat: Infinity, duration: 0.55, ease: "linear" }}
+                    className={`inline-block w-2 sm:w-3 md:w-3.5 h-12 sm:h-20 md:h-24 bg-white ml-2 sm:ml-4 rounded-xs shadow-[0_0_20px_rgba(255,255,255,0.9)] ${
+                      isComplete && showSubtitle ? "opacity-60" : "opacity-100"
+                    }`}
+                  />
+                </h1>
+              </div>
             </div>
 
             {/* Subtitle reveal */}
