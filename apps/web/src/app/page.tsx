@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/navigation";
 import { Spotlight } from "@/components/ui/spotlight";
 import { BackgroundGrid } from "@/components/ui/background-grid";
@@ -26,14 +27,16 @@ export default function LandingPage() {
       {/* Navigation */}
       <nav className="relative z-20 flex items-center justify-between px-6 py-5 max-w-7xl mx-auto border-b border-zinc-900">
         <div className="flex items-center space-x-3">
-          <div className="h-8 w-8 rounded-lg bg-white text-zinc-950 font-black flex items-center justify-center text-sm shadow-md">
-            CL
+          <div className="h-9 w-9 rounded-xl bg-zinc-900 border border-zinc-800 p-0.5 overflow-hidden shadow-md flex items-center justify-center">
+            <Image src="/icon.png" alt="CLOSE" width={36} height={36} className="h-full w-full object-contain" />
           </div>
           <div>
             <span className="font-bold text-sm tracking-wider uppercase">CLOSE</span>
             <span className="text-[10px] text-zinc-400 block font-mono -mt-0.5">AI Finance Controller</span>
           </div>
+
         </div>
+
 
         <div className="flex items-center space-x-4">
           <a

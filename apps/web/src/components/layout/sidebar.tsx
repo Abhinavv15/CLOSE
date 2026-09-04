@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -81,10 +82,11 @@ export function Sidebar() {
     >
       {/* Brand Header */}
       <div className="flex h-14 items-center justify-between px-3.5 border-b border-zinc-800/80">
-        <div className="flex items-center space-x-2.5 overflow-hidden">
-          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-white text-zinc-950 font-black text-xs tracking-wider shadow-sm">
-            CL
+        <Link href="/dashboard" className="flex items-center space-x-2.5 overflow-hidden group">
+          <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-800 p-0.5 overflow-hidden group-hover:border-zinc-700 transition-colors shadow-sm">
+            <Image src="/icon.png" alt="CLOSE Icon" width={32} height={32} className="w-full h-full object-contain" />
           </div>
+
           {!collapsed && (
             <div className="flex flex-col min-w-0">
               <span className="font-bold text-xs tracking-wider text-white uppercase truncate">
@@ -95,7 +97,8 @@ export function Sidebar() {
               </span>
             </div>
           )}
-        </div>
+        </Link>
+
 
         <button
           onClick={() => setCollapsed(!collapsed)}

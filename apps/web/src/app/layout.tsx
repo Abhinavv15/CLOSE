@@ -4,7 +4,13 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "CLOSE — AI Finance Controller",
   description: "Reconcile the books. Explain the exceptions. Know your cash position.",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.ico",
+    apple: "/icon.png",
+  },
 };
+
 
 export default function RootLayout({
   children,
