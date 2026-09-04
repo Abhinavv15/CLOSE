@@ -1,0 +1,44 @@
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Next.js & Build Outputs
+.next/
+out/
+build/
+dist/
+*.egg-info/
+
+# Databases & Local Storage
+*.db
+*.sqlite
+*.sqlite3
+close.db
+
+# IDE & OS
+.DS_Store
+*.pem
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
