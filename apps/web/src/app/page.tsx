@@ -85,12 +85,12 @@ export default function LandingPage() {
               <Moon className="w-4 h-4 text-zinc-400" />
             )}
           </button>
-          <a
+          <Link
             href="/dashboard"
             className="text-xs px-3 sm:px-3.5 py-1.5 rounded-lg bg-white text-zinc-950 font-semibold hover:bg-zinc-200 transition-all shadow-sm shrink-0"
           >
             Launch Controller &rarr;
-          </a>
+          </Link>
         </div>
       </nav>
 
