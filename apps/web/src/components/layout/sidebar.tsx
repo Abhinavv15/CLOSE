@@ -49,7 +49,7 @@ const NAV_SECTIONS: NavSection[] = [
     items: [
       { name: "Step 1 • Ingest Statements", href: "/batches", icon: Layers, badge: "127" },
       { name: "Step 2 • 5-Pass Matching", href: "/reconciliation", icon: GitMerge, badge: "94.5%" },
-      { name: "Step 3 • AI Exception Triage", href: "/exceptions", icon: AlertTriangle, badge: "7", badgeColor: "text-amber-400 bg-amber-950/40 border-amber-800/60" },
+      { name: "Step 3 • AI Exception Triage", href: "/exceptions", icon: AlertTriangle, badge: "7", badgeColor: "text-amber-700 bg-amber-50 border-amber-200 dark:text-amber-400 dark:bg-amber-950/40 dark:border-amber-800/60" },
       { name: "Step 4 • Cash Runway", href: "/cash-position", icon: Wallet, badge: "₹18.4L" },
       { name: "Step 5 • Accuracy Benchmarks", href: "/evaluation", icon: CheckCircle2, badge: "98.7%" },
       { name: "Step 6 • Merkle Audit Trail", href: "/audit-log", icon: FileText, badge: "SHA-256" },
@@ -58,7 +58,7 @@ const NAV_SECTIONS: NavSection[] = [
   {
     title: "Documentation & Controls",
     items: [
-      { name: "Product Tour & CSV Spec", href: "/walkthrough", icon: Compass, badge: "GUIDE", badgeColor: "text-blue-400 bg-blue-950/50 border-blue-800/60" },
+      { name: "Product Tour & CSV Spec", href: "/walkthrough", icon: Compass, badge: "GUIDE", badgeColor: "text-blue-700 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-950/50 dark:border-blue-800/60" },
       { name: "System Settings", href: "/settings", icon: Settings },
     ],
   },

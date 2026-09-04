@@ -206,40 +206,185 @@ html.light a.bg-white {
   background-color: #0f172a !important;
   color: #ffffff !important;
 }
+html.light button.bg-white *,
+html.light a.bg-white * {
+  color: #ffffff !important;
+}
 html.light button.bg-white:hover,
 html.light a.bg-white:hover {
   background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+html.light button.bg-white:hover *,
+html.light a.bg-white:hover * {
+  color: #ffffff !important;
 }
 
 /* Financial Accent Badges in Light Mode */
-html.light .bg-emerald-950\/40,
+html.light .bg-emerald-950,
+html.light .bg-emerald-950\/90,
+html.light .bg-emerald-950\/80,
+html.light .bg-emerald-950\/60,
 html.light .bg-emerald-950\/50,
+html.light .bg-emerald-950\/40,
 html.light .bg-emerald-950\/30,
-html.light .bg-emerald-950\/20 {
+html.light .bg-emerald-950\/20,
+html.light .bg-emerald-900\/40,
+html.light .bg-emerald-900\/50 {
   background-color: #ecfdf5 !important;
   color: #047857 !important;
   border-color: #a7f3d0 !important;
 }
 
+html.light .text-emerald-400,
+html.light .text-emerald-300 {
+  color: #047857 !important;
+}
+
+html.light .border-emerald-900,
+html.light .border-emerald-900\/50,
+html.light .border-emerald-800,
+html.light .border-emerald-800\/50,
+html.light .border-emerald-800\/60,
+html.light .border-emerald-700,
+html.light .border-emerald-700\/60 {
+  border-color: #a7f3d0 !important;
+}
+
+html.light .bg-amber-950,
+html.light .bg-amber-950\/90,
+html.light .bg-amber-950\/80,
+html.light .bg-amber-950\/60,
+html.light .bg-amber-950\/50,
 html.light .bg-amber-950\/40,
-html.light .bg-amber-950\/30 {
+html.light .bg-amber-950\/30,
+html.light .bg-amber-950\/20,
+html.light .bg-amber-900\/40,
+html.light .bg-amber-900\/50 {
   background-color: #fffbeb !important;
   color: #b45309 !important;
   border-color: #fde68a !important;
 }
 
+html.light .text-amber-400,
+html.light .text-amber-300 {
+  color: #b45309 !important;
+}
+
+html.light .border-amber-800,
+html.light .border-amber-800\/40,
+html.light .border-amber-800\/50,
+html.light .border-amber-800\/60,
+html.light .border-amber-700,
+html.light .border-amber-700\/60 {
+  border-color: #fde68a !important;
+}
+
+/* Institutional Clean Blue in Light Mode (replaces dark-navy blobs with crisp soft-blue #eff6ff & royal #1d4ed8) */
+html.light .bg-blue-950,
+html.light .bg-blue-950\/90,
+html.light .bg-blue-950\/80,
+html.light .bg-blue-950\/70,
+html.light .bg-blue-950\/60,
+html.light .bg-blue-950\/50,
+html.light .bg-blue-950\/40,
 html.light .bg-blue-950\/30,
-html.light .bg-blue-950\/40 {
+html.light .bg-blue-950\/20,
+html.light .bg-blue-900\/30,
+html.light .bg-blue-900\/40,
+html.light .bg-blue-900\/50,
+html.light .bg-blue-900\/60 {
   background-color: #eff6ff !important;
   color: #1d4ed8 !important;
   border-color: #bfdbfe !important;
 }
 
+html.light .hover\:bg-blue-900\/50:hover,
+html.light .hover\:bg-blue-950\/50:hover {
+  background-color: #dbeafe !important;
+  color: #1e40af !important;
+}
+
+html.light .text-blue-400,
+html.light .text-blue-300,
+html.light .text-blue-200 {
+  color: #1d4ed8 !important;
+}
+
+html.light .border-blue-900,
+html.light .border-blue-900\/50,
+html.light .border-blue-800,
+html.light .border-blue-800\/60,
+html.light .border-blue-800\/80,
+html.light .border-blue-700,
+html.light .border-blue-700\/60,
+html.light .border-blue-500,
+html.light .border-blue-500\/40,
+html.light .border-blue-500\/80 {
+  border-color: #bfdbfe !important;
+}
+
+html.light .ring-blue-500\/30 {
+  --tw-ring-color: rgba(37, 99, 235, 0.2) !important;
+}
+
+html.light .bg-blue-600 {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+html.light .bg-blue-600 *,
+html.light .bg-blue-700 *,
+html.light button.bg-blue-600 *,
+html.light a.bg-blue-600 * {
+  color: #ffffff !important;
+}
+
+html.light .bg-blue-600 svg,
+html.light .bg-blue-700 svg,
+html.light button.bg-blue-600 svg,
+html.light a.bg-blue-600 svg {
+  color: #ffffff !important;
+  stroke: currentColor;
+}
+
+html.light .border-blue-400,
+html.light .border-blue-600 {
+  border-color: #2563eb !important;
+}
+
+html.light .bg-rose-950,
+html.light .bg-rose-950\/80,
+html.light .bg-rose-950\/60,
+html.light .bg-rose-950\/50,
 html.light .bg-rose-950\/40,
-html.light .bg-rose-950\/30 {
+html.light .bg-rose-950\/30,
+html.light .bg-rose-950\/20 {
   background-color: #fff1f2 !important;
   color: #e11d48 !important;
   border-color: #fecdd3 !important;
+}
+
+html.light .text-rose-400,
+html.light .text-rose-300 {
+  color: #e11d48 !important;
+}
+
+html.light .border-rose-800,
+html.light .border-rose-800\/40,
+html.light .border-rose-800\/60 {
+  border-color: #fecdd3 !important;
+}
+
+/* Light mode overrides for active stepper items and cards */
+html.light .bg-zinc-800\/90 {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+html.light .bg-gradient-to-r.from-blue-950\/40 {
+  background-image: linear-gradient(to right, #eff6ff, #f8fafc) !important;
+  border-color: #bfdbfe !important;
 }
 
 /* Scrollbar in light mode */

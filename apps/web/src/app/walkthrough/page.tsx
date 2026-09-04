@@ -164,19 +164,19 @@ export default function WalkthroughPage() {
       </div>
 
       {/* Live Interactive Tour Launch Card */}
-      <div className="p-4 rounded-xl bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-purple-950/20 border border-blue-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono">
+      <div className="p-4 rounded-xl bg-gradient-to-r from-blue-50/80 via-indigo-50/60 to-blue-50/40 dark:from-blue-950/40 dark:via-indigo-950/30 dark:to-purple-950/20 border border-blue-200 dark:border-blue-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono">
         <div className="flex items-start space-x-3 min-w-0">
-          <div className="p-2.5 rounded-xl bg-blue-900/40 border border-blue-700/60 text-blue-400 shrink-0 mt-0.5">
+          <div className="p-2.5 rounded-xl bg-blue-100 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-700/60 text-blue-700 dark:text-blue-400 shrink-0 mt-0.5">
             <Compass className="w-5 h-5 animate-pulse" />
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <h2 className="text-sm font-bold text-white">Live Multi-Page Guided Walkthrough</h2>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40">
+              <h2 className="text-sm font-bold text-zinc-950 dark:text-white">Live Multi-Page Guided Walkthrough</h2>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 dark:bg-blue-500/20 dark:text-blue-300 dark:border-blue-500/40">
                 Interactive Popup
               </span>
             </div>
-            <p className="text-xs text-zinc-300 mt-1 font-sans">
+            <p className="text-xs text-zinc-600 dark:text-zinc-300 mt-1 font-sans">
               Step through all 7 pages sequentially with live step-by-step guidance and automatic page navigation.
             </p>
           </div>

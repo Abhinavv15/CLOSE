@@ -47,9 +47,9 @@ export default function LandingPage() {
         <div className="flex items-center space-x-2 sm:space-x-4">
           <Link
             href="/walkthrough"
-            className="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-blue-950/40 border border-blue-800/60 hover:border-blue-700 text-blue-300 hover:text-white transition-all font-mono flex items-center space-x-1.5"
+            className="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 hover:border-blue-300 dark:hover:border-blue-700 text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-white transition-all font-mono flex items-center space-x-1.5"
           >
-            <Compass className="w-3.5 h-3.5 text-blue-400" />
+            <Compass className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
             <span>Product Tour & CSV Guide</span>
           </Link>
           <a
@@ -116,9 +116,9 @@ export default function LandingPage() {
 
           <button
             onClick={() => startTour(0)}
-            className="px-5 py-3 rounded-xl bg-blue-950/40 hover:bg-blue-900/50 border border-blue-700/60 text-blue-200 hover:text-white text-sm font-medium transition-all flex items-center space-x-2 shadow-lg"
+            className="px-5 py-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/50 border border-blue-200 dark:border-blue-700/60 text-blue-700 dark:text-blue-200 hover:text-blue-900 dark:hover:text-white text-sm font-medium transition-all flex items-center space-x-2 shadow-lg"
           >
-            <Compass className="w-4 h-4 text-blue-400 animate-pulse" />
+            <Compass className="w-4 h-4 text-blue-600 dark:text-blue-400 animate-pulse" />
             <span>Start Guided Tour</span>
           </button>
 

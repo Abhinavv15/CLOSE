@@ -102,7 +102,7 @@ export function InteractiveTourModal() {
               <Link
                 href="/walkthrough"
                 onClick={endTour}
-                className="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl border border-blue-800/60 bg-blue-950/40 hover:bg-blue-900/50 text-xs text-blue-300 font-medium transition-colors flex items-center justify-center space-x-1.5"
+                className="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl border border-blue-200 dark:border-blue-800/60 bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-xs text-blue-700 dark:text-blue-300 font-medium transition-colors flex items-center justify-center space-x-1.5"
               >
                 <span>Read Full Spec</span>
                 <ExternalLink className="w-3 h-3" />
@@ -188,10 +188,10 @@ export function InteractiveTourModal() {
       {/* Top Header Bar */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800/80 bg-zinc-900/60 shrink-0">
         <div className="flex items-center space-x-2 min-w-0">
-          <div className="p-1 rounded-md bg-blue-950/60 border border-blue-700/60 text-blue-400 shrink-0">
+          <div className="p-1 rounded-md bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-700/60 text-blue-600 dark:text-blue-400 shrink-0">
             <Compass className="w-3.5 h-3.5" />
           </div>
-          <span className="text-[11px] font-bold text-blue-400 tracking-wider truncate">
+          <span className="text-[11px] font-bold text-blue-700 dark:text-blue-400 tracking-wider truncate">
             {currentStep.badge}
           </span>
         </div>
@@ -242,7 +242,7 @@ export function InteractiveTourModal() {
         {/* Key Highlights */}
         <div className="p-3 rounded-xl bg-zinc-900/60 border border-zinc-800/80 space-y-2">
           <div className="text-[10px] uppercase tracking-wider text-zinc-400 font-bold flex items-center space-x-1.5">
-            <Sparkles className="w-3 h-3 text-blue-400" />
+            <Sparkles className="w-3 h-3 text-blue-600 dark:text-blue-400" />
             <span>Key Controller Capabilities</span>
           </div>
           <ul className="space-y-1.5">
@@ -256,7 +256,7 @@ export function InteractiveTourModal() {
         </div>
 
         {/* Pro Tip Banner */}
-        <div className="p-2.5 rounded-lg bg-blue-950/30 border border-blue-900/50 text-[11px] text-blue-300 flex items-start space-x-2">
+        <div className="p-2.5 rounded-lg bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50 text-[11px] text-blue-800 dark:text-blue-300 flex items-start space-x-2">
           <span className="text-amber-400 shrink-0 mt-0.5">💡</span>
           <span className="leading-relaxed"><strong className="text-white">Pro-Tip:</strong> {currentStep.proTip}</span>
         </div>
@@ -274,7 +274,7 @@ export function InteractiveTourModal() {
               title={`Step ${s.stepNumber}: ${s.title}`}
               className={`h-2 rounded-full transition-all ${
                 idx === currentStepIndex
-                  ? "w-5 bg-blue-400"
+                  ? "w-5 bg-blue-600 dark:bg-blue-400"
                   : idx < currentStepIndex
                   ? "w-2 bg-emerald-400/70"
                   : "w-2 bg-zinc-700 hover:bg-zinc-500"

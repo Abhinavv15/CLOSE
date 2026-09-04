@@ -376,7 +376,7 @@ export default function DashboardPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-800/80">
             <div>
               <div className="flex items-center space-x-2">
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-950/60 text-blue-400 border border-blue-800/80 font-mono">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-950/60 dark:text-blue-400 dark:border-blue-800/80 font-mono">
                   CLOSE LIFECYCLE
                 </span>
                 <h2 className="text-sm font-bold text-white tracking-tight font-mono">
@@ -406,7 +406,7 @@ export default function DashboardPage() {
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] text-blue-400 font-bold uppercase">Step 1</span>
+                  <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase">Step 1</span>
                   <span className="text-[10px] px-1.5 py-0.2 rounded bg-zinc-800 text-zinc-300">127 Rows</span>
                 </div>
                 <div className="font-bold text-white group-hover:text-blue-300 transition-colors">
@@ -475,8 +475,8 @@ export default function DashboardPage() {
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] text-blue-400 font-bold uppercase">Step 4</span>
-                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-blue-950/60 text-blue-400 border border-blue-800/60">₹18.4L Safe</span>
+                  <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase">Step 4</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-950/60 dark:text-blue-400 dark:border-blue-800/60">₹18.4L Safe</span>
                 </div>
                 <div className="font-bold text-white group-hover:text-blue-300 transition-colors">
                   Cash Forecast
