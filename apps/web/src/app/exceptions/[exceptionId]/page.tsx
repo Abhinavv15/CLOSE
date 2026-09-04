@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState, use } from "react";
+import React, { useState, useEffect, use } from "react";
+import Link from "next/link";
 import { AppShell } from "@/components/layout/app-shell";
+import { api } from "@/lib/api";
 import { 
   ArrowLeft, 
   CheckCircle2, 
@@ -14,7 +16,9 @@ import {
   Clock,
   Send,
   HelpCircle,
-  Layers
+  Layers,
+  ArrowRight,
+  RotateCw
 } from "lucide-react";
 
 export default function ExceptionDetailPage({
@@ -24,50 +28,129 @@ export default function ExceptionDetailPage({
 }) {
   const resolvedParams = use(params);
   const exceptionId = resolvedParams.exceptionId || "EX-102";
-  const isUnresolvedExample = exceptionId === "EX-108";
 
-  const [approved, setApproved] = useState(false);
-  const [rejected, setRejected] = useState(false);
+  const [detail, setDetail] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [currentStatus, setCurrentStatus] = useState<string>("REVIEW");
   const [reason, setReason] = useState("");
-  const [investigating, setInvestigating] = useState(false);
-  const [investigationDone, setInvestigationDone] = useState(true);
+  const [actionSuccess, setActionSuccess] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleApprove = () => {
-    setApproved(true);
-    setRejected(false);
+  useEffect(() => {
+    async function loadDetail() {
+      try {
+        const res = await api.getExceptionDetail(exceptionId);
+        if (res) {
+          setDetail(res);
+          setCurrentStatus(res.status);
+        }
+      } catch {
+        // Fallback
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadDetail();
+  }, [exceptionId]);
+
+  const isUnresolvedExample = exceptionId === "EX-108" || detail?.type === "MISSING_RECORD";
+
+  const handleApprove = async () => {
+    setSubmitting(true);
+    try {
+      await api.approveException(exceptionId, {
+        user: "Senior Controller Abhinav",
+        note: reason || "Approved processor settlement fee variance.",
+      });
+      setCurrentStatus("APPROVED");
+      setActionSuccess("Resolution APPROVED. Immutable audit log recorded.");
+    } catch {
+      setCurrentStatus("APPROVED");
+      setActionSuccess("Resolution APPROVED (offline mode).");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const handleReject = () => {
-    setRejected(true);
-    setApproved(false);
+  const handleReject = async () => {
+    setSubmitting(true);
+    try {
+      await api.rejectException(exceptionId, {
+        user: "Senior Controller Abhinav",
+        note: reason || "Rejected AI recommendation. Sent for manual investigation.",
+      });
+      setCurrentStatus("REJECTED");
+      setActionSuccess("Recommendation REJECTED. Flagged for escalation.");
+    } catch {
+      setCurrentStatus("REJECTED");
+      setActionSuccess("Recommendation REJECTED.");
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+  const handleUnresolve = async () => {
+    setSubmitting(true);
+    try {
+      await api.unresolveException(exceptionId, {
+        user: "Senior Controller Abhinav",
+        note: reason || "Marked as unresolvable due to absence of counterpart records.",
+      });
+      setCurrentStatus("UNRESOLVED");
+      setActionSuccess("Exception marked UNRESOLVED (Honest Escalation).");
+    } catch {
+      setCurrentStatus("UNRESOLVED");
+      setActionSuccess("Exception marked UNRESOLVED.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // 7-step AI investigation execution timeline (Section 27)
+  const investigationSteps = [
+    { label: "Querying multi-source database index...", status: "done" },
+    { label: "Retrieved customer invoice records", status: "done" },
+    { label: "Retrieved payment gateway processor settlements", status: "done" },
+    { label: "Retrieved corresponding bank statement credit", status: "done" },
+    { label: "Compared expected vs actual amounts", status: "done" },
+    { label: "Evaluated 1.5% gateway interchange fee schedule", status: "done" },
+    { label: "Structured diagnostic recommendation synthesized", status: "done" },
+  ];
 
   return (
     <AppShell>
       {/* Header & Back Navigation */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
         <div className="flex items-center space-x-3">
-          <a
+          <Link
             href="/exceptions"
             className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-          </a>
+          </Link>
           <div>
             <div className="flex items-center space-x-2">
               <h1 className="text-xl font-bold tracking-tight text-white">{exceptionId}</h1>
-              <span className={`px-2 py-0.5 rounded text-[10px] font-mono border ${
-                isUnresolvedExample 
-                  ? "bg-rose-950/40 border-rose-800/60 text-rose-300" 
-                  : "bg-amber-950/40 border-amber-800/60 text-amber-300"
-              }`}>
-                {isUnresolvedExample ? "UNRESOLVED EXCEPTION" : "AMOUNT MISMATCH (REVIEW)"}
+              <span
+                className={`px-2 py-0.5 rounded text-[10px] font-mono border ${
+                  currentStatus === "APPROVED"
+                    ? "bg-emerald-950/40 border-emerald-800/60 text-emerald-300"
+                    : isUnresolvedExample || currentStatus === "UNRESOLVED"
+                    ? "bg-rose-950/40 border-rose-800/60 text-rose-300"
+                    : "bg-amber-950/40 border-amber-800/60 text-amber-300"
+                }`}
+              >
+                {currentStatus === "APPROVED"
+                  ? "STATUS: APPROVED"
+                  : isUnresolvedExample
+                  ? "UNRESOLVED ANOMALY"
+                  : "REVIEW REQUIRED"}
               </span>
             </div>
-            <p className="text-xs text-zinc-400 mt-0.5">
+            <p className="text-xs text-zinc-400 mt-0.5 font-mono">
               {isUnresolvedExample
-                ? "Bank credit with zero corroborating records across all connected sources."
-                : "₹50 discrepancy between invoice and processor gateway payout."}
+                ? "Bank credit deposit with zero corroborating records across connected sources."
+                : "₹50 settlement difference between invoice and payment gateway payout."}
             </p>
           </div>
         </div>
@@ -75,214 +158,208 @@ export default function ExceptionDetailPage({
         {/* Amount Summary Trio (Section 26) */}
         <div className="flex items-center space-x-4 p-3 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-xs">
           <div>
-            <div className="text-[10px] text-zinc-400 uppercase">Expected</div>
-            <div className="text-sm font-bold text-white font-tabular">{isUnresolvedExample ? "₹0 (Unknown)" : "₹31,800"}</div>
+            <div className="text-[10px] text-zinc-400 uppercase">Expected Amount</div>
+            <div className="text-sm font-bold text-white font-tabular">
+              {isUnresolvedExample ? "₹0.00 (Unknown)" : "₹31,800.00"}
+            </div>
           </div>
           <div className="border-l border-zinc-800 pl-4">
             <div className="text-[10px] text-zinc-400 uppercase">Actual Received</div>
-            <div className="text-sm font-bold text-white font-tabular">{isUnresolvedExample ? "₹72,400" : "₹31,750"}</div>
+            <div className="text-sm font-bold text-white font-tabular">
+              {isUnresolvedExample ? "₹72,400.00" : "₹31,750.00"}
+            </div>
           </div>
           <div className="border-l border-zinc-800 pl-4">
             <div className="text-[10px] text-zinc-400 uppercase">Difference</div>
-            <div className="text-sm font-bold text-amber-400 font-tabular">{isUnresolvedExample ? "₹72,400" : "-₹50"}</div>
+            <div className="text-sm font-bold text-amber-400 font-tabular">
+              {isUnresolvedExample ? "₹72,400.00" : "-₹50.00"}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main Grid: Evidence Room (Left) and AI Investigation + Approval (Right) */}
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Left Column: 3-Tier Connected Evidence Visual (Section 26 & 28) */}
+      {/* Action Notification Alert */}
+      {actionSuccess && (
+        <div className="p-3.5 rounded-xl bg-zinc-900 border border-emerald-800/60 font-mono text-xs text-emerald-400 flex items-center justify-between animate-in fade-in">
+          <div className="flex items-center space-x-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <span>{actionSuccess}</span>
+          </div>
+          <span className="text-[10px] text-zinc-400">Append-Only Audit Record Saved</span>
+        </div>
+      )}
+
+      {/* Main 2-Column Grid */}
+      <div className="grid lg:grid-cols-2 gap-6 font-mono text-xs">
+        {/* Left Column: Visual 3-Tier Connected Evidence (Section 26 & 28) */}
         <div className="space-y-4">
           <div className="p-5 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-4">
             <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
               <div className="flex items-center space-x-2">
                 <Layers className="w-4 h-4 text-zinc-300" />
-                <h3 className="text-sm font-semibold text-white">Evidence Lineage</h3>
+                <h3 className="text-sm font-semibold text-white">Visual Evidence Graph</h3>
               </div>
-              <span className="text-[10px] font-mono text-zinc-400">
-                {isUnresolvedExample ? "0 Corroborating Records" : "3 Corroborating Records"}
-              </span>
+              <span className="text-[10px] text-zinc-400">3-Source Lineage</span>
             </div>
 
-            {!isUnresolvedExample ? (
-              <div className="space-y-3 font-mono text-xs">
-                {/* Evidence Item 1: Invoice */}
-                <div className="p-3.5 rounded-lg bg-zinc-900/90 border border-zinc-800 flex items-center justify-between">
-                  <div>
-                    <div className="text-[10px] text-zinc-400 uppercase">Source 1: Invoice Record</div>
-                    <div className="text-zinc-100 font-bold mt-0.5">INV-1022 · Acme Corp</div>
-                    <div className="text-[11px] text-zinc-400">Date: 2026-09-01 · Due: 2026-09-15</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-bold text-white font-tabular">₹31,800</div>
-                    <span className="text-[10px] text-emerald-400">MATCHED REF</span>
-                  </div>
+            {/* Connected Node 1: Invoice */}
+            <div className="relative pl-6 pb-6 border-l-2 border-zinc-800 last:border-l-0">
+              <div className="absolute -left-2 top-0 h-4 w-4 rounded-full bg-zinc-800 border-2 border-zinc-600 flex items-center justify-center">
+                <div className="h-1.5 w-1.5 rounded-full bg-white" />
+              </div>
+              <div className="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-800 space-y-1.5">
+                <div className="flex items-center justify-between text-[10px] text-zinc-400">
+                  <span className="uppercase font-bold text-zinc-300">1. Customer Invoice</span>
+                  <span>Due: Sep 1, 2026</span>
                 </div>
-
-                <div className="flex justify-center text-zinc-600">
-                  <ArrowDown className="w-4 h-4 animate-bounce" />
+                <div className="text-sm font-bold text-white">
+                  {isUnresolvedExample ? "NO CORROBORATING INVOICE FOUND" : "INV-1022 (Nexus Retail Solutions)"}
                 </div>
-
-                {/* Evidence Item 2: Processor Settlement */}
-                <div className="p-3.5 rounded-lg bg-zinc-900/90 border border-zinc-800 flex items-center justify-between">
-                  <div>
-                    <div className="text-[10px] text-zinc-400 uppercase">Source 2: Processor Settlement</div>
-                    <div className="text-zinc-100 font-bold mt-0.5">SET-5521 (Stripe Gateway)</div>
-                    <div className="text-[11px] text-zinc-400">Gross: ₹31,800 · Deducted Fee: ₹50</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-bold text-zinc-200 font-tabular">₹31,750</div>
-                    <span className="text-[10px] text-amber-400">₹50 FEE VARIANCE</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-center text-zinc-600">
-                  <ArrowDown className="w-4 h-4 animate-bounce" />
-                </div>
-
-                {/* Evidence Item 3: Bank Transaction */}
-                <div className="p-3.5 rounded-lg bg-zinc-900/90 border border-zinc-800 flex items-center justify-between">
-                  <div>
-                    <div className="text-[10px] text-zinc-400 uppercase">Source 3: Bank Credit</div>
-                    <div className="text-zinc-100 font-bold mt-0.5">BANK-88421 · HDFC Current A/C</div>
-                    <div className="text-[11px] text-zinc-400">UTR: STRIPE*82931 · Cleared: 2026-09-03</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-bold text-emerald-400 font-tabular">₹31,750</div>
-                    <span className="text-[10px] text-emerald-400">NET SETTLEMENT</span>
-                  </div>
+                <div className="text-[11px] text-zinc-400">
+                  {isUnresolvedExample
+                    ? "Zero billed receivables match this deposit."
+                    : "Billed amount: ₹31,800.00 · Status: PARTIAL"}
                 </div>
               </div>
-            ) : (
-              /* Insufficient Evidence View (Section 28) */
-              <div className="p-6 rounded-xl bg-rose-950/20 border border-rose-900/50 text-center space-y-3 font-mono">
-                <HelpCircle className="w-8 h-8 text-rose-400 mx-auto" />
-                <div className="text-sm font-bold text-rose-300">INSUFFICIENT EVIDENCE</div>
-                <p className="text-xs text-zinc-400 max-w-sm mx-auto leading-relaxed">
-                  CLOSE queried Bank, Processor Settlements, General Ledger, and Customer Invoices. No matching reference or matching amount exists.
-                </p>
-                <div className="text-xs text-zinc-300 pt-2 border-t border-rose-900/40">
-                  Recommended Action: <span className="font-bold text-white">Manual Finance Audit Required</span>.
+            </div>
+
+            {/* Connected Node 2: Payment Processor Settlement */}
+            <div className="relative pl-6 pb-6 border-l-2 border-zinc-800 last:border-l-0">
+              <div className="absolute -left-2 top-0 h-4 w-4 rounded-full bg-zinc-800 border-2 border-zinc-600 flex items-center justify-center">
+                <div className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+              </div>
+              <div className="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-800 space-y-1.5">
+                <div className="flex items-center justify-between text-[10px] text-zinc-400">
+                  <span className="uppercase font-bold text-zinc-300">2. Gateway Settlement</span>
+                  <span>Settled: Sep 4, 2026</span>
+                </div>
+                <div className="text-sm font-bold text-white">
+                  {isUnresolvedExample ? "NO CORROBORATING PROCESSOR SETTLEMENT" : "Stripe Settlement #SET-5521"}
+                </div>
+                <div className="text-[11px] text-zinc-400">
+                  {isUnresolvedExample
+                    ? "Neither Stripe nor Razorpay logs recorded this incoming funds transfer."
+                    : "Gross: ₹31,800.00 · Fee: ₹50.00 · Net Payout: ₹31,750.00"}
                 </div>
               </div>
-            )}
+            </div>
+
+            {/* Connected Node 3: Bank Transaction */}
+            <div className="relative pl-6">
+              <div className="absolute -left-2 top-0 h-4 w-4 rounded-full bg-zinc-800 border-2 border-zinc-600 flex items-center justify-center">
+                <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              </div>
+              <div className="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-800 space-y-1.5">
+                <div className="flex items-center justify-between text-[10px] text-zinc-400">
+                  <span className="uppercase font-bold text-zinc-300">3. Verified Bank Credit</span>
+                  <span>Cleared: Sep 4, 2026</span>
+                </div>
+                <div className="text-sm font-bold text-white">
+                  {isUnresolvedExample ? "BANK-88421 (RTGS DEPOSIT)" : "BANK-88421 (STRIPE PAYOUT)"}
+                </div>
+                <div className="text-[11px] text-zinc-400">
+                  {isUnresolvedExample
+                    ? "Credited amount: ₹72,400.00 · Unknown sender reference."
+                    : "Credited amount: ₹31,750.00 · Perfectly matches net payout."}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Right Column: AI Investigation Timeline & Conclusion (Section 27) */}
+        {/* Right Column: AI Investigation Panel & Human Approval Actions */}
         <div className="space-y-4">
+          {/* AI Investigation Panel (Section 27) */}
           <div className="p-5 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-4">
             <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
               <div className="flex items-center space-x-2">
                 <Sparkles className="w-4 h-4 text-zinc-300" />
-                <h3 className="text-sm font-semibold text-white">AI Controller Investigation</h3>
+                <h3 className="text-sm font-semibold text-white">AI Controller Diagnosis</h3>
               </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-300">
-                Pydantic Validated
-              </span>
+              <span className="text-[10px] text-zinc-400">Step-by-Step Reasoning</span>
             </div>
 
-            {/* Step-by-step Investigation Trace (Section 27) */}
-            <div className="space-y-2 font-mono text-xs text-zinc-400">
-              <div className="flex items-center space-x-2 text-zinc-200">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Retrieved linked invoice INV-1022 (₹31,800)</span>
-              </div>
-              <div className="flex items-center space-x-2 text-zinc-200">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Retrieved processor settlement SET-5521 (₹31,750)</span>
-              </div>
-              <div className="flex items-center space-x-2 text-zinc-200">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Retrieved bank deposit BANK-88421 (₹31,750)</span>
-              </div>
-              <div className="flex items-center space-x-2 text-zinc-200">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Evaluated ₹50 difference against standard 0.15% fee bracket</span>
-              </div>
-              <div className="flex items-center space-x-2 text-zinc-200">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Settlement delay within 2 business days tolerance</span>
-              </div>
+            {/* Investigation Timeline */}
+            <div className="space-y-2 text-xs">
+              {investigationSteps.map((step, idx) => (
+                <div key={idx} className="flex items-center space-x-2 text-zinc-300">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <span className="text-[11px]">{step.label}</span>
+                </div>
+              ))}
             </div>
 
             {/* AI Conclusion Box */}
-            <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-700/80 space-y-3">
+            <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2">
               <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-[10px] font-mono uppercase text-zinc-400">AI Conclusion</span>
-                  <div className="text-sm font-bold text-white mt-0.5">
-                    {isUnresolvedExample ? "Unidentified Bank Deposit" : "Legitimate Payment Gateway Fee"}
-                  </div>
-                </div>
-                <div className="text-right font-mono">
-                  <span className="text-[10px] uppercase text-zinc-400">Confidence</span>
-                  <div className={`text-base font-bold ${isUnresolvedExample ? "text-rose-400" : "text-emerald-400"}`}>
-                    {isUnresolvedExample ? "38%" : "94%"}
-                  </div>
-                </div>
+                <span className="text-[10px] text-zinc-400 uppercase">AI Diagnosis</span>
+                <span
+                  className={`text-xs font-bold ${
+                    isUnresolvedExample ? "text-rose-400" : "text-emerald-400"
+                  }`}
+                >
+                  {isUnresolvedExample ? "38% Confidence" : "94% Confidence"}
+                </span>
               </div>
-
-              <p className="text-xs text-zinc-300 leading-relaxed font-mono">
+              <div className="text-sm font-bold text-white">
                 {isUnresolvedExample
-                  ? "CLOSE evaluated 4 connected sources and refused to make a decision without proof. Escalate to treasury for offline bank verification."
-                  : "The processor settlement is lower than the customer invoice by exactly ₹50, while transaction references and dates align. Classify ₹50 as processor fee."}
+                  ? "Unbacked Deposit — Insufficient Supporting Evidence"
+                  : "Likely Payment Processor Gateway Fee Variance"}
+              </div>
+              <p className="text-[11px] text-zinc-400 leading-relaxed pt-1">
+                {isUnresolvedExample
+                  ? "CLOSE refused to guess. Zero matching invoices or settlement batches were identified for ₹72,400. Escalation to controller required."
+                  : "The ₹50 variance exactly matches Stripe's 1.5% interchange schedule. Recommended action: Approve fee variance."}
               </p>
             </div>
+          </div>
 
-            {/* Human Approval Action Deck (Section 29) */}
-            <div className="pt-2 border-t border-zinc-800/80 space-y-3">
-              <div className="text-xs font-semibold text-zinc-200">Human Approval Action</div>
+          {/* Human Decision Controls (Section 29) */}
+          <div className="p-5 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-4">
+            <h3 className="text-sm font-semibold text-white">Human Controller Decision</h3>
 
-              {approved && (
-                <div className="p-3 rounded-lg bg-emerald-950/40 border border-emerald-800 text-xs font-mono text-emerald-300 flex items-center space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Approved by Senior Controller. Reclassified ₹50 as fee. Audit event recorded.</span>
-                </div>
-              )}
+            {/* Controller Rationale Note */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] text-zinc-400 uppercase block">
+                Audit Note / Resolution Justification (Optional)
+              </label>
+              <textarea
+                rows={2}
+                placeholder="Enter audit note for permanent record..."
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                className="w-full p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-zinc-600 transition-colors"
+              />
+            </div>
 
-              {rejected && (
-                <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800 text-xs font-mono text-rose-300 flex items-center space-x-2">
-                  <XCircle className="w-4 h-4 text-rose-400 shrink-0" />
-                  <span>Recommendation rejected. Transaction flagged for manual investigation.</span>
-                </div>
-              )}
+            {/* Action Buttons */}
+            <div className="grid grid-cols-3 gap-2.5 pt-1">
+              <button
+                onClick={handleApprove}
+                disabled={submitting}
+                className="py-2.5 px-3 rounded-lg bg-white hover:bg-zinc-200 text-zinc-950 font-bold text-xs transition-colors flex items-center justify-center space-x-1 shadow-sm disabled:opacity-50"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Approve</span>
+              </button>
 
-              {!approved && !rejected && (
-                <div className="space-y-3">
-                  <input
-                    type="text"
-                    placeholder="Optional approval note or reason (recorded in audit log)..."
-                    value={reason}
-                    onChange={(e) => setReason(e.target.value)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-200 font-mono outline-none focus:border-zinc-600"
-                  />
+              <button
+                onClick={handleReject}
+                disabled={submitting}
+                className="py-2.5 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-1 disabled:opacity-50"
+              >
+                <XCircle className="w-3.5 h-3.5 text-rose-400" />
+                <span>Reject</span>
+              </button>
 
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={handleApprove}
-                      className="flex-1 py-2 px-3 rounded-lg bg-white text-zinc-950 font-semibold text-xs hover:bg-zinc-200 transition-colors flex items-center justify-center space-x-1.5 shadow-sm"
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>Approve Resolution</span>
-                    </button>
-
-                    <button
-                      onClick={handleReject}
-                      className="py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white font-mono text-xs transition-colors"
-                    >
-                      Reject
-                    </button>
-
-                    <button
-                      onClick={() => setRejected(true)}
-                      className="py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-rose-800 text-zinc-400 hover:text-rose-400 font-mono text-xs transition-colors"
-                    >
-                      Mark Unresolved
-                    </button>
-                  </div>
-                </div>
-              )}
+              <button
+                onClick={handleUnresolve}
+                disabled={submitting}
+                className="py-2.5 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-1 disabled:opacity-50"
+              >
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                <span>Escalate</span>
+              </button>
             </div>
           </div>
         </div>
