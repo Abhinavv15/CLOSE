@@ -310,6 +310,78 @@ export const api = {
     });
   },
 
+  // Get Cash Forecast
+  async getCashForecast(timeframe_days = 30) {
+    return fetchWithFallback<any>(`/api/cash-forecast?timeframe_days=${timeframe_days}`, {
+      id: `fc_demo_${timeframe_days}`,
+      company_id: "comp_demo_001",
+      as_of_date: "2026-09-04",
+      timeframe_days,
+      current_cash: 1840000.0,
+      expected_receivables: 720000.0,
+      upcoming_expenses: 540000.0,
+      payroll: 410000.0,
+      taxes: 120000.0,
+      projected_cash: 1810000.0,
+      minimum_projected_cash: 1160000.0,
+      safety_threshold: 800000.0,
+      safety_buffer: 360000.0,
+      status: "SAFE",
+      forecast_curve: Array.from({ length: timeframe_days }).map((_, i) => {
+        const d = i + 1;
+        let bal = 18.4;
+        let rec = 0;
+        let out = 0.15;
+        let evts: string[] = [];
+
+        if (d % 30 === 5) { out += 0.8; evts.push("AWS Cloud & Hosting"); }
+        if (d % 30 === 10) { rec += 2.1; evts.push("Client Retainer #1"); }
+        if (d % 30 === 15) { out += 4.1; evts.push("Core Engineering Payroll"); }
+        if (d % 30 === 20) { rec += 2.5; evts.push("Enterprise Invoice Clearance"); }
+        if (d % 30 === 22) { out += 0.5; evts.push("Audit & Retainers"); }
+        if (d % 30 === 25) { rec += 3.1; evts.push("Subscription Settlements"); }
+        if (d % 30 === 0) { out += 1.2; evts.push("Statutory GST & Advance Tax"); }
+
+        if (d <= 5) bal = 18.2;
+        else if (d <= 10) bal = 18.9;
+        else if (d <= 15) bal = 15.2;
+        else if (d <= 20) bal = 16.8;
+        else if (d <= 25) bal = 19.1;
+        else bal = 18.1;
+
+        return {
+          day: `Day ${d}`,
+          day_num: d,
+          date: `2026-09-${d.toString().padStart(2, "0")}`,
+          balance: bal * 100000,
+          balance_lakhs: bal,
+          inflows: rec * 100000,
+          outflows: out * 100000,
+          net_change: (rec - out) * 100000,
+          events: evts,
+        };
+      }),
+      ai_explanation: {
+        headline: "Cash position appears stable.",
+        status: "SAFE",
+        projected_minimum_cash: 1160000.0,
+        projected_minimum_cash_lakhs: "₹11.6L",
+        minimum_cash_day: "Day 15",
+        safety_threshold: 800000.0,
+        safety_threshold_lakhs: "₹8.0L",
+        buffer: 360000.0,
+        buffer_lakhs: "+₹3.6L",
+        primary_upcoming_outflows: [
+          { category: "Payroll", amount: 410000.0, description: "Mid-month engineering & operations payroll", due_day: "Day 15" },
+          { category: "Cloud Infrastructure", amount: 80000.0, description: "AWS cloud cluster billing", due_day: "Day 5" },
+          { category: "Vendor Payments", amount: 50000.0, description: "Statutory audit and legal retainers", due_day: "Day 22" },
+          { category: "Tax Obligations", amount: 120000.0, description: "Quarterly advance tax & TDS provisions", due_day: "Day 30" },
+        ],
+        narrative: `Cash position remains STABLE throughout the ${timeframe_days}-day close cycle. Projected minimum cash of ₹11.6L occurs on Day 15 after payroll, maintaining a healthy safety buffer of +₹3.6L above the ₹8.0L operating threshold.`,
+      },
+    });
+  },
+
   // Get Evaluation Scorecard
   async getEvaluation(batchId = "batch_close_2026_09"): Promise<EvaluationData> {
     return fetchWithFallback<EvaluationData>(`/api/evaluation?batch_id=${batchId}`, {
