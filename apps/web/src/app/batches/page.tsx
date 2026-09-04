@@ -273,7 +273,7 @@ export default function BatchesPage() {
               reconcileSuccess
                 ? "bg-emerald-600 text-white border-emerald-500 shadow-emerald-500/20"
                 : isReconciling
-                ? "bg-blue-600 text-white border-blue-500 shadow-blue-500/20"
+                ? "bg-zinc-900 text-white border-zinc-800 shadow-sm"
                 : "bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border-zinc-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:border-zinc-700 dark:text-zinc-200"
             }`}
           >

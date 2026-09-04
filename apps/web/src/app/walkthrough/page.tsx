@@ -148,7 +148,7 @@ export default function WalkthroughPage() {
         <div className="flex items-center space-x-2.5">
           <button
             onClick={() => startTour(0)}
-            className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-all flex items-center space-x-1.5 shadow-md group"
+            className="px-3.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white font-semibold text-xs transition-all flex items-center space-x-1.5 shadow-md group"
           >
             <Compass className={`w-3.5 h-3.5 ${isTourActive ? "animate-spin" : ""}`} />
             <span>{isTourActive ? "Resume Live Tour" : "Start Live Tour"}</span>
@@ -164,15 +164,15 @@ export default function WalkthroughPage() {
       </div>
 
       {/* Live Interactive Tour Launch Card */}
-      <div className="p-4 rounded-xl bg-gradient-to-r from-blue-50/80 via-indigo-50/60 to-blue-50/40 dark:from-blue-950/40 dark:via-indigo-950/30 dark:to-purple-950/20 border border-blue-200 dark:border-blue-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono">
+      <div className="p-4 rounded-xl bg-zinc-100 dark:bg-zinc-900/60 border border-zinc-300 dark:border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono">
         <div className="flex items-start space-x-3 min-w-0">
-          <div className="p-2.5 rounded-xl bg-blue-100 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-700/60 text-blue-700 dark:text-blue-400 shrink-0 mt-0.5">
+          <div className="p-2.5 rounded-xl bg-zinc-900 text-white dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-800 shrink-0 mt-0.5">
             <Compass className="w-5 h-5 animate-pulse" />
           </div>
           <div>
             <div className="flex items-center space-x-2">
               <h2 className="text-sm font-bold text-zinc-950 dark:text-white">Live Multi-Page Guided Walkthrough</h2>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 dark:bg-blue-500/20 dark:text-blue-300 dark:border-blue-500/40">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-zinc-900 text-white border border-zinc-900 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700 font-bold">
                 Interactive Popup
               </span>
             </div>
@@ -319,7 +319,7 @@ export default function WalkthroughPage() {
                 </div>
 
                 <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
-                  <div className="text-blue-400 font-bold uppercase mb-1">2. Payment Gateway</div>
+                  <div className="text-zinc-100 font-bold uppercase mb-1">2. Payment Gateway</div>
                   <div className="text-zinc-200 font-semibold">SET-5521 &rarr; Net ₹31,750</div>
                   <div className="text-zinc-400 text-[9px] mt-0.5">Gross ₹31,800 · Fee ₹50</div>
                 </div>
@@ -506,7 +506,7 @@ export default function WalkthroughPage() {
                 </p>
               </div>
               <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800">
-                <div className="text-blue-400 font-bold mb-1">Tier 2: Corroborating Evidence</div>
+                <div className="text-zinc-200 font-bold mb-1">Tier 2: Corroborating Evidence</div>
                 <p className="text-zinc-400 font-sans text-[11px]">
                   Counterpart gateway settlement report with gross/fee deductions.
                 </p>

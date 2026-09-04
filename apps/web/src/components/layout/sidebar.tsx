@@ -58,7 +58,7 @@ const NAV_SECTIONS: NavSection[] = [
   {
     title: "Documentation & Controls",
     items: [
-      { name: "Product Tour & CSV Spec", href: "/walkthrough", icon: Compass, badge: "GUIDE", badgeColor: "text-blue-700 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-950/50 dark:border-blue-800/60" },
+      { name: "Product Tour & CSV Spec", href: "/walkthrough", icon: Compass, badge: "GUIDE", badgeColor: "text-white bg-zinc-900 border-zinc-900 dark:text-zinc-200 dark:bg-zinc-800 dark:border-zinc-700 font-bold" },
       { name: "System Settings", href: "/settings", icon: Settings },
     ],
   },

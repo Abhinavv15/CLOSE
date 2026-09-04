@@ -67,10 +67,10 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
         {/* Interactive Guided Tour Button */}
         <button
           onClick={() => startTour(0)}
-          className="hidden md:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 border border-blue-200 text-xs font-mono text-blue-700 hover:text-blue-900 dark:bg-blue-950/40 dark:hover:bg-blue-900/50 dark:border-blue-700/60 dark:text-blue-300 dark:hover:text-white transition-all shadow-sm"
+          className="hidden md:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-900 text-xs font-mono text-white dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:border-zinc-700 dark:text-zinc-200 transition-all shadow-sm font-semibold"
           title="Launch Step-by-Step Guided Product Walkthrough"
         >
-          <Compass className={`w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0 ${isTourActive ? "animate-spin" : ""}`} />
+          <Compass className={`w-3.5 h-3.5 text-zinc-300 shrink-0 ${isTourActive ? "animate-spin" : ""}`} />
           <span>{isTourActive ? "Resume Tour" : "Guided Tour"}</span>
         </button>
         {/* Search / Command trigger */}
@@ -108,7 +108,7 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
           {theme === "dark" ? (
             <Sun className="w-4 h-4 text-amber-400" />
           ) : (
-            <Moon className="w-4 h-4 text-blue-500" />
+            <Moon className="w-4 h-4 text-zinc-400" />
           )}
         </button>
 

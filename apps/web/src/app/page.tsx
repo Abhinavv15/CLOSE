@@ -47,9 +47,9 @@ export default function LandingPage() {
         <div className="flex items-center space-x-2 sm:space-x-4">
           <Link
             href="/walkthrough"
-            className="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 hover:border-blue-300 dark:hover:border-blue-700 text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-white transition-all font-mono flex items-center space-x-1.5"
+            className="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 text-zinc-900 dark:text-zinc-200 hover:text-black dark:hover:text-white transition-all font-mono flex items-center space-x-1.5"
           >
-            <Compass className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+            <Compass className="w-3.5 h-3.5 text-zinc-700 dark:text-zinc-400" />
             <span>Product Tour & CSV Guide</span>
           </Link>
           <a
@@ -67,7 +67,7 @@ export default function LandingPage() {
             {theme === "dark" ? (
               <Sun className="w-4 h-4 text-amber-400" />
             ) : (
-              <Moon className="w-4 h-4 text-blue-500" />
+              <Moon className="w-4 h-4 text-zinc-400" />
             )}
           </button>
           <a
@@ -116,9 +116,9 @@ export default function LandingPage() {
 
           <button
             onClick={() => startTour(0)}
-            className="px-5 py-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/50 border border-blue-200 dark:border-blue-700/60 text-blue-700 dark:text-blue-200 hover:text-blue-900 dark:hover:text-white text-sm font-medium transition-all flex items-center space-x-2 shadow-lg"
+            className="px-5 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-900 text-white dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:border-zinc-700 dark:text-zinc-200 text-sm font-semibold transition-all flex items-center space-x-2 shadow-lg"
           >
-            <Compass className="w-4 h-4 text-blue-600 dark:text-blue-400 animate-pulse" />
+            <Compass className="w-4 h-4 text-zinc-300 animate-pulse" />
             <span>Start Guided Tour</span>
           </button>
 

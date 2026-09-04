@@ -102,7 +102,7 @@ export function InteractiveTourModal() {
               <Link
                 href="/walkthrough"
                 onClick={endTour}
-                className="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl border border-blue-200 dark:border-blue-800/60 bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-xs text-blue-700 dark:text-blue-300 font-medium transition-colors flex items-center justify-center space-x-1.5"
+                className="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl border border-zinc-700 bg-zinc-800 hover:bg-zinc-700 text-xs text-zinc-200 font-medium transition-colors flex items-center justify-center space-x-1.5"
               >
                 <span>Read Full Spec</span>
                 <ExternalLink className="w-3 h-3" />
@@ -127,11 +127,11 @@ export function InteractiveTourModal() {
     return (
       <aside 
         aria-label="Guided Tour Minimized Control"
-        className="fixed bottom-4 right-4 z-50 flex items-center space-x-2 p-2 px-3 rounded-xl bg-zinc-950/95 border border-blue-500/50 shadow-2xl backdrop-blur-md text-zinc-100 font-mono text-xs animate-in slide-in-from-bottom-2 duration-150"
+        className="fixed bottom-4 right-4 z-50 flex items-center space-x-2 p-2 px-3 rounded-xl bg-zinc-950/95 border border-zinc-700 shadow-2xl backdrop-blur-md text-zinc-100 font-mono text-xs animate-in slide-in-from-bottom-2 duration-150"
       >
         <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
         </span>
 
         <span className="font-semibold text-[11px] text-zinc-300">
@@ -160,7 +160,7 @@ export function InteractiveTourModal() {
             onClick={toggleMinimize}
             title="Expand Tour Card"
             aria-label="Expand Tour Card"
-            className="p-1 rounded hover:bg-zinc-800 text-blue-400 hover:text-blue-300"
+            className="p-1 rounded hover:bg-zinc-800 text-zinc-300 hover:text-white"
           >
             <Maximize2 className="w-3.5 h-3.5" />
           </button>
@@ -188,10 +188,10 @@ export function InteractiveTourModal() {
       {/* Top Header Bar */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800/80 bg-zinc-900/60 shrink-0">
         <div className="flex items-center space-x-2 min-w-0">
-          <div className="p-1 rounded-md bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-700/60 text-blue-600 dark:text-blue-400 shrink-0">
+          <div className="p-1 rounded-md bg-zinc-800 border border-zinc-700 text-zinc-200 shrink-0">
             <Compass className="w-3.5 h-3.5" />
           </div>
-          <span className="text-[11px] font-bold text-blue-700 dark:text-blue-400 tracking-wider truncate">
+          <span className="text-[11px] font-bold text-zinc-100 tracking-wider truncate">
             {currentStep.badge}
           </span>
         </div>
@@ -219,7 +219,7 @@ export function InteractiveTourModal() {
       {/* Progress Bar */}
       <div className="w-full bg-zinc-900 h-1 shrink-0 overflow-hidden">
         <div 
-          className="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-full transition-all duration-300"
+          className="bg-zinc-200 h-full transition-all duration-300"
           style={{ width: `${((currentStep.stepNumber) / totalSteps) * 100}%` }}
         />
       </div>
@@ -242,7 +242,7 @@ export function InteractiveTourModal() {
         {/* Key Highlights */}
         <div className="p-3 rounded-xl bg-zinc-900/60 border border-zinc-800/80 space-y-2">
           <div className="text-[10px] uppercase tracking-wider text-zinc-400 font-bold flex items-center space-x-1.5">
-            <Sparkles className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+            <Sparkles className="w-3 h-3 text-amber-400" />
             <span>Key Controller Capabilities</span>
           </div>
           <ul className="space-y-1.5">
@@ -256,7 +256,7 @@ export function InteractiveTourModal() {
         </div>
 
         {/* Pro Tip Banner */}
-        <div className="p-2.5 rounded-lg bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50 text-[11px] text-blue-800 dark:text-blue-300 flex items-start space-x-2">
+        <div className="p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-[11px] text-zinc-300 flex items-start space-x-2">
           <span className="text-amber-400 shrink-0 mt-0.5">💡</span>
           <span className="leading-relaxed"><strong className="text-white">Pro-Tip:</strong> {currentStep.proTip}</span>
         </div>
@@ -274,7 +274,7 @@ export function InteractiveTourModal() {
               title={`Step ${s.stepNumber}: ${s.title}`}
               className={`h-2 rounded-full transition-all ${
                 idx === currentStepIndex
-                  ? "w-5 bg-blue-600 dark:bg-blue-400"
+                  ? "w-5 bg-white"
                   : idx < currentStepIndex
                   ? "w-2 bg-emerald-400/70"
                   : "w-2 bg-zinc-700 hover:bg-zinc-500"
