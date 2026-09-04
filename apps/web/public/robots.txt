@@ -1,0 +1,3 @@
+# CLOSE AI Finance Controller
+User-agent: *
+Allow: /
