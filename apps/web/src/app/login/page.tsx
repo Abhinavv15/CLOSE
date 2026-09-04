@@ -3,38 +3,41 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BackgroundGrid } from "@/components/ui/background-grid";
-import { ArrowRight, Lock, Mail, Shield, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Lock, Mail, Shield, CheckCircle2, UserCheck, Eye, Cog } from "lucide-react";
+import { PRESET_PERSONAS } from "@/lib/auth-context";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("controller@democorp.internal");
+  const [email, setEmail] = useState("abhinav@democorp.internal");
   const [password, setPassword] = useState("••••••••••••");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const setPersonaAndNavigate = (key: string) => {
     setLoading(true);
+    try {
+      localStorage.setItem("close_auth_persona", key);
+    } catch {
+      // ignore
+    }
     setTimeout(() => {
       router.push("/dashboard");
-    }, 400);
+    }, 250);
   };
 
-  const handleDemoLogin = () => {
-    setLoading(true);
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 300);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setPersonaAndNavigate("controller");
   };
 
   return (
     <BackgroundGrid pattern="grid" className="min-h-screen flex items-center justify-center p-6 text-zinc-100">
-      <div className="w-full max-w-md bg-zinc-900/80 border border-zinc-800/80 rounded-2xl p-8 backdrop-blur-xl shadow-2xl relative">
+      <div className="w-full max-w-lg bg-zinc-900/80 border border-zinc-800/80 rounded-2xl p-8 backdrop-blur-xl shadow-2xl relative">
         <div className="text-center mb-8">
           <div className="h-10 w-10 mx-auto rounded-xl bg-white text-zinc-950 font-black flex items-center justify-center text-base mb-3 shadow">
             CL
           </div>
           <h1 className="text-2xl font-bold text-white tracking-tight">Access CLOSE</h1>
-          <p className="text-xs text-zinc-400 mt-1">Institutional Financial Control Platform</p>
+          <p className="text-xs text-zinc-400 mt-1">Autonomous Multi-Source AI Finance Controller</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -81,20 +84,80 @@ export default function LoginPage() {
             <div className="w-full border-t border-zinc-800" />
           </div>
           <span className="relative bg-zinc-900 px-3 text-[10px] font-mono uppercase text-zinc-400">
-            Or Instant Hackathon Access
+            Select Persona for Instant Demo Access
           </span>
         </div>
 
-        <button
-          onClick={handleDemoLogin}
-          type="button"
-          className="w-full py-2.5 rounded-lg bg-zinc-800/80 hover:bg-zinc-700/80 border border-zinc-700/60 text-zinc-200 font-mono text-xs flex items-center justify-center space-x-2 transition-colors"
-        >
-          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          <span>Quick Demo Access (Senior Controller)</span>
-        </button>
+        {/* 3 Quick Persona Cards */}
+        <div className="grid grid-cols-1 gap-2.5">
+          <button
+            onClick={() => setPersonaAndNavigate("controller")}
+            type="button"
+            className="w-full p-3 rounded-xl bg-zinc-950/60 hover:bg-zinc-800/80 border border-zinc-800 hover:border-emerald-500/50 text-left transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center space-x-3">
+              <div className="h-8 w-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold text-xs flex items-center justify-center font-mono">
+                AV
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-zinc-200 flex items-center space-x-1.5">
+                  <span>Abhinav Verma</span>
+                  <span className="text-[10px] font-mono px-1.5 py-0.2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded">
+                    CONTROLLER
+                  </span>
+                </div>
+                <div className="text-[11px] text-zinc-500">Full Execution: Approve, Reject & Close Runner</div>
+              </div>
+            </div>
+            <ArrowRight className="w-4 h-4 text-zinc-600 group-hover:text-zinc-200 transition-colors" />
+          </button>
 
-        <div className="mt-6 text-center text-[11px] text-zinc-400 font-mono">
+          <button
+            onClick={() => setPersonaAndNavigate("auditor")}
+            type="button"
+            className="w-full p-3 rounded-xl bg-zinc-950/60 hover:bg-zinc-800/80 border border-zinc-800 hover:border-amber-500/50 text-left transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center space-x-3">
+              <div className="h-8 w-8 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-bold text-xs flex items-center justify-center font-mono">
+                SJ
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-zinc-200 flex items-center space-x-1.5">
+                  <span>Sarah Jenkins</span>
+                  <span className="text-[10px] font-mono px-1.5 py-0.2 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded">
+                    AUDITOR
+                  </span>
+                </div>
+                <div className="text-[11px] text-zinc-500">Read-Only: Evidence Review & Ground-Truth Audit</div>
+              </div>
+            </div>
+            <ArrowRight className="w-4 h-4 text-zinc-600 group-hover:text-zinc-200 transition-colors" />
+          </button>
+
+          <button
+            onClick={() => setPersonaAndNavigate("admin")}
+            type="button"
+            className="w-full p-3 rounded-xl bg-zinc-950/60 hover:bg-zinc-800/80 border border-zinc-800 hover:border-zinc-500/50 text-left transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center space-x-3">
+              <div className="h-8 w-8 rounded-lg bg-zinc-800 border border-zinc-700 text-white font-bold text-xs flex items-center justify-center font-mono">
+                VM
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-zinc-200 flex items-center space-x-1.5">
+                  <span>Vikram Malhotra</span>
+                  <span className="text-[10px] font-mono px-1.5 py-0.2 bg-zinc-800 text-zinc-300 border border-zinc-700 rounded">
+                    ADMIN
+                  </span>
+                </div>
+                <div className="text-[11px] text-zinc-500">Pipeline Config & Batch Ingestion</div>
+              </div>
+            </div>
+            <ArrowRight className="w-4 h-4 text-zinc-600 group-hover:text-zinc-200 transition-colors" />
+          </button>
+        </div>
+
+        <div className="mt-6 text-center text-[11px] text-zinc-500 font-mono">
           <span>Protected by AES-256 and RBAC. Audit logging active.</span>
         </div>
       </div>
