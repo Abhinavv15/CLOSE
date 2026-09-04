@@ -17,3 +17,9 @@ def test_system_status():
     data = response.json()
     assert data["status"] == "ready"
     assert "confidence_thresholds" in data
+
+def test_healthz_check():
+    response = client.get("/healthz")
+    assert response.status_code == 200
+    assert response.json()["status"] == "ok"
+
