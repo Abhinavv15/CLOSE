@@ -46,7 +46,7 @@ const SCHEMAS: SchemaSpec[] = [
     source: "Bank Statement",
     sourceKey: "bank",
     filename: "bank_transactions.csv",
-    description: "Raw cash activity from operating accounts (HDFC, SVB, Chase) with deposits, withdrawals, and bank references.",
+    description: "Operating account deposits, withdrawals, and wire references.",
     headers: ["date", "description", "amount", "currency", "reference", "type"],
     sampleRow: {
       date: "2026-09-03",
@@ -56,13 +56,13 @@ const SCHEMAS: SchemaSpec[] = [
       reference: "STRIPE-82931",
       type: "CREDIT"
     },
-    notes: "Amount must be strictly positive Decimal. Use type CREDIT for deposits and DEBIT for disbursements."
+    notes: "Positive decimal amounts. CREDIT for deposits, DEBIT for disbursements."
   },
   {
     source: "Payment Processor / Gateway",
     sourceKey: "processor",
     filename: "processor_settlements.csv",
-    description: "Stripe and Razorpay batch settlement files showing gross revenue, merchant discount fees (MDR), and net payouts.",
+    description: "Stripe and Razorpay batch settlements with interchange MDR fees.",
     headers: ["settlement_date", "processor", "transaction_id", "gross_amount", "fee", "net_amount", "currency", "status", "reference"],
     sampleRow: {
       settlement_date: "2026-09-03",
@@ -75,13 +75,13 @@ const SCHEMAS: SchemaSpec[] = [
       status: "SETTLED",
       reference: "STRIPE-82931"
     },
-    notes: "Deterministic math rule: gross_amount - fee = net_amount. The reference links to bank and ledger entries."
+    notes: "Deterministic rule: gross_amount - fee = net_amount."
   },
   {
     source: "General Ledger / ERP",
     sourceKey: "ledger",
     filename: "ledger_entries.csv",
-    description: "Journal entries from accounting software (NetSuite, Tally, QuickBooks) tracking Accounts Receivable and debits/credits.",
+    description: "ERP journal entries (NetSuite / QuickBooks) tracking debits and credits.",
     headers: ["date", "account", "description", "debit", "credit", "reference"],
     sampleRow: {
       date: "2026-09-03",
@@ -91,13 +91,13 @@ const SCHEMAS: SchemaSpec[] = [
       credit: "0.0000",
       reference: "STRIPE-82931"
     },
-    notes: "Double-entry bookkeeping format. Either debit or credit must be non-zero for each entry."
+    notes: "Double-entry format: either debit or credit must be non-zero."
   },
   {
     source: "Customer Invoices",
     sourceKey: "invoices",
     filename: "invoices.csv",
-    description: "B2B SaaS customer sales invoices tracking issued amounts, due dates, customer entity, and payment status.",
+    description: "B2B SaaS sales invoices tracking due dates and open receivables.",
     headers: ["invoice_number", "customer", "invoice_date", "due_date", "amount", "currency", "status"],
     sampleRow: {
       invoice_number: "INV-1022",
@@ -108,7 +108,7 @@ const SCHEMAS: SchemaSpec[] = [
       currency: "INR",
       status: "PARTIAL"
     },
-    notes: "Primary source of truth for accounts receivable and 30-day cash collection forecasting."
+    notes: "Source of truth for accounts receivable and 30-day forward cash."
   }
 ];
 
@@ -134,14 +134,14 @@ export default function WalkthroughPage() {
           <div className="flex items-center space-x-2">
             <h1 className="text-xl font-bold tracking-tight text-white flex items-center space-x-2">
               <Compass className="w-5 h-5 text-emerald-400" />
-              <span>CLOSE Product Walkthrough & CSV Specification</span>
+              <span>Product Walkthrough & CSV Specification</span>
             </h1>
             <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950/50 text-emerald-400 border border-emerald-800/60">
               Buildathon Tour
             </span>
           </div>
           <p className="text-xs text-zinc-400 mt-1">
-            Complete guide on how CLOSE works, where to upload CSV data, required schemas, and how to verify changes.
+            Architecture guide, CSV schemas, reconciliation rules, and benchmarks.
           </p>
         </div>
 
@@ -177,7 +177,7 @@ export default function WalkthroughPage() {
               </span>
             </div>
             <p className="text-xs text-zinc-300 mt-1 font-sans">
-              Step through all 7 pages sequentially with a live popup explaining each module, with Before and Next buttons, live table highlights, and automatic page navigation.
+              Step through all 7 pages sequentially with live step-by-step guidance and automatic page navigation.
             </p>
           </div>
         </div>
@@ -227,51 +227,51 @@ export default function WalkthroughPage() {
           <div className="p-5 sm:p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800">
             <h2 className="text-base font-bold text-white mb-2 flex items-center space-x-2">
               <Sparkles className="w-4 h-4 text-emerald-400" />
-              <span>The Problem: The Monthly Accounting Chaos</span>
+              <span>The Problem: Disconnected Financial Systems</span>
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-3xl">
-              At the end of every fiscal month, finance teams spend hundreds of hours manually comparing records across four completely disconnected systems:
+            <p className="text-xs text-zinc-400 max-w-3xl">
+              Finance teams manually reconcile 4 disconnected systems every month-end:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
               <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-zinc-800">
                 <div className="text-xs font-bold text-white mb-1">1. Bank Statement</div>
-                <div className="text-[11px] text-zinc-400">Raw deposits, withdrawals, and bank wire transfers. Shows the true settled cash.</div>
+                <div className="text-[11px] text-zinc-400">Raw cash deposits and withdrawals showing true settled cash.</div>
               </div>
               <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-zinc-800">
-                <div className="text-xs font-bold text-white mb-1">2. Payment Gateways</div>
-                <div className="text-[11px] text-zinc-400">Stripe and Razorpay deductions: gross sales minus 1.5%–2.5% interchange MDR processing fees.</div>
+                <div className="text-xs font-bold text-white mb-1">2. Payment Gateway</div>
+                <div className="text-[11px] text-zinc-400">Stripe & Razorpay sales minus interchange MDR processing fees.</div>
               </div>
               <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-zinc-800">
-                <div className="text-xs font-bold text-white mb-1">3. General Ledger (ERP)</div>
-                <div className="text-[11px] text-zinc-400">NetSuite, Tally, QuickBooks accounting journals with balanced debits and credits.</div>
+                <div className="text-xs font-bold text-white mb-1">3. General Ledger</div>
+                <div className="text-[11px] text-zinc-400">ERP journal entries (NetSuite/QuickBooks) with balanced debits and credits.</div>
               </div>
               <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-zinc-800">
                 <div className="text-xs font-bold text-white mb-1">4. Customer Invoices</div>
-                <div className="text-[11px] text-zinc-400">B2B SaaS contracts, invoices issued, due dates, and open receivables.</div>
+                <div className="text-[11px] text-zinc-400">B2B sales contracts, due dates, and open receivables.</div>
               </div>
             </div>
           </div>
 
           {/* Why CLOSE is Different */}
           <div className="p-5 sm:p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800">
-            <h3 className="text-sm font-bold text-white mb-3">Why Traditional AI & Spreadsheets Fail</h3>
+            <h3 className="text-sm font-bold text-white mb-3">Why Traditional Tools Fail</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
-              <div className="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800/80 space-y-2">
-                <div className="text-rose-400 font-bold uppercase text-[11px]">Spreadsheet Chaos</div>
-                <p className="text-zinc-400 font-sans leading-relaxed text-[11px]">
-                  VLOOKUPs break on typos, date lags, and currency conversions. Requires manual spot-checking of hundreds of ledger rows.
+              <div className="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800/80 space-y-1.5">
+                <div className="text-rose-400 font-bold uppercase text-[11px]">Spreadsheet Fragility</div>
+                <p className="text-zinc-400 font-sans text-[11px]">
+                  VLOOKUPs break on typos and date lags. High manual effort with zero audit trails.
                 </p>
               </div>
-              <div className="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800/80 space-y-2">
-                <div className="text-amber-400 font-bold uppercase text-[11px]">ChatGPT Hallucinations</div>
-                <p className="text-zinc-400 font-sans leading-relaxed text-[11px]">
-                  LLMs hallucinate arithmetic and invent fake numbers. Auditors (KPMG/PwC) will immediately fail non-deterministic closes.
+              <div className="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800/80 space-y-1.5">
+                <div className="text-amber-400 font-bold uppercase text-[11px]">LLM Hallucinations</div>
+                <p className="text-zinc-400 font-sans text-[11px]">
+                  General LLMs hallucinate math. Auditors reject non-deterministic closes immediately.
                 </p>
               </div>
-              <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-800/60 space-y-2">
+              <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-800/60 space-y-1.5">
                 <div className="text-emerald-400 font-bold uppercase text-[11px]">The CLOSE Standard</div>
-                <p className="text-zinc-300 font-sans leading-relaxed text-[11px]">
-                  <strong>Deterministic Math</strong> for reconciliation + <strong>AI Tool Reasoning</strong> for exception diagnosis + <strong>SHA-256 Merkle Chain</strong> for audit compliance.
+                <p className="text-zinc-300 font-sans text-[11px]">
+                  Deterministic math for reconciliation + AI tool reasoning + SHA-256 Merkle chain.
                 </p>
               </div>
             </div>
@@ -290,7 +290,7 @@ export default function WalkthroughPage() {
                   <span>CSV File Specification & Ingestion Guide</span>
                 </h2>
                 <p className="text-xs text-zinc-400 mt-0.5">
-                  Where to upload, required header columns, data formats, and sample files.
+                  Required header columns, data formats, and sample files.
                 </p>
               </div>
               <Link
@@ -302,47 +302,38 @@ export default function WalkthroughPage() {
               </Link>
             </div>
 
-
-
             {/* How the 4 CSVs Connect Across the Finance Graph */}
             <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-xs mb-6">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[11px] font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
                   <GitMerge className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>How the 4 CSV Files Connect Together (Graph Data Flow)</span>
+                  <span>Transaction Flow Across 4 Files</span>
                 </span>
                 <span className="text-[10px] text-zinc-500">Shared Reference & Decimal Balance</span>
               </div>
-              <p className="text-[11px] text-zinc-400 font-sans mb-3 leading-relaxed">
-                Financial reconciliation requires matching a customer invoice through the payment gateway settlement, bank deposit, and accounting ledger. Here is how one transaction traverses all 4 files:
-              </p>
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 text-[10px]">
                 <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
                   <div className="text-amber-400 font-bold uppercase mb-1">1. Customer Invoices</div>
-                  <div className="text-zinc-300 font-semibold">INV-1022</div>
-                  <div className="text-zinc-400 mt-1">Amount: <span className="text-white">₹31,800.0000</span></div>
-                  <div className="text-zinc-500 text-[9px] mt-1">Customer: Acme Tech</div>
+                  <div className="text-zinc-200 font-semibold">INV-1022 · ₹31,800</div>
+                  <div className="text-zinc-400 text-[9px] mt-0.5">Acme Tech · Due Sep 15</div>
                 </div>
 
                 <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
                   <div className="text-blue-400 font-bold uppercase mb-1">2. Payment Gateway</div>
-                  <div className="text-zinc-300 font-semibold">SET-5521 &rarr; STRIPE-82931</div>
-                  <div className="text-zinc-400 mt-1">Gross: ₹31,800 | Fee: ₹50</div>
-                  <div className="text-emerald-400 mt-0.5">Net Payout: ₹31,750.0000</div>
+                  <div className="text-zinc-200 font-semibold">SET-5521 &rarr; Net ₹31,750</div>
+                  <div className="text-zinc-400 text-[9px] mt-0.5">Gross ₹31,800 · Fee ₹50</div>
                 </div>
 
                 <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
                   <div className="text-emerald-400 font-bold uppercase mb-1">3. Bank Statement</div>
-                  <div className="text-zinc-300 font-semibold">Ref: STRIPE-82931</div>
-                  <div className="text-zinc-400 mt-1">Credit: <span className="text-white">₹31,750.0000</span></div>
-                  <div className="text-zinc-500 text-[9px] mt-1">HDFC Operating Acc</div>
+                  <div className="text-zinc-200 font-semibold">STRIPE-82931 · Credit ₹31,750</div>
+                  <div className="text-zinc-400 text-[9px] mt-0.5">HDFC Current Account</div>
                 </div>
 
                 <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
                   <div className="text-purple-400 font-bold uppercase mb-1">4. General Ledger</div>
-                  <div className="text-zinc-300 font-semibold">Ref: STRIPE-82931</div>
-                  <div className="text-zinc-400 mt-1">Debit 1010 Bank: <span className="text-white">₹31,750</span></div>
-                  <div className="text-zinc-500 text-[9px] mt-1">Credit 1200 AR: ₹31,750</div>
+                  <div className="text-zinc-200 font-semibold">STRIPE-82931 · Dr ₹31,750</div>
+                  <div className="text-zinc-400 text-[9px] mt-0.5">Dr 1010 Bank / Cr 1200 AR</div>
                 </div>
               </div>
             </div>
@@ -375,7 +366,7 @@ export default function WalkthroughPage() {
                   <div className="space-y-2">
                     <div>
                       <span className="text-[10px] uppercase text-zinc-500 font-bold block mb-1">
-                        Required Column Headers (Exact Match):
+                        Required Column Headers:
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {spec.headers.map((h) => (
@@ -388,7 +379,7 @@ export default function WalkthroughPage() {
 
                     <div className="pt-2">
                       <span className="text-[10px] uppercase text-zinc-500 font-bold block mb-1">
-                        Sample Row Content:
+                        Sample Row:
                       </span>
                       <div className="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-800/80 text-[11px] text-zinc-300 overflow-x-auto whitespace-pre">
                         {spec.headers.map((h) => `${h}: "${spec.sampleRow[h]}"`).join(",  ")}
@@ -417,7 +408,7 @@ export default function WalkthroughPage() {
                   <span>The 5-Pass Deterministic Reconciliation Pipeline</span>
                 </h2>
                 <p className="text-xs text-zinc-400 mt-0.5">
-                  How CLOSE matches transactions in 0.08s with zero LLM math hallucinations.
+                  Sub-100ms matching across 5 algorithmic passes with zero arithmetic errors.
                 </p>
               </div>
               <Link
@@ -436,7 +427,7 @@ export default function WalkthroughPage() {
                   <span className="text-[10px] text-amber-400 bg-amber-950/30 px-2 py-0.5 rounded border border-amber-800/40">Anomaly Guard</span>
                 </div>
                 <p className="text-zinc-400 font-sans text-[11px]">
-                  Scans all records for identical amount and reference hashes posted within 4 days to prevent duplicate payouts from settling twice.
+                  Detects identical amount and reference hashes within 4 days to prevent duplicate payouts.
                 </p>
               </div>
 
@@ -446,7 +437,7 @@ export default function WalkthroughPage() {
                   <span className="text-[10px] text-emerald-400 bg-emerald-950/30 px-2 py-0.5 rounded border border-emerald-800/40">100% Confidence</span>
                 </div>
                 <p className="text-zinc-400 font-sans text-[11px]">
-                  Deterministic hash lookup linking bank deposits directly to customer invoice numbers or gateway IDs with ₹0 difference.
+                  Direct hash lookup linking bank deposits to invoices or gateway IDs with ₹0 difference.
                 </p>
               </div>
 
@@ -456,27 +447,27 @@ export default function WalkthroughPage() {
                   <span className="text-[10px] text-emerald-400 bg-emerald-950/30 px-2 py-0.5 rounded border border-emerald-800/40">94% Confidence</span>
                 </div>
                 <p className="text-zinc-400 font-sans text-[11px]">
-                  Accounts for gateway interchange MDR fees (e.g. ₹150,000 invoice settling as ₹148,500 bank deposit with a verified ₹1,500 Stripe fee).
+                  Accounts for gateway interchange MDR fees with exact arithmetic (gross - fee = net payout).
                 </p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-800">
                 <div className="flex items-center justify-between font-bold text-white mb-1">
-                  <span>Pass 4: Multi-Day Date & Timing Tolerances</span>
+                  <span>Pass 4: Multi-Day Date Tolerances</span>
                   <span className="text-[10px] text-zinc-300 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700">92% Confidence</span>
                 </div>
                 <p className="text-zinc-400 font-sans text-[11px]">
-                  Matches transactions that settled over weekends or standard 2–4 business day automated clearing house (ACH/NEFT) banking windows.
+                  Matches transactions across weekend and clearing house (ACH/NEFT) 2-4 day banking windows.
                 </p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-800">
                 <div className="flex items-center justify-between font-bold text-white mb-1">
-                  <span>Pass 5: Honest Flagging of Unbacked Exceptions</span>
+                  <span>Pass 5: Honest Flagging of Unbacked Records</span>
                   <span className="text-[10px] text-rose-400 bg-rose-950/30 px-2 py-0.5 rounded border border-rose-800/40">Honest Refusal</span>
                 </div>
                 <p className="text-zinc-400 font-sans text-[11px]">
-                  Transactions with missing counterpart records or unrecognized merchant debits are flagged to the Exception Center. CLOSE refuses to hallucinate false matches.
+                  Flags unbacked debits to the Exception Center. CLOSE refuses to speculate on missing evidence.
                 </p>
               </div>
             </div>
@@ -495,7 +486,7 @@ export default function WalkthroughPage() {
                   <span>AI Exception Triage & 3-Tier Evidence Tree</span>
                 </h2>
                 <p className="text-xs text-zinc-400 mt-0.5">
-                  How AI investigations formulate audit-grade evidence graphs for human controller signoff.
+                  Autonomous AI investigations formulate audit-grade evidence graphs for controller sign-off.
                 </p>
               </div>
               <Link
@@ -511,29 +502,29 @@ export default function WalkthroughPage() {
               <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800">
                 <div className="text-emerald-400 font-bold mb-1">Tier 1: Primary Evidence</div>
                 <p className="text-zinc-400 font-sans text-[11px]">
-                  The direct source record (e.g. Bank Statement Credit #TXN-9012 showing ₹148,500).
+                  Direct source record (Bank Statement credit or debit).
                 </p>
               </div>
               <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800">
                 <div className="text-blue-400 font-bold mb-1">Tier 2: Corroborating Evidence</div>
                 <p className="text-zinc-400 font-sans text-[11px]">
-                  Counterpart files (e.g. Stripe Settlement report confirming gross ₹150,000 and ₹1,500 fee).
+                  Counterpart gateway settlement report with gross/fee deductions.
                 </p>
               </div>
               <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800">
                 <div className="text-purple-400 font-bold mb-1">Tier 3: Contextual Evidence</div>
                 <p className="text-zinc-400 font-sans text-[11px]">
-                  Customer invoice #INV-2026-001 and historical payment schedules confirming regular terms.
+                  Customer invoice and historical payment schedule terms.
                 </p>
               </div>
             </div>
 
             <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono">
-              <div className="text-white font-bold mb-1">Controller Human-in-the-Loop Actions:</div>
-              <ul className="text-zinc-400 font-sans text-[11px] space-y-1">
-                <li>• <strong>Accept AI Adjustment</strong>: Approves the diagnostic recommendation and automatically writes the adjusting journal entry to PostgreSQL.</li>
-                <li>• <strong>Request Information</strong>: Escalates to internal procurement or engineering for corroborating vendor receipts.</li>
-                <li>• <strong>Mark Unresolved</strong>: Flags as an honest discrepancy for month-end reconciliation disclosure.</li>
+              <div className="text-white font-bold mb-2">Controller Sign-off Actions:</div>
+              <ul className="text-zinc-400 font-sans text-[11px] space-y-1.5">
+                <li>• <strong>Accept AI Adjustment</strong>: Approves recommendation and writes adjusting journal entry.</li>
+                <li>• <strong>Request Information</strong>: Escalates to procurement or vendor for receipts.</li>
+                <li>• <strong>Mark Unresolved</strong>: Flags as honest discrepancy for month-end disclosure.</li>
               </ul>
             </div>
           </div>
@@ -548,10 +539,10 @@ export default function WalkthroughPage() {
               <div>
                 <h2 className="text-base font-bold text-white flex items-center space-x-2">
                   <Wallet className="w-4 h-4 text-emerald-400" />
-                  <span>30-Day Forward Cash Position & Scenario Stress Testing</span>
+                  <span>30-Day Forward Cash Position & Stress Testing</span>
                 </h2>
                 <p className="text-xs text-zinc-400 mt-0.5">
-                  Deterministic daily liquidity forecasting, payroll dip modeling, and runway sensitivity.
+                  Deterministic daily liquidity forecasting, payroll dip modeling, and scenario testing.
                 </p>
               </div>
               <Link
@@ -565,23 +556,23 @@ export default function WalkthroughPage() {
 
             <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono space-y-3">
               <div>
-                <div className="text-zinc-400 text-[10px] uppercase font-bold">Deterministic Mathematical Formula:</div>
-                <div className="text-emerald-400 font-bold text-sm mt-1">
-                  Projected 30d Cash = Current Bank Balance + Expected Receivables - Scheduled OPEX - Taxes
+                <div className="text-zinc-400 text-[10px] uppercase font-bold">Deterministic Formula:</div>
+                <div className="text-emerald-400 font-bold text-sm mt-0.5">
+                  Projected Cash = Current Cash + Receivables - Scheduled OPEX - Taxes
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-[11px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-[11px]">
                 <div className="p-3 rounded-lg bg-zinc-900/80 border border-zinc-800">
-                  <span className="text-white font-semibold block mb-1">The Day 15 Payroll Dip:</span>
+                  <span className="text-white font-semibold block mb-1">Day 15 Payroll Dip:</span>
                   <span className="text-zinc-400 font-sans">
-                    CLOSE explicitly models the mid-month payroll salary run (₹4.1L deduction), showing exactly how low cash drops (₹11.6L) relative to your safety floor (₹8.0L).
+                    Models mid-month salary run (₹4.1L deduction) against the ₹8.0L safety floor.
                   </span>
                 </div>
                 <div className="p-3 rounded-lg bg-zinc-900/80 border border-zinc-800">
                   <span className="text-white font-semibold block mb-1">Scenario Stress Testing:</span>
                   <span className="text-zinc-400 font-sans">
-                    Allows the Controller to simulate what happens if B2B customers delay payments by 15 days, or if cloud infrastructure OPEX surges by 20%.
+                    Simulates 7-day payment delays or 10% operating expense acceleration.
                   </span>
                 </div>
               </div>
@@ -601,7 +592,7 @@ export default function WalkthroughPage() {
                   <span>Immutable Cryptographic SHA-256 Merkle Chain</span>
                 </h2>
                 <p className="text-xs text-zinc-400 mt-0.5">
-                  SOX Section 404, IFRS, and PCAOB audit compliance built directly into the database.
+                  SOX Section 404, IFRS, and PCAOB audit compliance built into the database.
                 </p>
               </div>
               <Link
@@ -615,11 +606,11 @@ export default function WalkthroughPage() {
 
             <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono space-y-3">
               <div className="text-zinc-300 font-sans leading-relaxed text-[11px]">
-                Every event in CLOSE—uploading a statement, running reconciliation, adjusting a fee, or approving an exception—is cryptographically hashed with SHA-256 and chained to the previous log entry.
+                Every event—ingestion, matching, fee adjustment, or sign-off—is hashed with SHA-256 and chained to the previous entry.
               </div>
-              <div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400">
-                <span className="text-white font-bold block mb-1">Tamper Detection:</span>
-                If an unauthorized user attempts to update a reconciled row directly in PostgreSQL, the SHA-256 Merkle root hash breaks immediately, creating an unforgeable compliance trail.
+              <div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-[11px] text-zinc-400">
+                <span className="text-white font-bold block mb-0.5">Tamper Detection:</span>
+                Modifying any reconciled record breaks the Merkle root hash instantly, ensuring compliance.
               </div>
               <div className="flex items-center space-x-2 pt-1">
                 <a
@@ -681,7 +672,7 @@ export default function WalkthroughPage() {
             <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono">
               <div className="text-white font-bold mb-1">The Honest Exception Guarantee:</div>
               <p className="text-zinc-400 font-sans text-[11px] leading-relaxed">
-                CLOSE achieved 96.6% precision by refusing to guess. When records have missing counterpart invoices or conflicting data, it classifies them into explicit honest categories (Missing Source Records, Ambiguous Transactions, Insufficient Evidence).
+                CLOSE achieves 96.6% precision by refusing to guess. When records have missing counterpart invoices or conflicting data, it categorizes them as honest exceptions rather than hallucinating false matches.
               </p>
             </div>
           </div>

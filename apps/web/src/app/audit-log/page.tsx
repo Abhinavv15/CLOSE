@@ -99,7 +99,7 @@ export default function AuditLogPage() {
     <AppShell>
       <PipelineStepHeader 
         currentStep={6} 
-        subtitle="Step 6: Cryptographic SHA-256 Merkle chain guarantees tamper-proof statutory audit compliance." 
+        subtitle="SHA-256 Merkle chain for tamper-proof statutory compliance." 
       />
 
       {/* Header & Compliance Controls (Section 30) */}
@@ -117,7 +117,7 @@ export default function AuditLogPage() {
             )}
           </div>
           <p className="text-xs text-zinc-400 mt-1">
-            Deterministic cryptographic log of matches, data sources, AI reasoning graphs, and human sign-offs.
+            Cryptographic log of all reconciliations, AI actions, and human sign-offs.
           </p>
         </div>
 

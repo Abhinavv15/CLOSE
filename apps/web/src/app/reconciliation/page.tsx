@@ -164,7 +164,7 @@ export default function ReconciliationPage() {
     <AppShell>
       <PipelineStepHeader 
         currentStep={2} 
-        subtitle="Step 2: Stream 127 transactions through 5 deterministic passes in sub-100ms." 
+        subtitle="5 deterministic passes matching bank, processor, and ledger records." 
       />
 
       {/* Header & Batch Context */}
@@ -180,7 +180,7 @@ export default function ReconciliationPage() {
             </span>
           </div>
           <p className="text-xs text-zinc-400 mt-1">
-            Deterministic multi-pass reconciliation across Bank, Processor, General Ledger, and Invoices.
+            Multi-pass reconciliation across Bank, Gateway, Ledger, and Invoices.
           </p>
         </div>
 

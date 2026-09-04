@@ -452,7 +452,7 @@ export default function BatchesPage() {
                 </span>
               </div>
               <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                Inspect 5 algorithmic passes, dual-ledger side-by-side comparison drawer, and confidence scores.
+                5 algorithmic passes, side-by-side comparison drawer, and confidence scores.
               </p>
             </div>
             <div className="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] text-zinc-300 group-hover:text-white">
@@ -477,7 +477,7 @@ export default function BatchesPage() {
                 </span>
               </div>
               <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                Find flagged anomalies, fee variances, and unbacked deposits with AI root-cause reasoning and 3-tier evidence.
+                Flagged anomalies, fee variances, and unbacked deposits with 3-tier evidence.
               </p>
             </div>
             <div className="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] text-zinc-300 group-hover:text-white">
@@ -502,7 +502,7 @@ export default function BatchesPage() {
                 </span>
               </div>
               <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                Real-time 14/30-day liquidity forecast curve reflecting newly reconciled deposits and payroll deductions.
+                Forward liquidity curve reflecting newly reconciled deposits and payroll deductions.
               </p>
             </div>
             <div className="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] text-zinc-300 group-hover:text-white">
@@ -527,7 +527,7 @@ export default function BatchesPage() {
                 </span>
               </div>
               <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                Tamper-evident cryptographic ledger recording every ingestion batch, matching action, and controller approval.
+                Cryptographic SHA-256 ledger recording every batch, match, and controller approval.
               </p>
             </div>
             <div className="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] text-zinc-300 group-hover:text-white">
@@ -552,7 +552,7 @@ export default function BatchesPage() {
                 </span>
               </div>
               <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
-                Benchmark engine against hidden ground-truth markers to verify recall, false-resolution rates, and honest refusals.
+                Accuracy scorecard verifying recall, precision, and honest refusal rates.
               </p>
             </div>
             <div className="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] text-zinc-300 group-hover:text-white">

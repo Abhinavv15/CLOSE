@@ -53,7 +53,7 @@ export function InteractiveTourModal() {
           </h2>
 
           <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
-            You have experienced the end-to-end CLOSE pipeline from raw statement ingestion to 5-pass deterministic reconciliation, autonomous AI exception triage, cash runway forecasting, and cryptographic SHA-256 Merkle audit chains.
+            All 6 close lifecycle steps verified: multi-source ingestion, 5-pass deterministic matching, AI exception triage, cash forecasting, benchmarks, and Merkle audit.
           </p>
 
           <div className="my-5 p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 space-y-2.5 text-xs">

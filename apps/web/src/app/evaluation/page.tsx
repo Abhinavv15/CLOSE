@@ -20,7 +20,7 @@ export default function EvaluationPage() {
     <AppShell>
       <PipelineStepHeader 
         currentStep={5} 
-        subtitle="Step 5: Verify measurable accuracy against hidden ground-truth labels (96.6% precision, 0.0% math hallucinations)." 
+        subtitle="Benchmark precision and auto-resolution against hidden ground truth." 
       />
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-5">
@@ -32,7 +32,7 @@ export default function EvaluationPage() {
             </span>
           </div>
           <p className="text-xs text-zinc-400 mt-1">
-            Reconciliation precision and auto-resolution accuracy evaluated strictly against hidden ground truth labels.
+            Accuracy metrics evaluated strictly against hidden ground-truth labels.
           </p>
         </div>
 
@@ -96,7 +96,7 @@ export default function EvaluationPage() {
           <div>
             <h3 className="text-sm font-semibold text-white">What CLOSE Could Not Resolve</h3>
             <p className="text-xs text-zinc-400 mt-0.5">
-              The unresolved exception list is a feature, not a failure. CLOSE refuses to speculate when evidence is missing.
+              CLOSE halts and categorizes exceptions rather than guessing without evidence.
             </p>
           </div>
           <span className="text-xs font-mono font-bold text-amber-400 bg-amber-950/40 border border-amber-800/60 px-2.5 py-1 rounded">

@@ -162,7 +162,7 @@ export default function ExceptionsPage() {
     <AppShell>
       <PipelineStepHeader 
         currentStep={3} 
-        subtitle="Step 3: Autonomous AI agent investigates fee variances and unbacked deposits with bounded tools." 
+        subtitle="AI agent investigates fee variances and discrepancies with bounded tools." 
       />
 
       {/* Header (Section 25) */}
@@ -175,7 +175,7 @@ export default function ExceptionsPage() {
             </span>
           </div>
           <p className="text-xs text-zinc-400 mt-1">
-            Investigate multi-source financial discrepancies with AI evidence citations and human-in-the-loop approvals.
+            Investigate discrepancies with AI evidence citations and human controller sign-off.
           </p>
         </div>
 
