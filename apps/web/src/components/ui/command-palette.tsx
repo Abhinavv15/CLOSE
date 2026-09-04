@@ -13,22 +13,27 @@ import {
   Settings as SettingsIcon,
   Sparkles,
   X,
-  UserCheck,
-  Eye,
   Shield,
   Download,
   Flame,
   ArrowRight,
+  Sun,
+  Moon,
+  Compass,
   LogOut
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
+import { useTheme } from "@/lib/theme-context";
+import { useTour } from "@/lib/tour-context";
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const router = useRouter();
-  const { switchPersona, logout, user } = useAuth();
+  const { user, logout } = useAuth();
+  const { theme, toggleTheme, setTheme } = useTheme();
+  const { startTour, isTourActive } = useTour();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -54,6 +59,26 @@ export function CommandPalette() {
   }, [open]);
 
   const items = [
+    // Interactive Tour
+    { 
+      name: isTourActive ? "Resume Interactive Guided Tour (Current Step)" : "Start Step-by-Step Interactive Tour (Step 1 to 7)", 
+      icon: Compass, 
+      action: () => startTour(0), 
+      section: "Guided Tour" 
+    },
+    { 
+      name: "Jump to Tour Step 2: Multi-Source Ingestion Deck", 
+      icon: Compass, 
+      action: () => startTour(1), 
+      section: "Guided Tour" 
+    },
+    { 
+      name: "Jump to Tour Step 4: AI Exception Triage Center", 
+      icon: Compass, 
+      action: () => startTour(3), 
+      section: "Guided Tour" 
+    },
+
     // Navigation
     { name: "Command Center Dashboard", icon: Layers, path: "/dashboard", section: "Navigation" },
     { name: "Multi-Source Reconciliation Matrix", icon: GitMerge, path: "/reconciliation", section: "Navigation" },
@@ -68,26 +93,6 @@ export function CommandPalette() {
     { name: "Inspect EX-108 (₹72,400 Unbacked Bank Deposit Anomaly)", icon: AlertCircle, path: "/exceptions/EX-108", section: "Exceptions" },
     { name: "Inspect BATCH-2026-09-DEMO (127 Canonical Records)", icon: GitMerge, path: "/batches/BATCH-2026-09-DEMO", section: "Batches" },
 
-    // Persona Switching
-    { 
-      name: "Switch Persona: Senior Controller (Abhinav V)", 
-      icon: UserCheck, 
-      action: () => switchPersona("controller"), 
-      section: "Persona Switcher" 
-    },
-    { 
-      name: "Switch Persona: Statutory Auditor (Sarah Jenkins — Read Only)", 
-      icon: Eye, 
-      action: () => switchPersona("auditor"), 
-      section: "Persona Switcher" 
-    },
-    { 
-      name: "Switch Persona: VP Finance Ops & Admin (Vikram Malhotra)", 
-      icon: Shield, 
-      action: () => switchPersona("admin"), 
-      section: "Persona Switcher" 
-    },
-
     // Quick Compliance & Operations
     { 
       name: "Download Statutory Audit Trail Export (CSV)", 
@@ -101,14 +106,34 @@ export function CommandPalette() {
       path: "/cash-position", 
       section: "Quick Actions" 
     },
+    // Appearance & Theme
     { 
-      name: "Sign Out of Session (Logout)", 
-      icon: LogOut, 
-      action: async () => {
-        await logout();
+      name: `Toggle Theme (Currently ${theme === "light" ? "Light Mode" : "Dark Mode"})`, 
+      icon: theme === "light" ? Moon : Sun, 
+      action: () => toggleTheme(), 
+      section: "Appearance" 
+    },
+    { 
+      name: "Switch to Light Mode (Institutional Slate)", 
+      icon: Sun, 
+      action: () => setTheme("light"), 
+      section: "Appearance" 
+    },
+    { 
+      name: "Switch to Dark Mode (Fintech Terminal)", 
+      icon: Moon, 
+      action: () => setTheme("dark"), 
+      section: "Appearance" 
+    },
+    // Authentication & Account
+    {
+      name: "Sign Out of Company Workspace",
+      icon: LogOut,
+      action: () => {
+        logout();
         router.push("/login");
-      }, 
-      section: "Session Management" 
+      },
+      section: "Account"
     },
   ];
 

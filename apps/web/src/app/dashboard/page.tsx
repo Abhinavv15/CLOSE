@@ -20,8 +20,9 @@ import {
   TrendingUp,
   Clock,
   RotateCw,
-  Compass,
+  Compass
 } from "lucide-react";
+import { useTour } from "@/lib/tour-context";
 import {
   AreaChart,
   Area,
@@ -33,6 +34,7 @@ import {
 } from "recharts";
 
 export default function DashboardPage() {
+  const { startTour } = useTour();
   const [loading, setLoading] = useState(true);
   const [runningClose, setRunningClose] = useState(false);
   const [demoLoaded, setDemoLoaded] = useState(true);
@@ -219,28 +221,6 @@ export default function DashboardPage() {
       <div className="relative">
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
 
-        {/* Walkthrough & CSV Guide Banner */}
-        <div className="mb-4 p-3 sm:p-3.5 rounded-xl bg-gradient-to-r from-blue-950/40 via-zinc-900/60 to-zinc-900/40 border border-blue-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-sm">
-          <div className="flex items-center space-x-2.5">
-            <div className="h-7 w-7 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0">
-              <Compass className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="font-semibold text-zinc-100">Product Tour & CSV Guide:</span>{" "}
-              <span className="text-zinc-400">
-                Learn how CLOSE reconciles 4 sources in 5 passes, diagnoses AI exceptions, and where to upload custom CSV statements.
-              </span>
-            </div>
-          </div>
-          <Link
-            href="/walkthrough"
-            className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 hover:text-white font-mono text-xs transition-colors shrink-0 self-start sm:self-auto"
-          >
-            <span>Explore Walkthrough</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
         {/* Title & Command Bar (Section 10) */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
           <div>
@@ -254,7 +234,7 @@ export default function DashboardPage() {
               </span>
             </div>
             <p className="text-xs text-zinc-400 mt-1">
-              AI Finance Controller — Reconcile the books. Explain the exceptions. Know your cash position.
+              Continuous multi-source close cycle across Bank, Gateway, Ledger, and Invoices.
             </p>
           </div>
 
@@ -389,6 +369,174 @@ export default function DashboardPage() {
             </div>
             <div className="text-[10px] text-emerald-400 mt-1 font-mono">STATUS: {cashPosition.status}</div>
           </motion.div>
+        </div>
+
+        {/* Step-by-Step Financial Close Lifecycle Pipeline */}
+        <div className="mt-6 p-4 sm:p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800/90 shadow-xl backdrop-blur-md">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-800/80">
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-zinc-900 text-white border border-zinc-900 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700 font-mono">
+                  CLOSE LIFECYCLE
+                </span>
+                <h2 className="text-sm font-bold text-white tracking-tight font-mono">
+                  Financial Close Pipeline: Step 1 Through Step 6
+                </h2>
+              </div>
+              <p className="text-xs text-zinc-400 mt-1 font-mono">
+                Sequential data flow: from raw statement ingestion to deterministic matching, AI triage, cash runway, and Merkle audit.
+              </p>
+            </div>
+
+            <button
+              onClick={() => startTour(0)}
+              className="self-start sm:self-auto px-3.5 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs font-mono transition-all shadow-md flex items-center space-x-1.5 shrink-0 group"
+            >
+              <Compass className="w-3.5 h-3.5" />
+              <span>Launch Step-by-Step Guided Tour</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 mt-4 font-mono text-xs">
+            {/* Step 1 */}
+            <Link
+              href="/batches"
+              className="p-3.5 rounded-xl bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] text-zinc-900 dark:text-zinc-300 font-bold uppercase">Step 1</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-zinc-800 text-zinc-300">127 Rows</span>
+                </div>
+                <div className="font-bold text-white group-hover:text-zinc-300 transition-colors">
+                  Ingest Statements
+                </div>
+                <p className="text-[11px] text-zinc-400 mt-1 leading-snug">
+                  Upload Bank, Stripe, Ledger & Invoices.
+                </p>
+              </div>
+              <div className="mt-3 pt-2 border-t border-zinc-800/80 text-[10px] text-zinc-500 group-hover:text-zinc-300 flex items-center justify-between">
+                <span>Open Step 1</span>
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Step 2 */}
+            <Link
+              href="/reconciliation"
+              className="p-3.5 rounded-xl bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] text-emerald-400 font-bold uppercase">Step 2</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-800/60">94.5% Match</span>
+                </div>
+                <div className="font-bold text-white group-hover:text-emerald-300 transition-colors">
+                  5-Pass Matching
+                </div>
+                <p className="text-[11px] text-zinc-400 mt-1 leading-snug">
+                  116 records matched in 0.08s with zero math errors.
+                </p>
+              </div>
+              <div className="mt-3 pt-2 border-t border-zinc-800/80 text-[10px] text-zinc-500 group-hover:text-zinc-300 flex items-center justify-between">
+                <span>Open Step 2</span>
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Step 3 */}
+            <Link
+              href="/exceptions"
+              className="p-3.5 rounded-xl bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] text-amber-400 font-bold uppercase">Step 3</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-950/60 text-amber-400 border border-amber-800/60">7 Anomalies</span>
+                </div>
+                <div className="font-bold text-white group-hover:text-amber-300 transition-colors">
+                  AI Exception Triage
+                </div>
+                <p className="text-[11px] text-zinc-400 mt-1 leading-snug">
+                  Autonomous tool citations & honest refusal.
+                </p>
+              </div>
+              <div className="mt-3 pt-2 border-t border-zinc-800/80 text-[10px] text-zinc-500 group-hover:text-zinc-300 flex items-center justify-between">
+                <span>Open Step 3</span>
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Step 4 */}
+            <Link
+              href="/cash-position"
+              className="p-3.5 rounded-xl bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] text-zinc-900 dark:text-zinc-300 font-bold uppercase">Step 4</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border-emerald-800/60">₹18.4L Safe</span>
+                </div>
+                <div className="font-bold text-white group-hover:text-zinc-300 transition-colors">
+                  Cash Forecast
+                </div>
+                <p className="text-[11px] text-zinc-400 mt-1 leading-snug">
+                  30-day forward curve & ₹2.4M payroll buffer.
+                </p>
+              </div>
+              <div className="mt-3 pt-2 border-t border-zinc-800/80 text-[10px] text-zinc-500 group-hover:text-zinc-300 flex items-center justify-between">
+                <span>Open Step 4</span>
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Step 5 */}
+            <Link
+              href="/evaluation"
+              className="p-3.5 rounded-xl bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] text-purple-400 font-bold uppercase">Step 5</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-purple-950/60 text-purple-400 border border-purple-800/60">96.6% Prec</span>
+                </div>
+                <div className="font-bold text-white group-hover:text-purple-300 transition-colors">
+                  Benchmarks
+                </div>
+                <p className="text-[11px] text-zinc-400 mt-1 leading-snug">
+                  Ground truth: 98.7% auto-resolution precision.
+                </p>
+              </div>
+              <div className="mt-3 pt-2 border-t border-zinc-800/80 text-[10px] text-zinc-500 group-hover:text-zinc-300 flex items-center justify-between">
+                <span>Open Step 5</span>
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Step 6 */}
+            <Link
+              href="/audit-log"
+              className="p-3.5 rounded-xl bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] text-emerald-400 font-bold uppercase">Step 6</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-zinc-800 text-zinc-300">SHA-256</span>
+                </div>
+                <div className="font-bold text-white group-hover:text-emerald-300 transition-colors">
+                  Merkle Audit
+                </div>
+                <p className="text-[11px] text-zinc-400 mt-1 leading-snug">
+                  Cryptographic chain & statutory CSV export.
+                </p>
+              </div>
+              <div className="mt-3 pt-2 border-t border-zinc-800/80 text-[10px] text-zinc-500 group-hover:text-zinc-300 flex items-center justify-between">
+                <span>Open Step 6</span>
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </Link>
+          </div>
         </div>
 
         {/* Main 2-Column Grid */}

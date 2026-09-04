@@ -18,6 +18,7 @@ import {
   RotateCw,
   TrendingDown
 } from "lucide-react";
+import { PipelineStepHeader } from "@/components/layout/pipeline-step-header";
 
 export default function ExceptionsPage() {
   const [activeFilter, setActiveFilter] = useState("ALL");
@@ -159,6 +160,11 @@ export default function ExceptionsPage() {
 
   return (
     <AppShell>
+      <PipelineStepHeader 
+        currentStep={3} 
+        subtitle="AI agent investigates fee variances and discrepancies with bounded tools." 
+      />
+
       {/* Header (Section 25) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
         <div>
@@ -169,7 +175,7 @@ export default function ExceptionsPage() {
             </span>
           </div>
           <p className="text-xs text-zinc-400 mt-1">
-            Investigate multi-source financial discrepancies with AI evidence citations and human-in-the-loop approvals.
+            Investigate discrepancies with AI evidence citations and human controller sign-off.
           </p>
         </div>
 

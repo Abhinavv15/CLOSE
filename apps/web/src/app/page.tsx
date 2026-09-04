@@ -17,10 +17,32 @@ import {
   Sparkles,
   FileCheck2,
   Lock,
-  Compass
+  Compass,
+  Sun,
+  Moon
 } from "lucide-react";
+import { useTheme } from "@/lib/theme-context";
+import { useTour } from "@/lib/tour-context";
 
 export default function LandingPage() {
+  const { theme, toggleTheme } = useTheme();
+  const { startTour } = useTour();
+  const [heroLetters, setHeroLetters] = React.useState("");
+
+  React.useEffect(() => {
+    let idx = 0;
+    const word = "CLOSE";
+    setHeroLetters("");
+    const timer = setInterval(() => {
+      idx++;
+      setHeroLetters(word.slice(0, idx));
+      if (idx >= word.length) {
+        clearInterval(timer);
+      }
+    }, 140);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <BackgroundGrid pattern="grid" className="min-h-screen text-zinc-100 selection:bg-zinc-800">
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
@@ -40,9 +62,9 @@ export default function LandingPage() {
         <div className="flex items-center space-x-2 sm:space-x-4">
           <Link
             href="/walkthrough"
-            className="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-blue-950/40 border border-blue-800/60 hover:border-blue-700 text-blue-300 hover:text-white transition-all font-mono flex items-center space-x-1.5"
+            className="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 text-zinc-900 dark:text-zinc-200 hover:text-black dark:hover:text-white transition-all font-mono flex items-center space-x-1.5"
           >
-            <Compass className="w-3.5 h-3.5 text-blue-400" />
+            <Compass className="w-3.5 h-3.5 text-zinc-700 dark:text-zinc-400" />
             <span>Product Tour & CSV Guide</span>
           </Link>
           <a
@@ -51,12 +73,24 @@ export default function LandingPage() {
           >
             Ground-Truth Benchmark
           </a>
-          <a
+          <button
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors flex items-center justify-center shrink-0"
+          >
+            {theme === "dark" ? (
+              <Sun className="w-4 h-4 text-amber-400" />
+            ) : (
+              <Moon className="w-4 h-4 text-zinc-400" />
+            )}
+          </button>
+          <Link
             href="/dashboard"
             className="text-xs px-3 sm:px-3.5 py-1.5 rounded-lg bg-white text-zinc-950 font-semibold hover:bg-zinc-200 transition-all shadow-sm shrink-0"
           >
             Launch Controller &rarr;
-          </a>
+          </Link>
         </div>
       </nav>
 
@@ -67,19 +101,22 @@ export default function LandingPage() {
           <span className="truncate">Deterministic Matching + AI Investigation + Ground Truth</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-white mb-4 sm:mb-6">
-          CLOSE
-          <span className="block text-lg sm:text-2xl lg:text-3xl font-light text-zinc-400 mt-2">
+        <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black tracking-[0.2em] text-white mb-4 sm:mb-6 font-mono flex flex-col items-center justify-center">
+          <span className="flex items-center justify-center min-h-[3rem] sm:min-h-[5rem]">
+            <span>{heroLetters || "CLOSE"}</span>
+            <span className="inline-block w-1.5 sm:w-2.5 h-8 sm:h-14 bg-white ml-2 sm:ml-3 rounded-xs animate-pulse shadow-[0_0_12px_rgba(255,255,255,0.7)]" />
+          </span>
+          <span className="block text-lg sm:text-2xl lg:text-3xl font-light text-zinc-400 mt-2 font-sans tracking-normal">
             AI Finance Controller
           </span>
         </h1>
 
-        <p className="text-sm sm:text-base md:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-10 font-normal">
-          Reconcile financial records, investigate ambiguous exceptions, and forecast cash — with indisputable evidence behind every decision.
+        <p className="text-sm sm:text-base md:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-8 font-normal">
+          Deterministic 5-pass reconciliation, autonomous AI exception triage, and 30-day cash forecasting.
         </p>
 
-        {/* Core Philosophy Callout (Section 2 & 68) */}
-        <div className="mb-8 sm:mb-10 max-w-2xl mx-auto p-3.5 sm:p-4 rounded-xl bg-zinc-900/50 border border-zinc-800 text-xs text-zinc-400 italic text-center">
+        {/* Core Philosophy Callout */}
+        <div className="mb-8 max-w-xl mx-auto p-3 rounded-xl bg-zinc-900/50 border border-zinc-800 text-xs text-zinc-400 italic text-center">
           &ldquo;Our deterministic engine handles what can be proven. Our AI handles what requires reasoning. When neither has enough evidence, CLOSE refuses to decide.&rdquo;
         </div>
 
@@ -95,20 +132,20 @@ export default function LandingPage() {
             </span>
           </ButtonWithMovingBorder>
 
+          <button
+            onClick={() => startTour(0)}
+            className="px-5 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-900 text-white dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:border-zinc-700 dark:text-zinc-200 text-sm font-semibold transition-all flex items-center space-x-2 shadow-lg"
+          >
+            <Compass className="w-4 h-4 text-zinc-300 animate-pulse" />
+            <span>Start Guided Tour</span>
+          </button>
+
           <Link
             href="/walkthrough"
-            className="px-6 py-3 rounded-xl bg-blue-950/40 hover:bg-blue-900/50 border border-blue-800/60 text-blue-200 hover:text-white text-sm font-medium transition-all flex items-center space-x-2"
+            className="px-5 py-3 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-sm font-medium transition-all flex items-center space-x-2"
           >
-            <Compass className="w-4 h-4 text-blue-400" />
-            <span>How It Works & CSV Guide</span>
+            <span>Documentation</span>
           </Link>
-
-          <a
-            href="/evaluation"
-            className="px-6 py-3 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-sm font-medium transition-all"
-          >
-            View Evaluation Metrics
-          </a>
         </div>
 
         {/* Live Controller Benchmark Bar (Section 8) */}
@@ -116,61 +153,61 @@ export default function LandingPage() {
           <div className="p-2.5 sm:p-3 border-r border-zinc-800/60">
             <div className="text-[10px] sm:text-[11px] font-mono text-zinc-400 uppercase">Records Processed</div>
             <div className="text-xl sm:text-2xl md:text-3xl font-bold font-tabular text-white mt-1">127</div>
-            <div className="text-[10px] text-zinc-400 font-mono mt-0.5 truncate">Synthetic Batch 001</div>
+            <div className="text-[10px] text-zinc-400 font-mono mt-0.5 truncate">Across 4 Sources</div>
           </div>
           <div className="p-2.5 sm:p-3 md:border-r border-zinc-800/60">
-            <div className="text-[10px] sm:text-[11px] font-mono text-zinc-400 uppercase">Match Rate</div>
+            <div className="text-[10px] sm:text-[11px] font-mono text-zinc-400 uppercase">Deterministic Match</div>
             <div className="text-xl sm:text-2xl md:text-3xl font-bold font-tabular text-emerald-400 mt-1">94.5%</div>
-            <div className="text-[10px] text-zinc-400 font-mono mt-0.5 truncate">Exact + Multi-source</div>
+            <div className="text-[10px] text-zinc-400 font-mono mt-0.5 truncate">Sub-100ms Speed</div>
           </div>
           <div className="p-2.5 sm:p-3 border-r border-zinc-800/60">
-            <div className="text-[10px] sm:text-[11px] font-mono text-zinc-400 uppercase">Auto-Resolution</div>
+            <div className="text-[10px] sm:text-[11px] font-mono text-zinc-400 uppercase">AI Precision</div>
             <div className="text-xl sm:text-2xl md:text-3xl font-bold font-tabular text-white mt-1">98.7%</div>
-            <div className="text-[10px] text-zinc-400 font-mono mt-0.5 truncate">Zero Hallucinations</div>
+            <div className="text-[10px] text-zinc-400 font-mono mt-0.5 truncate">0.0% Math Errors</div>
           </div>
           <div className="p-2.5 sm:p-3">
-            <div className="text-[10px] sm:text-[11px] font-mono text-zinc-400 uppercase">Unresolved Exceptions</div>
+            <div className="text-[10px] sm:text-[11px] font-mono text-zinc-400 uppercase">Honest Exceptions</div>
             <div className="text-xl sm:text-2xl md:text-3xl font-bold font-tabular text-amber-400 mt-1">7</div>
-            <div className="text-[10px] text-zinc-400 font-mono mt-0.5 truncate">Human Escalation</div>
+            <div className="text-[10px] text-zinc-400 font-mono mt-0.5 truncate">Refuses to Guess</div>
           </div>
         </div>
       </section>
 
       {/* Feature Pillar Cards */}
-      <section className="relative z-10 py-16 px-6 max-w-6xl mx-auto border-t border-zinc-900">
-        <div className="text-center mb-12">
-          <span className="text-xs font-mono uppercase tracking-widest text-zinc-400">Core Architecture</span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2">Built like an institutional control terminal</h2>
+      <section className="relative z-10 py-12 px-6 max-w-6xl mx-auto border-t border-zinc-900">
+        <div className="text-center mb-8">
+          <span className="text-xs font-mono uppercase tracking-widest text-zinc-400">Core Engine</span>
+          <h2 className="text-xl sm:text-2xl font-bold text-white mt-1">Institutional Financial Control Terminal</h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-3">
-            <div className="p-2.5 rounded-lg bg-zinc-800/60 w-fit text-zinc-200">
-              <Cpu className="w-5 h-5" />
+        <div className="grid md:grid-cols-3 gap-5">
+          <div className="p-5 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-2.5">
+            <div className="p-2 rounded-lg bg-zinc-800/60 w-fit text-zinc-200">
+              <Cpu className="w-4 h-4" />
             </div>
-            <h3 className="font-semibold text-white text-base">Deterministic Matching First</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Amounts, reference IDs, and tolerance windows are processed with deterministic algorithms. No fuzzy LLM arithmetic.
+            <h3 className="font-semibold text-white text-sm">Deterministic 5-Pass Core</h3>
+            <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+              Matches reference IDs, fees, and timing windows in 0.08s with strict Decimal precision. No arithmetic hallucinations.
             </p>
           </div>
 
-          <div className="p-6 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-3">
-            <div className="p-2.5 rounded-lg bg-zinc-800/60 w-fit text-zinc-200">
-              <ShieldCheck className="w-5 h-5" />
+          <div className="p-5 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-2.5">
+            <div className="p-2 rounded-lg bg-zinc-800/60 w-fit text-zinc-200">
+              <ShieldCheck className="w-4 h-4" />
             </div>
-            <h3 className="font-semibold text-white text-base">Evidence-First AI Agent</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              When differences arise, the AI queries transaction history and processor fees, returning structured citations and confidence scores.
+            <h3 className="font-semibold text-white text-sm">Autonomous AI Investigator</h3>
+            <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+              Investigates variances using bounded ledger and gateway search tools. Halts with honest refusal under 90% confidence.
             </p>
           </div>
 
-          <div className="p-6 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-3">
-            <div className="p-2.5 rounded-lg bg-zinc-800/60 w-fit text-zinc-200">
-              <TrendingUp className="w-5 h-5" />
+          <div className="p-5 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-2.5">
+            <div className="p-2 rounded-lg bg-zinc-800/60 w-fit text-zinc-200">
+              <TrendingUp className="w-4 h-4" />
             </div>
-            <h3 className="font-semibold text-white text-base">30-Day Forward Cash Forecast</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Calculates forward cash balance from proven receivables and liabilities, pairing the numbers with an AI-generated variance narrative.
+            <h3 className="font-semibold text-white text-sm">Forward Cash Runway</h3>
+            <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+              Projects 30-day liquidity from verified collections and scheduled bills, with automated payroll dip stress testing.
             </p>
           </div>
         </div>

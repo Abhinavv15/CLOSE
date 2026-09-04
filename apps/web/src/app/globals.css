@@ -88,3 +88,336 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
+
+/* ==========================================================================
+   LIGHT MODE DESIGN SYSTEM
+   Institutional Crisp Monochrome: #f8fafc canvas, #ffffff surfaces,
+   slate-900 typography, subtle slate-200 borders, high-contrast financial tags.
+   ========================================================================== */
+
+html.light {
+  color-scheme: light;
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+
+  /* Tailwind v4 color remapping */
+  --color-zinc-950: #f8fafc;
+  --color-zinc-900: #ffffff;
+  --color-zinc-800: #e2e8f0;
+  --color-zinc-700: #cbd5e1;
+  --color-zinc-600: #94a3b8;
+  --color-zinc-500: #64748b;
+  --color-zinc-400: #475569;
+  --color-zinc-300: #334155;
+  --color-zinc-200: #1e293b;
+  --color-zinc-100: #0f172a;
+}
+
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Base surface overrides in light mode */
+html.light .bg-zinc-950 {
+  background-color: #f8fafc !important;
+}
+
+html.light .bg-zinc-950\/80,
+html.light .bg-zinc-950\/90,
+html.light .bg-zinc-950\/95 {
+  background-color: rgba(248, 250, 252, 0.92) !important;
+}
+
+html.light .bg-zinc-900,
+html.light .bg-zinc-900\/40,
+html.light .bg-zinc-900\/50,
+html.light .bg-zinc-900\/60,
+html.light .bg-zinc-900\/70,
+html.light .bg-zinc-900\/80 {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-zinc-800,
+html.light .bg-zinc-800\/60,
+html.light .bg-zinc-800\/80 {
+  background-color: #f1f5f9 !important;
+}
+
+/* Borders */
+html.light .border-zinc-900,
+html.light .border-zinc-800,
+html.light .border-zinc-800\/60,
+html.light .border-zinc-800\/80 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light .border-zinc-700 {
+  border-color: #cbd5e1 !important;
+}
+
+/* Typography */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-zinc-950,
+html.light .text-zinc-900 {
+  color: #0f172a !important;
+}
+
+html.light .text-zinc-100 {
+  color: #0f172a !important;
+}
+
+html.light .text-zinc-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-zinc-300 {
+  color: #334155 !important;
+}
+
+html.light .text-zinc-400 {
+  color: #64748b !important;
+}
+
+html.light .text-zinc-500 {
+  color: #94a3b8 !important;
+}
+
+/* Hovers */
+html.light .hover\:bg-zinc-900:hover,
+html.light .hover\:bg-zinc-900\/60:hover {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .hover\:bg-zinc-800:hover,
+html.light .hover\:bg-zinc-800\/30:hover {
+  background-color: #e2e8f0 !important;
+}
+
+html.light .hover\:text-white:hover {
+  color: #0f172a !important;
+}
+
+/* Invert solid white action buttons & links in light mode to solid dark */
+html.light button.bg-white,
+html.light a.bg-white {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border-color: #0f172a !important;
+}
+html.light button.bg-white *,
+html.light a.bg-white * {
+  color: #ffffff !important;
+}
+html.light button.bg-white:hover,
+html.light a.bg-white:hover {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+html.light button.bg-white:hover *,
+html.light a.bg-white:hover * {
+  color: #ffffff !important;
+}
+
+/* Financial Accent Badges in Light Mode */
+html.light .bg-emerald-950,
+html.light .bg-emerald-950\/90,
+html.light .bg-emerald-950\/80,
+html.light .bg-emerald-950\/60,
+html.light .bg-emerald-950\/50,
+html.light .bg-emerald-950\/40,
+html.light .bg-emerald-950\/30,
+html.light .bg-emerald-950\/20,
+html.light .bg-emerald-900\/40,
+html.light .bg-emerald-900\/50 {
+  background-color: #ecfdf5 !important;
+  color: #047857 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html.light .text-emerald-400,
+html.light .text-emerald-300 {
+  color: #047857 !important;
+}
+
+html.light .border-emerald-900,
+html.light .border-emerald-900\/50,
+html.light .border-emerald-800,
+html.light .border-emerald-800\/50,
+html.light .border-emerald-800\/60,
+html.light .border-emerald-700,
+html.light .border-emerald-700\/60 {
+  border-color: #a7f3d0 !important;
+}
+
+html.light .bg-amber-950,
+html.light .bg-amber-950\/90,
+html.light .bg-amber-950\/80,
+html.light .bg-amber-950\/60,
+html.light .bg-amber-950\/50,
+html.light .bg-amber-950\/40,
+html.light .bg-amber-950\/30,
+html.light .bg-amber-950\/20,
+html.light .bg-amber-900\/40,
+html.light .bg-amber-900\/50 {
+  background-color: #fffbeb !important;
+  color: #b45309 !important;
+  border-color: #fde68a !important;
+}
+
+html.light .text-amber-400,
+html.light .text-amber-300 {
+  color: #b45309 !important;
+}
+
+html.light .border-amber-800,
+html.light .border-amber-800\/40,
+html.light .border-amber-800\/50,
+html.light .border-amber-800\/60,
+html.light .border-amber-700,
+html.light .border-amber-700\/60 {
+  border-color: #fde68a !important;
+}
+
+/* Sleek Charcoal & Slate in Light Mode (Institutional Monochrome replacing all blue) */
+html.light .bg-blue-950,
+html.light .bg-blue-950\/90,
+html.light .bg-blue-950\/80,
+html.light .bg-blue-950\/70,
+html.light .bg-blue-950\/60,
+html.light .bg-blue-950\/50,
+html.light .bg-blue-950\/40,
+html.light .bg-blue-950\/30,
+html.light .bg-blue-950\/20,
+html.light .bg-blue-900\/30,
+html.light .bg-blue-900\/40,
+html.light .bg-blue-900\/50,
+html.light .bg-blue-900\/60,
+html.light .bg-blue-600,
+html.light .bg-blue-700 {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border-color: #1e293b !important;
+}
+
+html.light .bg-blue-50,
+html.light .bg-blue-50\/80,
+html.light .bg-blue-50\/70,
+html.light .bg-blue-50\/60,
+html.light .bg-blue-50\/40,
+html.light .bg-blue-100 {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light .hover\:bg-blue-900\/50:hover,
+html.light .hover\:bg-blue-950\/50:hover,
+html.light .hover\:bg-blue-100:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light .text-blue-600,
+html.light .text-blue-700,
+html.light .text-blue-800 {
+  color: #0f172a !important;
+}
+
+html.light .text-blue-400,
+html.light .text-blue-300,
+html.light .text-blue-200 {
+  color: #334155 !important;
+}
+
+html.light .border-blue-900,
+html.light .border-blue-900\/50,
+html.light .border-blue-800,
+html.light .border-blue-800\/60,
+html.light .border-blue-800\/80,
+html.light .border-blue-700,
+html.light .border-blue-700\/60,
+html.light .border-blue-500,
+html.light .border-blue-500\/40,
+html.light .border-blue-500\/80,
+html.light .border-blue-400,
+html.light .border-blue-300,
+html.light .border-blue-200 {
+  border-color: #cbd5e1 !important;
+}
+
+html.light .ring-blue-500\/20,
+html.light .ring-blue-500\/30 {
+  --tw-ring-color: rgba(15, 23, 42, 0.15) !important;
+}
+
+html.light .bg-blue-950 *,
+html.light .bg-blue-900 *,
+html.light .bg-blue-600 *,
+html.light .bg-blue-700 *,
+html.light button.bg-blue-600 *,
+html.light a.bg-blue-600 * {
+  color: #ffffff !important;
+}
+
+html.light .bg-blue-950 svg,
+html.light .bg-blue-900 svg,
+html.light .bg-blue-600 svg,
+html.light .bg-blue-700 svg,
+html.light button.bg-blue-600 svg,
+html.light a.bg-blue-600 svg {
+  color: #ffffff !important;
+  stroke: currentColor;
+}
+
+html.light .bg-rose-950,
+html.light .bg-rose-950\/80,
+html.light .bg-rose-950\/60,
+html.light .bg-rose-950\/50,
+html.light .bg-rose-950\/40,
+html.light .bg-rose-950\/30,
+html.light .bg-rose-950\/20 {
+  background-color: #fff1f2 !important;
+  color: #e11d48 !important;
+  border-color: #fecdd3 !important;
+}
+
+html.light .text-rose-400,
+html.light .text-rose-300 {
+  color: #e11d48 !important;
+}
+
+html.light .border-rose-800,
+html.light .border-rose-800\/40,
+html.light .border-rose-800\/60 {
+  border-color: #fecdd3 !important;
+}
+
+/* Light mode overrides for active stepper items and cards */
+html.light .bg-zinc-800\/90 {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+html.light .bg-gradient-to-r.from-blue-950\/40 {
+  background-image: linear-gradient(to right, #eff6ff, #f8fafc) !important;
+  border-color: #bfdbfe !important;
+}
+
+/* Scrollbar in light mode */
+html.light ::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/lib/theme-context";
+import { TourProvider } from "@/lib/tour-context";
+import { InteractiveTourModal } from "@/components/tour/interactive-tour-modal";
+import { CinematicIntro } from "@/components/brand/cinematic-intro";
 
 export const metadata: Metadata = {
   title: "CLOSE — AI Finance Controller",
@@ -11,16 +15,21 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-zinc-950 text-zinc-100 min-h-screen">
-        {children}
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className="bg-zinc-950 text-zinc-100 min-h-screen transition-colors duration-200" suppressHydrationWarning>
+        <ThemeProvider>
+          <TourProvider>
+            <CinematicIntro />
+            {children}
+            <InteractiveTourModal />
+          </TourProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

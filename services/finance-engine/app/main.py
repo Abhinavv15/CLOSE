@@ -96,6 +96,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 @app.get("/health", tags=["System"])
 @app.get("/healthz", tags=["System"])
 @app.get("/api/health", tags=["System"])
+@app.get("/api/healthz", tags=["System"])
 async def health_check():
     db_ok = check_db_connection()
     return {

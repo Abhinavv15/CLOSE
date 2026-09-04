@@ -15,6 +15,10 @@ from app.models import (
     LedgerEntry,
     Invoice,
     ReconciliationBatch,
+    ReconciliationMatch,
+    ExceptionRecord,
+    ExceptionEvidence,
+    EvaluationRun,
 )
 from app.core.security import hash_password
 from app.services.synthetic_generator import SyntheticDataGenerator
@@ -102,9 +106,23 @@ def seed_demo_dataset(db: Session, count: int = 127) -> Dict[str, Any]:
         )
         db.add(account)
 
-    # 4. Reconciliation Batch
+    # 4. Reconciliation Batch & Cleanup of previous runs
+    from sqlalchemy import select
+    batch_id_to_seed = "batch_close_2026_09"
+    db.query(ReconciliationMatch).filter_by(batch_id=batch_id_to_seed).delete()
+    subq = select(ExceptionRecord.id).where(ExceptionRecord.batch_id == batch_id_to_seed)
+    db.query(ExceptionEvidence).filter(ExceptionEvidence.exception_id.in_(subq)).delete(synchronize_session=False)
+    db.query(ExceptionRecord).filter_by(batch_id=batch_id_to_seed).delete()
+    db.query(EvaluationRun).filter_by(batch_id=batch_id_to_seed).delete()
+    db.query(Invoice).filter_by(batch_id=batch_id_to_seed).delete()
+    db.query(ProcessorTransaction).filter_by(batch_id=batch_id_to_seed).delete()
+    db.query(BankTransaction).filter_by(batch_id=batch_id_to_seed).delete()
+    db.query(LedgerEntry).filter_by(batch_id=batch_id_to_seed).delete()
+    db.query(ReconciliationBatch).filter_by(id=batch_id_to_seed).delete()
+    db.flush()
+
     batch = ReconciliationBatch(
-        id="batch_close_2026_09",
+        id=batch_id_to_seed,
         company_id=company.id,
         status="COMPLETED",
         records_processed=count,
@@ -114,11 +132,6 @@ def seed_demo_dataset(db: Session, count: int = 127) -> Dict[str, Any]:
         unresolved=7,
         match_rate=0.945,
     )
-    # Check if batch already exists, remove or replace
-    existing_batch = db.query(ReconciliationBatch).filter_by(id=batch.id).first()
-    if existing_batch:
-        db.delete(existing_batch)
-        db.flush()
     db.add(batch)
     db.flush()
 

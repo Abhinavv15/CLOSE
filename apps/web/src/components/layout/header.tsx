@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Shield, ChevronDown, Check, Eye, UserCheck, ShieldAlert, Menu, LogOut, Compass } from "lucide-react";
-import { useAuth, PRESET_PERSONAS } from "@/lib/auth-context";
+import { Search, Shield, ChevronDown, Check, Menu, Compass, Sun, Moon, Building2, LogOut } from "lucide-react";
+import { useAuth } from "@/lib/auth-context";
+import { useTheme } from "@/lib/theme-context";
+import { useTour } from "@/lib/tour-context";
 
 interface HeaderProps {
   onToggleMobileMenu?: () => void;
@@ -12,7 +13,9 @@ interface HeaderProps {
 
 export function Header({ onToggleMobileMenu }: HeaderProps) {
   const router = useRouter();
-  const { user, switchPersona, logout, isAuditor } = useAuth();
+  const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
+  const { startTour, isTourActive } = useTour();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -48,27 +51,18 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
             Sep 2026
           </span>
         </div>
-
-        {/* Auditor Read-Only Banner */}
-        {isAuditor && (
-          <div className="hidden xl:flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-[11px] font-mono text-amber-400">
-            <Eye className="w-3 h-3" />
-            <span className="font-semibold">AUDITOR REVIEW MODE</span>
-            <span className="text-amber-500/70 text-[10px]">(Read-Only)</span>
-          </div>
-        )}
       </div>
 
       <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
-        {/* Walkthrough & Guide Button */}
-        <Link
-          href="/walkthrough"
-          className="hidden md:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-blue-950/30 hover:bg-blue-900/40 border border-blue-800/60 text-xs font-mono text-blue-300 hover:text-white transition-colors"
-          title="Interactive Product Tour & CSV Schema Guide"
+        {/* Interactive Guided Tour Button */}
+        <button
+          onClick={() => startTour(0)}
+          className="hidden md:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-900 text-xs font-mono text-white dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:border-zinc-700 dark:text-zinc-200 transition-all shadow-sm font-semibold"
+          title="Launch Step-by-Step Guided Product Walkthrough"
         >
-          <Compass className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-          <span>Walkthrough & CSV Guide</span>
-        </Link>
+          <Compass className={`w-3.5 h-3.5 text-zinc-300 shrink-0 ${isTourActive ? "animate-spin" : ""}`} />
+          <span>{isTourActive ? "Resume Tour" : "Guided Tour"}</span>
+        </button>
         {/* Search / Command trigger */}
         <button
           onClick={() => {
@@ -94,96 +88,98 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
           <span className="text-zinc-200">ONLINE</span>
         </div>
 
-        {/* Persona Switcher Dropdown */}
+        {/* Theme Toggle (Dark / Light) */}
+        <button
+          onClick={toggleTheme}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors flex items-center justify-center shrink-0"
+        >
+          {theme === "dark" ? (
+            <Sun className="w-4 h-4 text-amber-400" />
+          ) : (
+            <Moon className="w-4 h-4 text-zinc-400" />
+          )}
+        </button>
+
+        {/* Company Workspace Profile & Organization Info */}
         <div className="relative pl-1 sm:pl-2 border-l border-zinc-800" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center space-x-1.5 sm:space-x-2 p-1 rounded-lg hover:bg-zinc-900 transition-colors text-left"
-            aria-label="Switch User Persona"
+            className="flex items-center space-x-1.5 sm:space-x-2 p-1.5 rounded-lg hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-colors text-left cursor-pointer"
+            aria-label="View Company Workspace Info"
+            title="Company Organization Workspace"
           >
-            <div
-              className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-semibold border shrink-0 ${
-                user.role === "AUDITOR"
-                  ? "bg-amber-500/10 border-amber-500/40 text-amber-300"
-                  : user.role === "ADMIN"
-                  ? "bg-zinc-800 border-zinc-600 text-white"
-                  : "bg-zinc-900 border-zinc-700 text-emerald-300"
-              }`}
-            >
-              {user.avatar}
+            <div className="h-7 w-7 rounded-lg bg-zinc-900 border border-zinc-700 text-zinc-200 flex items-center justify-center text-xs font-semibold shrink-0">
+              <Building2 className="w-4 h-4 text-emerald-400" />
             </div>
             <div className="hidden lg:flex flex-col text-left">
-              <span className="text-xs font-medium text-zinc-200 leading-none">{user.name}</span>
-              <span className="text-[10px] font-mono text-zinc-500 leading-tight mt-0.5">{user.role}</span>
+              <span className="text-xs font-semibold text-zinc-200 leading-none truncate max-w-[140px]">{user.company}</span>
+              <span className="text-[10px] font-mono text-emerald-400 leading-tight mt-0.5 flex items-center space-x-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 inline-block" />
+                <span>Enterprise Active</span>
+              </span>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
           </button>
 
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-64 max-w-[calc(100vw-1.5rem)] rounded-xl bg-zinc-950 border border-zinc-800 shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 font-sans">
-              <div className="px-2 py-1.5 mb-1 border-b border-zinc-900">
-                <span className="text-[10px] font-mono uppercase text-zinc-500 font-semibold tracking-wider">
-                  Switch User Persona
-                </span>
+            <div className="absolute right-0 mt-2 w-72 max-w-[calc(100vw-1.5rem)] rounded-xl bg-zinc-950 border border-zinc-800 shadow-2xl p-3 z-50 animate-in fade-in zoom-in-95 duration-100 font-sans">
+              <div className="flex items-start space-x-3 pb-3 border-b border-zinc-800/80">
+                <div className="h-9 w-9 rounded-lg bg-zinc-900 border border-zinc-700 text-white flex items-center justify-center shrink-0 mt-0.5">
+                  <Building2 className="w-5 h-5 text-emerald-400" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-xs font-bold text-white truncate">{user.company}</div>
+                  <div className="text-[10px] font-mono text-zinc-400">{user.legalEntity}</div>
+                  <span className="inline-block font-mono text-[9px] px-1.5 py-0.5 rounded mt-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-medium">
+                    SOC-2 Type II Certified
+                  </span>
+                </div>
               </div>
 
-              {Object.entries(PRESET_PERSONAS).map(([key, persona]) => {
-                const isActive = user.id === persona.id;
-                return (
-                  <button
-                    key={key}
-                    onClick={() => {
-                      switchPersona(key as "controller" | "auditor" | "admin");
-                      setDropdownOpen(false);
-                    }}
-                    className={`w-full flex items-start space-x-2.5 p-2 rounded-lg text-left transition-colors ${
-                      isActive ? "bg-zinc-900 text-white" : "text-zinc-400 hover:bg-zinc-900/60 hover:text-zinc-200"
-                    }`}
-                  >
-                    <div
-                      className={`h-6 w-6 mt-0.5 rounded-full flex items-center justify-center text-[10px] font-bold border shrink-0 ${
-                        persona.role === "AUDITOR"
-                          ? "bg-amber-500/10 border-amber-500/30 text-amber-400"
-                          : persona.role === "ADMIN"
-                          ? "bg-zinc-800 border-zinc-600 text-white"
-                          : "bg-zinc-900 border-zinc-700 text-emerald-400"
-                      }`}
-                    >
-                      {persona.avatar}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-medium truncate">{persona.name}</span>
-                        {isActive && <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 ml-1" />}
-                      </div>
-                      <span className="text-[10px] text-zinc-500 block truncate">{persona.title}</span>
-                      <span
-                        className={`inline-block font-mono text-[9px] px-1.5 py-0.2 rounded mt-1 border ${
-                          persona.role === "AUDITOR"
-                            ? "bg-amber-500/10 border-amber-500/30 text-amber-400"
-                            : persona.role === "ADMIN"
-                            ? "bg-zinc-800 border-zinc-700 text-zinc-300"
-                            : "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                        }`}
-                      >
-                        {persona.role}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
+              <div className="py-2.5 space-y-2 text-xs font-mono">
+                <div className="flex items-center justify-between text-zinc-400">
+                  <span>Workspace:</span>
+                  <span className="text-zinc-200 font-sans font-medium">{user.name}</span>
+                </div>
+                <div className="flex items-center justify-between text-zinc-400">
+                  <span>Jurisdiction:</span>
+                  <span className="text-zinc-200">US (SEC Regulated)</span>
+                </div>
+                <div className="flex items-center justify-between text-zinc-400">
+                  <span>Base Currency:</span>
+                  <span className="text-zinc-200">{user.currency}</span>
+                </div>
+                <div className="flex items-center justify-between text-zinc-400">
+                  <span>Fiscal Period:</span>
+                  <span className="text-emerald-400 font-bold">Sep 2026 (Open)</span>
+                </div>
+                <div className="flex items-center justify-between text-zinc-400">
+                  <span>Engine:</span>
+                  <span className="text-zinc-200">5-Pass Deterministic</span>
+                </div>
+              </div>
 
-              <div className="pt-2 mt-1.5 border-t border-zinc-900">
+              <div className="pt-2.5 border-t border-zinc-900 text-[11px] text-zinc-500 flex items-center justify-between">
+                <span>Autonomous Controller</span>
+                <span className="text-emerald-400 font-mono text-[10px]">ALL PERMISSIONS</span>
+              </div>
+
+              <div className="pt-2 border-t border-zinc-900 mt-2">
                 <button
                   onClick={async () => {
                     setDropdownOpen(false);
                     await logout();
                     router.push("/login");
                   }}
-                  className="w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-red-400 hover:bg-red-950/40 hover:text-red-300 transition-colors text-xs font-mono"
+                  className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-400 hover:text-red-400 hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-colors text-xs font-mono cursor-pointer"
                 >
-                  <LogOut className="w-3.5 h-3.5" />
-                  <span>Sign Out of Session</span>
+                  <span className="flex items-center space-x-2">
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out / Switch Company</span>
+                  </span>
+                  <span className="text-[10px] text-zinc-500">&rarr;</span>
                 </button>
               </div>
             </div>

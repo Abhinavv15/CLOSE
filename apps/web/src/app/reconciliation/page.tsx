@@ -22,6 +22,7 @@ import {
   ArrowUpDown,
   RotateCw
 } from "lucide-react";
+import { PipelineStepHeader } from "@/components/layout/pipeline-step-header";
 
 export default function ReconciliationPage() {
   const [filterMethod, setFilterMethod] = useState<string>("ALL");
@@ -161,6 +162,11 @@ export default function ReconciliationPage() {
 
   return (
     <AppShell>
+      <PipelineStepHeader 
+        currentStep={2} 
+        subtitle="5 deterministic passes matching bank, processor, and ledger records." 
+      />
+
       {/* Header & Batch Context */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
         <div>
@@ -174,7 +180,7 @@ export default function ReconciliationPage() {
             </span>
           </div>
           <p className="text-xs text-zinc-400 mt-1">
-            Deterministic multi-pass reconciliation across Bank, Processor, General Ledger, and Invoices.
+            Multi-pass reconciliation across Bank, Gateway, Ledger, and Invoices.
           </p>
         </div>
 

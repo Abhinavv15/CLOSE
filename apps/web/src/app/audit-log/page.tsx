@@ -22,6 +22,7 @@ import {
   ShieldAlert,
   Hash
 } from "lucide-react";
+import { PipelineStepHeader } from "@/components/layout/pipeline-step-header";
 
 export default function AuditLogPage() {
   const { user, isAuditor } = useAuth();
@@ -96,6 +97,11 @@ export default function AuditLogPage() {
 
   return (
     <AppShell>
+      <PipelineStepHeader 
+        currentStep={6} 
+        subtitle="SHA-256 Merkle chain for tamper-proof statutory compliance." 
+      />
+
       {/* Header & Compliance Controls (Section 30) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-5">
         <div>
@@ -104,14 +110,12 @@ export default function AuditLogPage() {
             <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 border border-zinc-700 text-zinc-300">
               Append-Only SHA-256
             </span>
-            {isAuditor && (
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/10 border border-amber-500/30 text-amber-400 font-semibold">
-                Auditor View (Sarah Jenkins)
-              </span>
-            )}
+            <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">
+              Corporate Workspace (Demo Technologies)
+            </span>
           </div>
           <p className="text-xs text-zinc-400 mt-1">
-            Deterministic cryptographic log of matches, data sources, AI reasoning graphs, and human sign-offs.
+            Cryptographic log of all reconciliations, AI actions, and human sign-offs.
           </p>
         </div>
 

@@ -18,6 +18,7 @@ import {
   CheckCircle2,
   AlertTriangle
 } from "lucide-react";
+import { PipelineStepHeader } from "@/components/layout/pipeline-step-header";
 import {
   AreaChart,
   Area,
@@ -95,6 +96,11 @@ export default function CashPositionPage() {
 
   return (
     <AppShell>
+      <PipelineStepHeader 
+        currentStep={4} 
+        subtitle="30-day forward liquidity curve with payroll buffer stress testing." 
+      />
+
       {/* Header & Timeframe Selector (Section 37) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
         <div>
@@ -111,7 +117,7 @@ export default function CashPositionPage() {
             </span>
           </div>
           <p className="text-xs text-zinc-400 mt-1">
-            Deterministic forward liquidity calculation based on verified receivables and recurring operational outflows.
+            Forward liquidity based on verified receivables and operational outflows.
           </p>
         </div>
 
@@ -315,7 +321,7 @@ export default function CashPositionPage() {
             <Sparkles className="w-4 h-4 text-zinc-300" />
             <h3 className="text-sm font-semibold text-white">AI Controller Forecast Analysis</h3>
           </div>
-          <span className="text-[10px] text-zinc-400">Formula-driven arithmetic · AI synthesized</span>
+          <span className="text-[10px] text-zinc-400">Formula-driven arithmetic</span>
         </div>
 
         <div className="space-y-3 leading-relaxed text-zinc-300">

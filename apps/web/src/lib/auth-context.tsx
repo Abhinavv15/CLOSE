@@ -2,9 +2,9 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-export type Role = "CONTROLLER" | "AUDITOR" | "ADMIN";
+export type Role = "CONTROLLER";
 
-export interface UserProfile {
+export interface CompanyProfile {
   id: string;
   name: string;
   email: string;
@@ -13,196 +13,177 @@ export interface UserProfile {
   avatar: string;
   company: string;
   company_id: string;
+  legalEntity: string;
+  jurisdiction: string;
+  fiscalYear: string;
+  currency: string;
+  tier: string;
   permissions: string[];
 }
 
-export const PRESET_PERSONAS: Record<string, UserProfile> = {
-  controller: {
-    id: "usr_controller_01",
-    name: "Abhinav V",
-    email: "abhinav@democorp.internal",
-    role: "CONTROLLER",
-    title: "Senior Financial Controller",
-    avatar: "AV",
-    company: "Demo Technologies Pvt Ltd",
-    company_id: "cmp_demo_001",
-    permissions: [
-      "reconciliation:run",
-      "reconciliation:view",
-      "exceptions:triage",
-      "exceptions:approve",
-      "exceptions:reject",
-      "exceptions:investigate",
-      "cash:view",
-      "cash:forecast",
-      "audit:view",
-      "evaluation:view",
-    ],
-  },
-  auditor: {
-    id: "usr_auditor_02",
-    name: "Sarah Jenkins",
-    email: "sarah.auditor@kpmg-audit.internal",
-    role: "AUDITOR",
-    title: "Lead Statutory Auditor",
-    avatar: "SJ",
-    company: "KPMG Statutory Audit LLP",
-    company_id: "cmp_audit_001",
-    permissions: [
-      "reconciliation:view",
-      "exceptions:view",
-      "cash:view",
-      "audit:view",
-      "audit:export",
-      "evaluation:view",
-    ],
-  },
-  admin: {
-    id: "usr_admin_03",
-    name: "Vikram Malhotra",
-    email: "vikram.admin@democorp.internal",
-    role: "ADMIN",
-    title: "VP Finance Operations",
-    avatar: "VM",
-    company: "Demo Technologies Pvt Ltd",
-    company_id: "cmp_demo_001",
-    permissions: [
-      "reconciliation:run",
-      "reconciliation:view",
-      "exceptions:triage",
-      "exceptions:approve",
-      "exceptions:reject",
-      "cash:view",
-      "cash:forecast",
-      "audit:view",
-      "audit:export",
-      "evaluation:view",
-      "system:configure",
-      "data:seed",
-    ],
-  },
+export type UserProfile = CompanyProfile;
+
+export const DEFAULT_COMPANY: CompanyProfile = {
+  id: "org_enterprise_01",
+  name: "Corporate Finance",
+  email: "controller@demotechnologies.internal",
+  role: "CONTROLLER",
+  title: "Enterprise Autonomous Controller",
+  avatar: "DT",
+  company: "Demo Technologies Inc.",
+  company_id: "cmp_demo_001",
+  legalEntity: "Demo Technologies Inc. (Delaware C-Corp)",
+  jurisdiction: "United States (SEC Regulated)",
+  fiscalYear: "FY 2026",
+  currency: "USD ($)",
+  tier: "Institutional Enterprise",
+  permissions: [
+    "reconciliation:run",
+    "reconciliation:view",
+    "exceptions:triage",
+    "exceptions:approve",
+    "exceptions:reject",
+    "exceptions:investigate",
+    "cash:view",
+    "cash:forecast",
+    "audit:view",
+    "audit:export",
+    "evaluation:view",
+    "system:configure",
+    "data:seed",
+  ],
 };
 
-import { api } from "@/lib/api";
+export const PRESET_PERSONAS: Record<string, CompanyProfile> = {
+  company: DEFAULT_COMPANY,
+};
 
 export interface AuthContextType {
-  user: UserProfile;
-  personas: UserProfile[];
-  switchPersona: (key: "controller" | "auditor" | "admin") => Promise<void>;
+  user: CompanyProfile;
+  company: CompanyProfile;
+  personas: CompanyProfile[];
+  isAuthenticated: boolean;
   hasPermission: (permission: string) => boolean;
   isAuditor: boolean;
   isController: boolean;
   isAdmin: boolean;
-  login: (credentials?: { email?: string; password?: string; persona_key?: string } | string) => Promise<void>;
+  login: (credentials?: { company?: string; email?: string; password?: string }) => Promise<void>;
+  signup: (details: { company: string; email: string; legalEntity?: string; currency?: string; password?: string }) => Promise<void>;
   logout: () => Promise<void>;
+  switchPersona: (key?: string) => Promise<void>;
   loading: boolean;
   error: string | null;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-const AUTH_STORAGE_KEY = "close_auth_persona";
-const AUTH_TOKEN_KEY = "close_auth_token";
+const AuthContext = createContext<AuthContextType>({
+  user: DEFAULT_COMPANY,
+  company: DEFAULT_COMPANY,
+  personas: [DEFAULT_COMPANY],
+  isAuthenticated: true,
+  hasPermission: () => true,
+  isAuditor: false,
+  isController: true,
+  isAdmin: true,
+  login: async () => {},
+  signup: async () => {},
+  logout: async () => {},
+  switchPersona: async () => {},
+  loading: false,
+  error: null,
+});
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [currentUser, setCurrentUser] = useState<UserProfile>(PRESET_PERSONAS.controller);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [currentCompany, setCurrentCompany] = useState<CompanyProfile>(DEFAULT_COMPANY);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Restore authenticated session from PostgreSQL via JWT token
   useEffect(() => {
-    async function restoreSession() {
-      try {
-        const token = localStorage.getItem(AUTH_TOKEN_KEY);
-        if (token) {
-          const profile = await api.getMe(token);
-          if (profile && profile.email) {
-            setCurrentUser(profile);
-            setLoading(false);
-            return;
-          }
-        }
-        
-        // Fallback to saved persona
-        const savedPersona = localStorage.getItem(AUTH_STORAGE_KEY);
-        if (savedPersona && PRESET_PERSONAS[savedPersona]) {
-          setCurrentUser(PRESET_PERSONAS[savedPersona]);
-        }
-      } catch {
-        // Safe default
-      } finally {
-        setLoading(false);
+    try {
+      const savedAuth = localStorage.getItem("close_auth_status");
+      if (savedAuth === "logged_out") {
+        setIsAuthenticated(false);
+      } else {
+        setIsAuthenticated(true);
       }
-    }
-    restoreSession();
+
+      const savedCompany = localStorage.getItem("close_company_profile");
+      if (savedCompany) {
+        setCurrentCompany(JSON.parse(savedCompany));
+      }
+    } catch {}
   }, []);
 
-  const login = async (credentials?: { email?: string; password?: string; persona_key?: string } | string) => {
-    setError(null);
+  const login = async (credentials?: { company?: string; email?: string; password?: string }) => {
     setLoading(true);
+    setError(null);
     try {
-      let payload: { email?: string; password?: string; persona_key?: string } = {};
-      if (typeof credentials === "string") {
-        payload = { persona_key: credentials };
-      } else if (credentials) {
-        payload = credentials;
-      } else {
-        payload = { persona_key: "controller" };
-      }
-
-      const res = await api.login(payload);
-      if (res && res.token) {
-        localStorage.setItem(AUTH_TOKEN_KEY, res.token);
-        if (payload.persona_key) {
-          localStorage.setItem(AUTH_STORAGE_KEY, payload.persona_key);
-        }
-        setCurrentUser(res.user);
-      }
+      const companyName = credentials?.company?.trim() || "Demo Technologies Inc.";
+      const updated: CompanyProfile = {
+        ...DEFAULT_COMPANY,
+        company: companyName,
+        legalEntity: `${companyName} (Delaware C-Corp)`,
+        email: credentials?.email?.trim() || "controller@demotechnologies.internal",
+        avatar: companyName.slice(0, 2).toUpperCase(),
+      };
+      setCurrentCompany(updated);
+      setIsAuthenticated(true);
+      localStorage.setItem("close_auth_status", "logged_in");
+      localStorage.setItem("close_company_profile", JSON.stringify(updated));
     } catch (err: any) {
-      setError(err?.message || "Invalid corporate credentials");
+      setError(err?.message || "Failed to authenticate workspace.");
       throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  const switchPersona = async (key: "controller" | "auditor" | "admin") => {
+  const signup = async (details: { company: string; email: string; legalEntity?: string; currency?: string; password?: string }) => {
+    setLoading(true);
+    setError(null);
     try {
-      await login({ persona_key: key });
-    } catch {
-      // Fallback
-      if (PRESET_PERSONAS[key]) {
-        setCurrentUser(PRESET_PERSONAS[key]);
-        localStorage.setItem(AUTH_STORAGE_KEY, key);
-      }
+      const name = details.company.trim() || "New Company Inc.";
+      const newProfile: CompanyProfile = {
+        ...DEFAULT_COMPANY,
+        id: `org_${Date.now()}`,
+        company: name,
+        legalEntity: details.legalEntity || `${name} (Institutional Entity)`,
+        email: details.email.trim(),
+        currency: details.currency || "USD ($)",
+        avatar: name.slice(0, 2).toUpperCase(),
+      };
+      setCurrentCompany(newProfile);
+      setIsAuthenticated(true);
+      localStorage.setItem("close_auth_status", "logged_in");
+      localStorage.setItem("close_company_profile", JSON.stringify(newProfile));
+    } catch (err: any) {
+      setError(err?.message || "Failed to create corporate workspace.");
+      throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
   const logout = async () => {
-    try {
-      await api.logout();
-    } catch {}
-    localStorage.removeItem(AUTH_TOKEN_KEY);
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-    setCurrentUser(PRESET_PERSONAS.controller);
-  };
-
-  const hasPermission = (perm: string) => {
-    return (currentUser.permissions || []).includes(perm);
+    setIsAuthenticated(false);
+    localStorage.setItem("close_auth_status", "logged_out");
   };
 
   return (
     <AuthContext.Provider
       value={{
-        user: currentUser,
-        personas: Object.values(PRESET_PERSONAS),
-        switchPersona,
-        hasPermission,
-        isAuditor: currentUser.role === "AUDITOR",
-        isController: currentUser.role === "CONTROLLER",
-        isAdmin: currentUser.role === "ADMIN",
+        user: currentCompany,
+        company: currentCompany,
+        personas: [currentCompany],
+        isAuthenticated,
+        hasPermission: () => true,
+        isAuditor: false,
+        isController: true,
+        isAdmin: true,
         login,
+        signup,
         logout,
+        switchPersona: async () => {},
         loading,
         error,
       }}
@@ -214,19 +195,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) {
-    return {
-      user: PRESET_PERSONAS.controller,
-      personas: Object.values(PRESET_PERSONAS),
-      switchPersona: () => {},
-      hasPermission: () => true,
-      isAuditor: false,
-      isController: true,
-      isAdmin: false,
-      login: () => {},
-      logout: () => {},
-    };
-  }
   return context;
 }
+
+
 

@@ -11,10 +11,15 @@ import {
   Key, 
   Save,
   CheckCircle2,
-  Lock
+  Lock,
+  Sun,
+  Moon,
+  Monitor
 } from "lucide-react";
+import { useTheme } from "@/lib/theme-context";
 
 export default function SettingsPage() {
+  const { theme, setTheme } = useTheme();
   const [aiMode, setAiMode] = useState<"mock" | "live">("mock");
   const [autoResolveThreshold, setAutoResolveThreshold] = useState(95);
   const [recommendThreshold, setRecommendThreshold] = useState(85);
@@ -184,6 +189,73 @@ export default function SettingsPage() {
                 <span className="text-zinc-200">SQLite Local / PostgreSQL Ready</span>
               </div>
               <span className="text-emerald-400 text-[11px]">ACTIVE</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Interface & Theme Selection Card */}
+        <div className="lg:col-span-2 p-5 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-4">
+          <div className="flex items-center space-x-2 border-b border-zinc-800/80 pb-3">
+            <Monitor className="w-4 h-4 text-zinc-300" />
+            <h3 className="text-sm font-semibold text-white">Interface & Visual Theme</h3>
+            <span className="text-[10px] text-zinc-500 font-mono ml-auto">Persisted in LocalStorage</span>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div
+              onClick={() => setTheme("dark")}
+              className={`p-4 rounded-xl border cursor-pointer transition-all flex items-start space-x-3.5 ${
+                theme === "dark"
+                  ? "bg-zinc-900 border-zinc-400 shadow-md ring-1 ring-zinc-400/20"
+                  : "bg-zinc-900/30 border-zinc-800 hover:border-zinc-700"
+              }`}
+            >
+              <div className={`p-2.5 rounded-lg border ${
+                theme === "dark" ? "bg-zinc-800 border-zinc-600 text-amber-300" : "bg-zinc-950 border-zinc-800 text-zinc-500"
+              }`}>
+                <Moon className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-white text-xs">Fintech Dark Mode</span>
+                  {theme === "dark" && (
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/80 text-emerald-400 font-bold">
+                      ACTIVE
+                    </span>
+                  )}
+                </div>
+                <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
+                  Institutional dark terminal theme with deep zinc contrasts, glowing semantic alerts, and low glare for trading floor operations.
+                </p>
+              </div>
+            </div>
+
+            <div
+              onClick={() => setTheme("light")}
+              className={`p-4 rounded-xl border cursor-pointer transition-all flex items-start space-x-3.5 ${
+                theme === "light"
+                  ? "bg-zinc-900 border-zinc-400 shadow-md ring-1 ring-zinc-400/20"
+                  : "bg-zinc-900/30 border-zinc-800 hover:border-zinc-700"
+              }`}
+            >
+              <div className={`p-2.5 rounded-lg border ${
+                theme === "light" ? "bg-zinc-800 border-zinc-600 text-amber-400" : "bg-zinc-950 border-zinc-800 text-zinc-500"
+              }`}>
+                <Sun className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-white text-xs">Institutional Light Mode</span>
+                  {theme === "light" && (
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/80 text-emerald-400 font-bold">
+                      ACTIVE
+                    </span>
+                  )}
+                </div>
+                <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
+                  Crisp institutional slate palette designed for board presentations, daylight compliance reviews, and executive reporting.
+                </p>
+              </div>
             </div>
           </div>
         </div>
