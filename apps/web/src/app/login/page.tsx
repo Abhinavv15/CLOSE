@@ -102,7 +102,7 @@ export default function LoginPage() {
               </div>
               <div className="min-w-0">
                 <div className="text-xs font-semibold text-zinc-200 flex items-center space-x-1.5">
-                  <span className="truncate">Abhinav Verma</span>
+                  <span className="truncate">Abhinav V</span>
                   <span className="text-[10px] font-mono px-1.5 py-0.2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded shrink-0">
                     CONTROLLER
                   </span>

@@ -7,7 +7,7 @@ router = APIRouter(prefix="/api/auth", tags=["auth"])
 PERSONAS = {
     "controller": {
         "id": "usr_controller_01",
-        "name": "Abhinav Verma",
+        "name": "Abhinav V",
         "email": "abhinav@democorp.internal",
         "role": "CONTROLLER",
         "title": "Senior Financial Controller",

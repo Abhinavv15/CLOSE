@@ -69,7 +69,7 @@ export function CommandPalette() {
 
     // Persona Switching
     { 
-      name: "Switch Persona: Senior Controller (Abhinav Verma)", 
+      name: "Switch Persona: Senior Controller (Abhinav V)", 
       icon: UserCheck, 
       action: () => switchPersona("controller"), 
       section: "Persona Switcher" 
