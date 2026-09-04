@@ -29,6 +29,20 @@ export interface ExceptionSummaryItem {
   ai_classification?: string;
 }
 
+export interface ReconciliationMatchItem {
+  id: string;
+  bank_tx_id?: string;
+  description: string;
+  source: string;
+  amount: number;
+  matched_with: string;
+  difference: number;
+  method: string;
+  confidence: number;
+  status: string;
+  created_at?: string;
+}
+
 export interface CashPositionData {
   company_id: string;
   current_cash: number;
@@ -128,7 +142,111 @@ export const api = {
     });
   },
 
-  // Get Exceptions
+  // Get Reconciliation Results Table
+  async getReconciliationResults(
+    batchId = "batch_close_2026_09",
+    method?: string,
+    status?: string
+  ): Promise<{ batch_id: string; count: number; results: ReconciliationMatchItem[] }> {
+    const params = new URLSearchParams();
+    if (method && method !== "ALL") params.append("method", method);
+    if (status && status !== "ALL") params.append("status", status);
+    const query = params.toString() ? `?${params.toString()}` : "";
+
+    return fetchWithFallback(
+      `/api/reconciliation/${batchId}/results${query}`,
+      {
+        batch_id: batchId,
+        count: 7,
+        results: [
+          {
+            id: "match_demo_001",
+            bank_tx_id: "bt_demo_001",
+            description: "STRIPE PAYOUT #82931",
+            source: "Bank",
+            amount: 124500.0,
+            matched_with: "Stripe #SET-9912 (INV-1014)",
+            difference: 0.0,
+            method: "EXACT",
+            confidence: 1.0,
+            status: "RECONCILED",
+          },
+          {
+            id: "match_demo_002",
+            bank_tx_id: "bt_demo_002",
+            description: "RAZORPAY SETTLEMENT #5521",
+            source: "Bank",
+            amount: 4950.0,
+            matched_with: "Razorpay #SET-5521 (INV-1022)",
+            difference: 50.0,
+            method: "AI",
+            confidence: 0.94,
+            status: "REVIEW",
+          },
+          {
+            id: "match_demo_003",
+            bank_tx_id: "bt_demo_003",
+            description: "NEFT INFLOW AWS REBATE",
+            source: "Bank",
+            amount: 14200.0,
+            matched_with: "General Ledger #GL-4401",
+            difference: 0.0,
+            method: "FUZZY",
+            confidence: 0.91,
+            status: "RECONCILED",
+          },
+          {
+            id: "match_demo_004",
+            bank_tx_id: "bt_demo_004",
+            description: "OFFICE LEASE SEP 2026 CHQ #4091",
+            source: "Bank",
+            amount: 65000.0,
+            matched_with: "General Ledger #GL-8802",
+            difference: 0.0,
+            method: "RULE",
+            confidence: 0.98,
+            status: "RECONCILED",
+          },
+          {
+            id: "match_demo_005",
+            bank_tx_id: "bt_demo_005",
+            description: "RTGS DEPOSIT UNBACKED",
+            source: "Bank",
+            amount: 72400.0,
+            matched_with: "— No corroborating evidence —",
+            difference: 72400.0,
+            method: "HUMAN",
+            confidence: 0.38,
+            status: "UNRESOLVED",
+          },
+          {
+            id: "match_demo_006",
+            bank_tx_id: "bt_demo_006",
+            description: "STRIPE DUPLICATE SETTLEMENT",
+            source: "Bank",
+            amount: 25000.0,
+            matched_with: "Stripe #SET-9092",
+            difference: 0.0,
+            method: "RULE",
+            confidence: 0.97,
+            status: "REVIEW",
+          },
+          {
+            id: "match_demo_007",
+            bank_tx_id: "bt_demo_007",
+            description: "ENTERPRISE SUBSCRIPTION BHART FINSERV",
+            source: "Bank",
+            amount: 100000.0,
+            matched_with: "Invoice INV-1088 (Split settlement)",
+            difference: 0.0,
+            method: "AI",
+            confidence: 0.96,
+            status: "RECONCILED",
+          },
+        ],
+      }
+    );
+  },
   async getExceptions(batchId = "batch_close_2026_09"): Promise<{
     exceptions: ExceptionSummaryItem[];
     counts: { total: number; review: number; critical: number; auto_resolved: number };
