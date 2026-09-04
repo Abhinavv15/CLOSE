@@ -39,37 +39,27 @@ interface NavSection {
 
 const NAV_SECTIONS: NavSection[] = [
   {
-    title: "Overview",
+    title: "Command Center",
     items: [
-      { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-      { name: "Walkthrough & Guide", href: "/walkthrough", icon: Compass, badge: "TOUR", badgeColor: "text-blue-400 bg-blue-950/50 border-blue-800/60" },
+      { name: "Executive Dashboard", href: "/dashboard", icon: LayoutDashboard },
     ],
   },
   {
-    title: "Operations",
+    title: "Close Lifecycle Pipeline",
     items: [
-      { name: "Batches", href: "/batches", icon: Layers },
-      { name: "Reconciliation", href: "/reconciliation", icon: GitMerge, badge: "94.5%" },
-      { name: "Exceptions", href: "/exceptions", icon: AlertTriangle, badge: "7", badgeColor: "text-amber-400 bg-amber-950/40 border-amber-800/60" },
+      { name: "Step 1 • Ingest Statements", href: "/batches", icon: Layers, badge: "127" },
+      { name: "Step 2 • 5-Pass Matching", href: "/reconciliation", icon: GitMerge, badge: "94.5%" },
+      { name: "Step 3 • AI Exception Triage", href: "/exceptions", icon: AlertTriangle, badge: "7", badgeColor: "text-amber-400 bg-amber-950/40 border-amber-800/60" },
+      { name: "Step 4 • Cash Runway", href: "/cash-position", icon: Wallet, badge: "₹18.4L" },
+      { name: "Step 5 • Accuracy Benchmarks", href: "/evaluation", icon: CheckCircle2, badge: "98.7%" },
+      { name: "Step 6 • Merkle Audit Trail", href: "/audit-log", icon: FileText, badge: "SHA-256" },
     ],
   },
   {
-    title: "Finance",
+    title: "Documentation & Controls",
     items: [
-      { name: "Cash Position", href: "/cash-position", icon: Wallet, badge: "₹18.4L" },
-    ],
-  },
-  {
-    title: "Control",
-    items: [
-      { name: "Evaluation", href: "/evaluation", icon: CheckCircle2, badge: "98.7%" },
-      { name: "Audit Log", href: "/audit-log", icon: FileText },
-    ],
-  },
-  {
-    title: "System",
-    items: [
-      { name: "Settings", href: "/settings", icon: Settings },
+      { name: "Product Tour & CSV Spec", href: "/walkthrough", icon: Compass, badge: "GUIDE", badgeColor: "text-blue-400 bg-blue-950/50 border-blue-800/60" },
+      { name: "System Settings", href: "/settings", icon: Settings },
     ],
   },
 ];

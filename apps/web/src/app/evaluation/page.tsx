@@ -13,10 +13,16 @@ import {
   Cpu,
   Layers
 } from "lucide-react";
+import { PipelineStepHeader } from "@/components/layout/pipeline-step-header";
 
 export default function EvaluationPage() {
   return (
     <AppShell>
+      <PipelineStepHeader 
+        currentStep={5} 
+        subtitle="Step 5: Verify measurable accuracy against hidden ground-truth labels (96.6% precision, 0.0% math hallucinations)." 
+      />
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-5">
         <div>
           <div className="flex items-center space-x-2">

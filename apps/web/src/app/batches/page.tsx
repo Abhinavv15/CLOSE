@@ -19,9 +19,9 @@ import {
   TrendingUp,
   FolderOpen,
   Info,
-  Layers,
   FileText,
 } from "lucide-react";
+import { PipelineStepHeader } from "@/components/layout/pipeline-step-header";
 
 interface SourceConfig {
   id: string;
@@ -220,6 +220,11 @@ export default function BatchesPage() {
 
   return (
     <AppShell>
+      <PipelineStepHeader 
+        currentStep={1} 
+        subtitle="Step 1: Ingest statement files across 4 independent sources to initiate the close cycle." 
+      />
+
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
         <div>

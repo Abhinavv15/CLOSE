@@ -18,6 +18,7 @@ import {
   RotateCw,
   TrendingDown
 } from "lucide-react";
+import { PipelineStepHeader } from "@/components/layout/pipeline-step-header";
 
 export default function ExceptionsPage() {
   const [activeFilter, setActiveFilter] = useState("ALL");
@@ -159,6 +160,11 @@ export default function ExceptionsPage() {
 
   return (
     <AppShell>
+      <PipelineStepHeader 
+        currentStep={3} 
+        subtitle="Step 3: Autonomous AI agent investigates fee variances and unbacked deposits with bounded tools." 
+      />
+
       {/* Header (Section 25) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
         <div>

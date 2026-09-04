@@ -22,6 +22,7 @@ import {
   ShieldAlert,
   Hash
 } from "lucide-react";
+import { PipelineStepHeader } from "@/components/layout/pipeline-step-header";
 
 export default function AuditLogPage() {
   const { user, isAuditor } = useAuth();
@@ -96,6 +97,11 @@ export default function AuditLogPage() {
 
   return (
     <AppShell>
+      <PipelineStepHeader 
+        currentStep={6} 
+        subtitle="Step 6: Cryptographic SHA-256 Merkle chain guarantees tamper-proof statutory audit compliance." 
+      />
+
       {/* Header & Compliance Controls (Section 30) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-5">
         <div>

@@ -22,6 +22,7 @@ import {
   ArrowUpDown,
   RotateCw
 } from "lucide-react";
+import { PipelineStepHeader } from "@/components/layout/pipeline-step-header";
 
 export default function ReconciliationPage() {
   const [filterMethod, setFilterMethod] = useState<string>("ALL");
@@ -161,6 +162,11 @@ export default function ReconciliationPage() {
 
   return (
     <AppShell>
+      <PipelineStepHeader 
+        currentStep={2} 
+        subtitle="Step 2: Stream 127 transactions through 5 deterministic passes in sub-100ms." 
+      />
+
       {/* Header & Batch Context */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
         <div>
