@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Shield, ChevronDown, Check, Eye, UserCheck, ShieldAlert, Menu, LogOut } from "lucide-react";
+import { Search, Shield, ChevronDown, Check, Eye, UserCheck, ShieldAlert, Menu, LogOut, Compass } from "lucide-react";
 import { useAuth, PRESET_PERSONAS } from "@/lib/auth-context";
 
 interface HeaderProps {
@@ -59,6 +60,15 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
       </div>
 
       <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
+        {/* Walkthrough & Guide Button */}
+        <Link
+          href="/walkthrough"
+          className="hidden md:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-blue-950/30 hover:bg-blue-900/40 border border-blue-800/60 text-xs font-mono text-blue-300 hover:text-white transition-colors"
+          title="Interactive Product Tour & CSV Schema Guide"
+        >
+          <Compass className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+          <span>Walkthrough & CSV Guide</span>
+        </Link>
         {/* Search / Command trigger */}
         <button
           onClick={() => {

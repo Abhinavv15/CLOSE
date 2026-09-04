@@ -21,6 +21,7 @@ import {
   Terminal,
   X,
   LogOut,
+  Compass,
 } from "lucide-react";
 
 interface NavItem {
@@ -41,6 +42,7 @@ const NAV_SECTIONS: NavSection[] = [
     title: "Overview",
     items: [
       { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+      { name: "Walkthrough & Guide", href: "/walkthrough", icon: Compass, badge: "TOUR", badgeColor: "text-blue-400 bg-blue-950/50 border-blue-800/60" },
     ],
   },
   {

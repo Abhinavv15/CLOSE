@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/navigation";
+import Link from "next/link";
 import { Spotlight } from "@/components/ui/spotlight";
 import { BackgroundGrid } from "@/components/ui/background-grid";
 import { ButtonWithMovingBorder } from "@/components/ui/moving-border";
@@ -16,7 +16,8 @@ import {
   Search, 
   Sparkles,
   FileCheck2,
-  Lock
+  Lock,
+  Compass
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -37,6 +38,13 @@ export default function LandingPage() {
         </div>
 
         <div className="flex items-center space-x-2 sm:space-x-4">
+          <Link
+            href="/walkthrough"
+            className="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-blue-950/40 border border-blue-800/60 hover:border-blue-700 text-blue-300 hover:text-white transition-all font-mono flex items-center space-x-1.5"
+          >
+            <Compass className="w-3.5 h-3.5 text-blue-400" />
+            <span>Product Tour & CSV Guide</span>
+          </Link>
           <a
             href="/evaluation"
             className="text-xs text-zinc-400 hover:text-zinc-200 font-mono transition-colors hidden sm:inline-block"
@@ -44,16 +52,10 @@ export default function LandingPage() {
             Ground-Truth Benchmark
           </a>
           <a
-            href="/login"
-            className="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-200 transition-all font-medium"
-          >
-            Sign In
-          </a>
-          <a
             href="/dashboard"
             className="text-xs px-3 sm:px-3.5 py-1.5 rounded-lg bg-white text-zinc-950 font-semibold hover:bg-zinc-200 transition-all shadow-sm shrink-0"
           >
-            Launch Controller
+            Launch Controller &rarr;
           </a>
         </div>
       </nav>
@@ -88,10 +90,18 @@ export default function LandingPage() {
             onClick={() => window.location.href = "/dashboard"}
           >
             <span className="flex items-center space-x-2">
-              <span>Run a Demo (127 Records)</span>
+              <span>Launch Controller (127 Records)</span>
               <ArrowRight className="w-4 h-4 text-zinc-400" />
             </span>
           </ButtonWithMovingBorder>
+
+          <Link
+            href="/walkthrough"
+            className="px-6 py-3 rounded-xl bg-blue-950/40 hover:bg-blue-900/50 border border-blue-800/60 text-blue-200 hover:text-white text-sm font-medium transition-all flex items-center space-x-2"
+          >
+            <Compass className="w-4 h-4 text-blue-400" />
+            <span>How It Works & CSV Guide</span>
+          </Link>
 
           <a
             href="/evaluation"

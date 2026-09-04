@@ -20,7 +20,8 @@ import {
   FolderOpen,
   Info,
   Layers,
-  FileText
+  FileText,
+  Compass
 } from "lucide-react";
 
 interface SourceConfig {
@@ -45,8 +46,8 @@ const SOURCES: SourceConfig[] = [
     id: "processor",
     name: "Payment Gateway",
     filename: "processor_settlements.csv",
-    schema: "settlement_date, processor, transaction_id, gross_amount, fee, net_amount, reference",
-    columns: ["settlement_date", "processor", "transaction_id", "gross_amount", "fee", "net_amount", "reference"],
+    schema: "settlement_date, processor, transaction_id, gross_amount, fee, net_amount, currency, status, reference",
+    columns: ["settlement_date", "processor", "transaction_id", "gross_amount", "fee", "net_amount", "currency", "status", "reference"],
     description: "Stripe & Razorpay batch settlements with MDR fees and gateway transaction IDs.",
   },
   {
@@ -255,6 +256,28 @@ export default function BatchesPage() {
         </div>
       </div>
 
+      {/* Walkthrough & CSV Specification Callout */}
+      <div className="p-3 sm:p-3.5 rounded-xl bg-gradient-to-r from-blue-950/40 via-zinc-900/60 to-zinc-900/40 border border-blue-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center space-x-2.5">
+          <div className="h-7 w-7 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0">
+            <Compass className="w-4 h-4" />
+          </div>
+          <div>
+            <span className="font-semibold text-zinc-100">Where & How to Upload Your CSV:</span>{" "}
+            <span className="text-zinc-400">
+              Select one of the 4 source cards below, inspect required column headers, and drop your file.
+            </span>
+          </div>
+        </div>
+        <Link
+          href="/walkthrough?tab=csv_guide"
+          className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 hover:text-white font-mono text-xs transition-colors shrink-0 self-start sm:self-auto"
+        >
+          <span>Open Full CSV Specification Guide</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
+      </div>
+
       {/* Multi-Source Selector Deck */}
       <div>
         <div className="flex items-center justify-between mb-2">
@@ -313,6 +336,63 @@ export default function BatchesPage() {
             );
           })}
         </div>
+      </div>
+
+      {/* Step 2: What Should Be in this CSV? */}
+      <div className="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 font-mono text-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3 mb-3">
+          <div className="flex items-center space-x-2">
+            <Info className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span className="font-bold text-white text-xs">
+              Step 2: CSV Requirements for {activeSource.name} ({activeSource.filename})
+            </span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <a
+              href={`/demo/${activeSource.filename}`}
+              download={activeSource.filename}
+              className="text-[11px] px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 transition-colors flex items-center space-x-1"
+            >
+              <Download className="w-3 h-3 text-zinc-400" />
+              <span>Download Template</span>
+            </a>
+            <Link
+              href="/walkthrough?tab=csv_guide"
+              className="text-[11px] text-blue-400 hover:text-blue-300 underline font-mono"
+            >
+              View All Schemas &rarr;
+            </Link>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div>
+            <span className="text-[10px] uppercase text-zinc-500 font-bold block mb-1.5">
+              Required Column Headers (Case-Insensitive):
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              {activeSource.columns.map((col) => (
+                <code key={col} className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400 text-[11px]">
+                  {col}
+                </code>
+              ))}
+            </div>
+          </div>
+
+          <div className="text-[11px] text-zinc-400 font-sans leading-relaxed border-t lg:border-t-0 lg:border-l border-zinc-800/80 lg:pl-3 pt-2 lg:pt-0">
+            <span className="text-zinc-200 font-semibold font-mono block mb-1">Financial Precision & Format Rules:</span>
+            <ul className="space-y-0.5 text-zinc-400 list-disc list-inside text-[11px]">
+              <li>Dates must be <code className="text-zinc-300 font-mono">YYYY-MM-DD</code> (e.g. 2026-09-01).</li>
+              <li>Amounts must be numeric decimals (e.g. <code className="text-zinc-300 font-mono">148500.0000</code>). Do not include currency signs.</li>
+              <li>Reference values link cross-source transactions (e.g. invoice numbers or processor payout IDs).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Step 3: Upload Dropzone */}
+      <div className="text-xs font-mono uppercase tracking-wider text-zinc-400 -mb-3">
+        Step 3: Drop File to Ingest into {activeSource.name}
       </div>
 
       {/* Upload Zone / Interactive Dropzone */}
