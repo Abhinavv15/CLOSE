@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { BackgroundGrid } from "@/components/ui/background-grid";
 import { ArrowRight, Lock, Mail, Shield, CheckCircle2, UserCheck, Eye, Cog } from "lucide-react";
@@ -33,12 +34,14 @@ export default function LoginPage() {
     <BackgroundGrid pattern="grid" className="min-h-screen flex items-center justify-center p-6 text-zinc-100">
       <div className="w-full max-w-lg bg-zinc-900/80 border border-zinc-800/80 rounded-2xl p-8 backdrop-blur-xl shadow-2xl relative">
         <div className="text-center mb-8">
-          <div className="h-10 w-10 mx-auto rounded-xl bg-white text-zinc-950 font-black flex items-center justify-center text-base mb-3 shadow">
-            CL
+          <div className="h-16 mx-auto flex items-center justify-center mb-3">
+            <Image src="/logo-white.png" alt="CLOSE Logo" width={160} height={56} className="h-14 w-auto object-contain drop-shadow" priority />
           </div>
           <h1 className="text-2xl font-bold text-white tracking-tight">Access CLOSE</h1>
           <p className="text-xs text-zinc-400 mt-1">Autonomous Multi-Source AI Finance Controller</p>
         </div>
+
+
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
