@@ -19,7 +19,8 @@ import {
   ArrowRight,
   Sun,
   Moon,
-  Compass
+  Compass,
+  LogOut
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "@/lib/theme-context";
@@ -30,7 +31,7 @@ export function CommandPalette() {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { theme, toggleTheme, setTheme } = useTheme();
   const { startTour, isTourActive } = useTour();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -123,6 +124,16 @@ export function CommandPalette() {
       icon: Moon, 
       action: () => setTheme("dark"), 
       section: "Appearance" 
+    },
+    // Authentication & Account
+    {
+      name: "Sign Out of Company Workspace",
+      icon: LogOut,
+      action: () => {
+        logout();
+        router.push("/login");
+      },
+      section: "Account"
     },
   ];
 

@@ -71,6 +71,8 @@ interface SidebarProps {
 
 export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, logout } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
 
   const handleLinkClick = () => {
@@ -196,9 +198,9 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
         ))}
       </div>
 
-      {/* Sidebar Footer Info */}
+      {/* Sidebar Footer Info & Sign Out */}
       {(!collapsed || mobileOpen) ? (
-        <div className="p-3 border-t border-zinc-800/80 bg-zinc-950 text-[11px] font-mono text-zinc-400 space-y-1.5">
+        <div className="p-3 border-t border-zinc-800/80 bg-zinc-950 text-[11px] font-mono text-zinc-400 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-zinc-500 font-semibold">ENGINE:</span>
             <span className="flex items-center space-x-1.5 text-emerald-400 font-bold">
@@ -208,16 +210,36 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
           </div>
           <div className="flex items-center justify-between text-[10px] text-zinc-500">
             <span>WORKSPACE:</span>
-            <span className="text-zinc-300 font-sans truncate max-w-[120px]">Demo Technologies</span>
+            <span className="text-zinc-300 font-sans truncate max-w-[120px]">{user?.company || "Demo Technologies"}</span>
           </div>
-          <div className="flex items-center justify-between text-[9px] text-zinc-600">
-            <span>AUDIT ROOT:</span>
-            <span className="text-zinc-400 font-mono">SHA-256 VALID</span>
-          </div>
+          <button
+            onClick={async () => {
+              if (onCloseMobile) onCloseMobile();
+              await logout();
+              router.push("/login");
+            }}
+            className="w-full mt-1 flex items-center justify-between px-2 py-1.5 rounded-lg border border-zinc-800 hover:border-zinc-700 bg-zinc-900/60 hover:bg-zinc-900 text-zinc-400 hover:text-red-400 transition-colors text-[10px] cursor-pointer"
+          >
+            <span className="flex items-center space-x-1.5">
+              <LogOut className="w-3 h-3" />
+              <span>Sign Out</span>
+            </span>
+            <span>&rarr;</span>
+          </button>
         </div>
       ) : (
-        <div className="p-2 border-t border-zinc-800/80 bg-zinc-950 flex flex-col items-center justify-center py-2.5">
+        <div className="p-2 border-t border-zinc-800/80 bg-zinc-950 flex flex-col items-center justify-center py-2.5 space-y-2">
           <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" title="Engine Online · Corporate Workspace" />
+          <button
+            onClick={async () => {
+              await logout();
+              router.push("/login");
+            }}
+            title="Sign Out"
+            className="p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-zinc-900 transition-colors cursor-pointer"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+          </button>
         </div>
       )}
     </aside>

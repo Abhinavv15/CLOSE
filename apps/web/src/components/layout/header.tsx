@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Search, Shield, ChevronDown, Check, Menu, Compass, Sun, Moon, Building2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Search, Shield, ChevronDown, Check, Menu, Compass, Sun, Moon, Building2, LogOut } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "@/lib/theme-context";
 import { useTour } from "@/lib/tour-context";
@@ -11,7 +12,8 @@ interface HeaderProps {
 }
 
 export function Header({ onToggleMobileMenu }: HeaderProps) {
-  const { user } = useAuth();
+  const router = useRouter();
+  const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { startTour, isTourActive } = useTour();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -162,6 +164,23 @@ export function Header({ onToggleMobileMenu }: HeaderProps) {
               <div className="pt-2.5 border-t border-zinc-900 text-[11px] text-zinc-500 flex items-center justify-between">
                 <span>Autonomous Controller</span>
                 <span className="text-emerald-400 font-mono text-[10px]">ALL PERMISSIONS</span>
+              </div>
+
+              <div className="pt-2 border-t border-zinc-900 mt-2">
+                <button
+                  onClick={async () => {
+                    setDropdownOpen(false);
+                    await logout();
+                    router.push("/login");
+                  }}
+                  className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-400 hover:text-red-400 hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-colors text-xs font-mono cursor-pointer"
+                >
+                  <span className="flex items-center space-x-2">
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out / Switch Company</span>
+                  </span>
+                  <span className="text-[10px] text-zinc-500">&rarr;</span>
+                </button>
               </div>
             </div>
           )}
