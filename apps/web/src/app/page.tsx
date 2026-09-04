@@ -27,6 +27,21 @@ import { useTour } from "@/lib/tour-context";
 export default function LandingPage() {
   const { theme, toggleTheme } = useTheme();
   const { startTour } = useTour();
+  const [heroLetters, setHeroLetters] = React.useState("");
+
+  React.useEffect(() => {
+    let idx = 0;
+    const word = "CLOSE";
+    setHeroLetters("");
+    const timer = setInterval(() => {
+      idx++;
+      setHeroLetters(word.slice(0, idx));
+      if (idx >= word.length) {
+        clearInterval(timer);
+      }
+    }, 140);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <BackgroundGrid pattern="grid" className="min-h-screen text-zinc-100 selection:bg-zinc-800">
@@ -86,9 +101,12 @@ export default function LandingPage() {
           <span className="truncate">Deterministic Matching + AI Investigation + Ground Truth</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-white mb-4 sm:mb-6">
-          CLOSE
-          <span className="block text-lg sm:text-2xl lg:text-3xl font-light text-zinc-400 mt-2">
+        <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black tracking-[0.2em] text-white mb-4 sm:mb-6 font-mono flex flex-col items-center justify-center">
+          <span className="flex items-center justify-center min-h-[3rem] sm:min-h-[5rem]">
+            <span>{heroLetters || "CLOSE"}</span>
+            <span className="inline-block w-1.5 sm:w-2.5 h-8 sm:h-14 bg-white ml-2 sm:ml-3 rounded-xs animate-pulse shadow-[0_0_12px_rgba(255,255,255,0.7)]" />
+          </span>
+          <span className="block text-lg sm:text-2xl lg:text-3xl font-light text-zinc-400 mt-2 font-sans tracking-normal">
             AI Finance Controller
           </span>
         </h1>

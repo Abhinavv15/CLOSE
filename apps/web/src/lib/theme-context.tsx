@@ -22,23 +22,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    // On first link click / new browser session, guarantee default to dark mode
-    const isSessionActive = sessionStorage.getItem("close_session_active");
-    if (!isSessionActive) {
-      sessionStorage.setItem("close_session_active", "true");
-      setThemeState("dark");
-      applyTheme("dark");
-      localStorage.setItem("close_theme", "dark");
-      return;
-    }
-
-    const saved = localStorage.getItem("close_theme") as Theme | null;
-    if (saved === "light" || saved === "dark") {
-      setThemeState(saved);
-      applyTheme(saved);
-    } else {
-      applyTheme("dark");
-    }
+    // When someone clicks the link / visits the website, it MUST strictly be in dark mode
+    const root = document.documentElement;
+    root.classList.remove("light");
+    root.classList.add("dark");
+    setThemeState("dark");
+    localStorage.setItem("close_theme", "dark");
   }, []);
 
   const applyTheme = (t: Theme) => {
