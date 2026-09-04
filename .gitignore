@@ -6,17 +6,23 @@
 
 # Dependencies
 node_modules/
+**/node_modules/
+**/node_modules/**
 .pnp
 .pnp.js
 __pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
 .venv/
+**/.venv/
 venv/
 env/
 
 # Next.js & Build Outputs
 .next/
+**/.next/
+**/.next/**
 out/
 build/
 dist/
