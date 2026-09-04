@@ -47,6 +47,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Register API routers
+from app.api.endpoints.data import router as data_router
+app.include_router(data_router)
+
 
 # Request timing and structured audit logging middleware
 @app.middleware("http")

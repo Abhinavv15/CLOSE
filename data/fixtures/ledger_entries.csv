@@ -1,0 +1,240 @@
+date,account,description,debit,credit,reference
+2026-09-03,1010 - Operating Bank Account,Stripe Settlement STRIPE-82931,31750.0000,0.0000,STRIPE-82931
+2026-09-26,1200 - Accounts Receivable,Receipt against INV-4006 Zeta Cloud Services,0.0000,12500.0000,REF-46048
+2026-09-26,1010 - Operating Bank Account,Bank deposit receipt 46048,12500.0000,0.0000,REF-46048
+2026-09-21,1200 - Accounts Receivable,Receipt against INV-2260 Zenith Health Systems,0.0000,18200.0000,REF-65302
+2026-09-21,1010 - Operating Bank Account,Bank deposit receipt 65302,18200.0000,0.0000,REF-65302
+2026-09-03,1200 - Accounts Receivable,Receipt against INV-3628 Zenith Health Systems,0.0000,125000.0000,REF-83563
+2026-09-03,1010 - Operating Bank Account,Bank deposit receipt 83563,125000.0000,0.0000,REF-83563
+2026-09-17,1200 - Accounts Receivable,Receipt against INV-4278 Orbit Media Works,0.0000,36000.0000,REF-87236
+2026-09-17,1010 - Operating Bank Account,Bank deposit receipt 87236,36000.0000,0.0000,REF-87236
+2026-09-11,1200 - Accounts Receivable,Receipt against INV-3763 Orbit Media Works,0.0000,52000.0000,REF-30379
+2026-09-11,1010 - Operating Bank Account,Bank deposit receipt 30379,52000.0000,0.0000,REF-30379
+2026-09-06,1200 - Accounts Receivable,Receipt against INV-8942 Zeta Cloud Services,0.0000,65000.0000,REF-57052
+2026-09-06,1010 - Operating Bank Account,Bank deposit receipt 57052,65000.0000,0.0000,REF-57052
+2026-09-06,1200 - Accounts Receivable,Receipt against INV-2645 Trident Infotech,0.0000,110000.0000,REF-59615
+2026-09-06,1010 - Operating Bank Account,Bank deposit receipt 59615,110000.0000,0.0000,REF-59615
+2026-09-09,1200 - Accounts Receivable,Receipt against INV-2375 BlueStone Analytics,0.0000,125000.0000,REF-19116
+2026-09-09,1010 - Operating Bank Account,Bank deposit receipt 19116,125000.0000,0.0000,REF-19116
+2026-09-15,1200 - Accounts Receivable,Receipt against INV-5714 Kaveri Enterprises,0.0000,18200.0000,REF-46434
+2026-09-15,1010 - Operating Bank Account,Bank deposit receipt 46434,18200.0000,0.0000,REF-46434
+2026-09-09,1200 - Accounts Receivable,Receipt against INV-4187 BlueStone Analytics,0.0000,52000.0000,REF-97841
+2026-09-09,1010 - Operating Bank Account,Bank deposit receipt 97841,52000.0000,0.0000,REF-97841
+2026-09-23,1200 - Accounts Receivable,Receipt against INV-6375 Zeta Cloud Services,0.0000,125000.0000,REF-32431
+2026-09-23,1010 - Operating Bank Account,Bank deposit receipt 32431,125000.0000,0.0000,REF-32431
+2026-09-23,1200 - Accounts Receivable,Receipt against INV-3799 Orbit Media Works,0.0000,48000.0000,REF-83000
+2026-09-23,1010 - Operating Bank Account,Bank deposit receipt 83000,48000.0000,0.0000,REF-83000
+2026-09-15,1200 - Accounts Receivable,Receipt against INV-2542 Acme Technologies Pvt Ltd,0.0000,52000.0000,REF-45093
+2026-09-15,1010 - Operating Bank Account,Bank deposit receipt 45093,52000.0000,0.0000,REF-45093
+2026-09-15,1200 - Accounts Receivable,Receipt against INV-5758 Kaveri Enterprises,0.0000,95000.0000,REF-94259
+2026-09-15,1010 - Operating Bank Account,Bank deposit receipt 94259,95000.0000,0.0000,REF-94259
+2026-09-11,1200 - Accounts Receivable,Receipt against INV-5509 Zenith Health Systems,0.0000,110000.0000,REF-86622
+2026-09-11,1010 - Operating Bank Account,Bank deposit receipt 86622,110000.0000,0.0000,REF-86622
+2026-09-19,1200 - Accounts Receivable,Receipt against INV-2744 Kaveri Enterprises,0.0000,24500.0000,REF-74686
+2026-09-19,1010 - Operating Bank Account,Bank deposit receipt 74686,24500.0000,0.0000,REF-74686
+2026-09-22,1200 - Accounts Receivable,Receipt against INV-5152 Apex Logistics India,0.0000,65000.0000,REF-18326
+2026-09-22,1010 - Operating Bank Account,Bank deposit receipt 18326,65000.0000,0.0000,REF-18326
+2026-09-03,1200 - Accounts Receivable,Receipt against INV-7904 Nexus Retail Solutions,0.0000,110000.0000,REF-99166
+2026-09-03,1010 - Operating Bank Account,Bank deposit receipt 99166,110000.0000,0.0000,REF-99166
+2026-09-12,1200 - Accounts Receivable,Receipt against INV-3295 BlueStone Analytics,0.0000,18200.0000,REF-66985
+2026-09-12,1010 - Operating Bank Account,Bank deposit receipt 66985,18200.0000,0.0000,REF-66985
+2026-09-19,1200 - Accounts Receivable,Receipt against INV-9131 Zenith Health Systems,0.0000,24500.0000,REF-23947
+2026-09-19,1010 - Operating Bank Account,Bank deposit receipt 23947,24500.0000,0.0000,REF-23947
+2026-09-07,1200 - Accounts Receivable,Receipt against INV-8246 Bharat FinServ,0.0000,36000.0000,REF-59009
+2026-09-07,1010 - Operating Bank Account,Bank deposit receipt 59009,36000.0000,0.0000,REF-59009
+2026-09-18,1200 - Accounts Receivable,Receipt against INV-2916 Bharat FinServ,0.0000,52000.0000,REF-12552
+2026-09-18,1010 - Operating Bank Account,Bank deposit receipt 12552,52000.0000,0.0000,REF-12552
+2026-09-21,1200 - Accounts Receivable,Receipt against INV-2701 Acme Technologies Pvt Ltd,0.0000,36000.0000,REF-20322
+2026-09-21,1010 - Operating Bank Account,Bank deposit receipt 20322,36000.0000,0.0000,REF-20322
+2026-09-24,1200 - Accounts Receivable,Receipt against INV-9756 Apex Logistics India,0.0000,24500.0000,REF-72296
+2026-09-24,1010 - Operating Bank Account,Bank deposit receipt 72296,24500.0000,0.0000,REF-72296
+2026-09-09,1200 - Accounts Receivable,Receipt against INV-8187 Bharat FinServ,0.0000,65000.0000,REF-80686
+2026-09-09,1010 - Operating Bank Account,Bank deposit receipt 80686,65000.0000,0.0000,REF-80686
+2026-09-17,1200 - Accounts Receivable,Receipt against INV-5698 Orbit Media Works,0.0000,52000.0000,REF-77839
+2026-09-17,1010 - Operating Bank Account,Bank deposit receipt 77839,52000.0000,0.0000,REF-77839
+2026-09-21,1200 - Accounts Receivable,Receipt against INV-3885 BlueStone Analytics,0.0000,12500.0000,REF-82603
+2026-09-21,1010 - Operating Bank Account,Bank deposit receipt 82603,12500.0000,0.0000,REF-82603
+2026-09-05,1200 - Accounts Receivable,Receipt against INV-9042 Acme Technologies Pvt Ltd,0.0000,36000.0000,REF-14117
+2026-09-05,1010 - Operating Bank Account,Bank deposit receipt 14117,36000.0000,0.0000,REF-14117
+2026-09-09,1200 - Accounts Receivable,Receipt against INV-3083 Nexus Retail Solutions,0.0000,95000.0000,REF-80678
+2026-09-09,1010 - Operating Bank Account,Bank deposit receipt 80678,95000.0000,0.0000,REF-80678
+2026-09-18,1200 - Accounts Receivable,Receipt against INV-3559 Trident Infotech,0.0000,36000.0000,REF-63354
+2026-09-18,1010 - Operating Bank Account,Bank deposit receipt 63354,36000.0000,0.0000,REF-63354
+2026-09-16,1200 - Accounts Receivable,Receipt against INV-9076 BlueStone Analytics,0.0000,65000.0000,REF-71213
+2026-09-16,1010 - Operating Bank Account,Bank deposit receipt 71213,65000.0000,0.0000,REF-71213
+2026-09-15,1200 - Accounts Receivable,Receipt against INV-8558 Zeta Cloud Services,0.0000,12500.0000,REF-54473
+2026-09-15,1010 - Operating Bank Account,Bank deposit receipt 54473,12500.0000,0.0000,REF-54473
+2026-09-17,1200 - Accounts Receivable,Receipt against INV-5456 Kaveri Enterprises,0.0000,110000.0000,REF-28373
+2026-09-17,1010 - Operating Bank Account,Bank deposit receipt 28373,110000.0000,0.0000,REF-28373
+2026-09-20,1200 - Accounts Receivable,Receipt against INV-2414 Zeta Cloud Services,0.0000,95000.0000,REF-22833
+2026-09-20,1010 - Operating Bank Account,Bank deposit receipt 22833,95000.0000,0.0000,REF-22833
+2026-09-08,1200 - Accounts Receivable,Receipt against INV-5978 Zeta Cloud Services,0.0000,36000.0000,REF-63269
+2026-09-08,1010 - Operating Bank Account,Bank deposit receipt 63269,36000.0000,0.0000,REF-63269
+2026-09-03,1200 - Accounts Receivable,Receipt against INV-4172 Apex Logistics India,0.0000,65000.0000,REF-61173
+2026-09-03,1010 - Operating Bank Account,Bank deposit receipt 61173,65000.0000,0.0000,REF-61173
+2026-09-24,1200 - Accounts Receivable,Receipt against INV-3268 Orbit Media Works,0.0000,110000.0000,REF-73788
+2026-09-24,1010 - Operating Bank Account,Bank deposit receipt 73788,110000.0000,0.0000,REF-73788
+2026-09-04,1200 - Accounts Receivable,Receipt against INV-2468 Bharat FinServ,0.0000,110000.0000,REF-51104
+2026-09-04,1010 - Operating Bank Account,Bank deposit receipt 51104,110000.0000,0.0000,REF-51104
+2026-09-04,1200 - Accounts Receivable,Receipt against INV-2656 Zenith Health Systems,0.0000,24500.0000,REF-76562
+2026-09-04,1010 - Operating Bank Account,Bank deposit receipt 76562,24500.0000,0.0000,REF-76562
+2026-09-15,1200 - Accounts Receivable,Receipt against INV-9713 Zeta Cloud Services,0.0000,36000.0000,REF-25713
+2026-09-15,1010 - Operating Bank Account,Bank deposit receipt 25713,36000.0000,0.0000,REF-25713
+2026-09-22,1200 - Accounts Receivable,Receipt against INV-5434 Bharat FinServ,0.0000,12500.0000,REF-20745
+2026-09-22,1010 - Operating Bank Account,Bank deposit receipt 20745,12500.0000,0.0000,REF-20745
+2026-09-09,1200 - Accounts Receivable,Receipt against INV-7867 BlueStone Analytics,0.0000,48000.0000,REF-97782
+2026-09-09,1010 - Operating Bank Account,Bank deposit receipt 97782,48000.0000,0.0000,REF-97782
+2026-09-17,1200 - Accounts Receivable,Receipt against INV-9610 Apex Logistics India,0.0000,48000.0000,REF-51441
+2026-09-17,1010 - Operating Bank Account,Bank deposit receipt 51441,48000.0000,0.0000,REF-51441
+2026-09-21,1200 - Accounts Receivable,Receipt against INV-2600 Trident Infotech,0.0000,125000.0000,REF-23104
+2026-09-21,1010 - Operating Bank Account,Bank deposit receipt 23104,125000.0000,0.0000,REF-23104
+2026-09-05,1200 - Accounts Receivable,Receipt against INV-5027 Apex Logistics India,0.0000,52000.0000,REF-42018
+2026-09-05,1010 - Operating Bank Account,Bank deposit receipt 42018,52000.0000,0.0000,REF-42018
+2026-09-23,1200 - Accounts Receivable,Receipt against INV-2064 Nexus Retail Solutions,0.0000,125000.0000,REF-79329
+2026-09-23,1010 - Operating Bank Account,Bank deposit receipt 79329,125000.0000,0.0000,REF-79329
+2026-09-11,1200 - Accounts Receivable,Receipt against INV-9288 Zeta Cloud Services,0.0000,24500.0000,REF-25129
+2026-09-11,1010 - Operating Bank Account,Bank deposit receipt 25129,24500.0000,0.0000,REF-25129
+2026-09-22,1200 - Accounts Receivable,Receipt against INV-7878 Nexus Retail Solutions,0.0000,48000.0000,REF-37607
+2026-09-22,1010 - Operating Bank Account,Bank deposit receipt 37607,48000.0000,0.0000,REF-37607
+2026-09-18,1200 - Accounts Receivable,Receipt against INV-9416 Nexus Retail Solutions,0.0000,110000.0000,REF-42914
+2026-09-18,1010 - Operating Bank Account,Bank deposit receipt 42914,110000.0000,0.0000,REF-42914
+2026-09-04,1200 - Accounts Receivable,Receipt against INV-4732 Orbit Media Works,0.0000,48000.0000,REF-10464
+2026-09-04,1010 - Operating Bank Account,Bank deposit receipt 10464,48000.0000,0.0000,REF-10464
+2026-09-20,1200 - Accounts Receivable,Receipt against INV-6594 Apex Logistics India,0.0000,95000.0000,REF-66057
+2026-09-20,1010 - Operating Bank Account,Bank deposit receipt 66057,95000.0000,0.0000,REF-66057
+2026-09-14,1200 - Accounts Receivable,Receipt against INV-6526 Zenith Health Systems,0.0000,12500.0000,REF-86350
+2026-09-14,1010 - Operating Bank Account,Bank deposit receipt 86350,12500.0000,0.0000,REF-86350
+2026-09-04,1200 - Accounts Receivable,Receipt against INV-3720 Nexus Retail Solutions,0.0000,52000.0000,REF-56898
+2026-09-04,1010 - Operating Bank Account,Bank deposit receipt 56898,52000.0000,0.0000,REF-56898
+2026-09-16,1200 - Accounts Receivable,Receipt against INV-8139 BlueStone Analytics,0.0000,110000.0000,REF-91351
+2026-09-16,1010 - Operating Bank Account,Bank deposit receipt 91351,110000.0000,0.0000,REF-91351
+2026-09-03,1200 - Accounts Receivable,Receipt against INV-8033 Apex Logistics India,0.0000,65000.0000,REF-33509
+2026-09-03,1010 - Operating Bank Account,Bank deposit receipt 33509,65000.0000,0.0000,REF-33509
+2026-09-08,1200 - Accounts Receivable,Receipt against INV-5133 Kaveri Enterprises,0.0000,48000.0000,REF-24168
+2026-09-08,1010 - Operating Bank Account,Bank deposit receipt 24168,48000.0000,0.0000,REF-24168
+2026-09-14,1200 - Accounts Receivable,Receipt against INV-8721 Kaveri Enterprises,0.0000,95000.0000,REF-50001
+2026-09-14,1010 - Operating Bank Account,Bank deposit receipt 50001,95000.0000,0.0000,REF-50001
+2026-09-15,1200 - Accounts Receivable,Receipt against INV-4282 Acme Technologies Pvt Ltd,0.0000,36000.0000,REF-53025
+2026-09-15,1010 - Operating Bank Account,Bank deposit receipt 53025,36000.0000,0.0000,REF-53025
+2026-09-24,1200 - Accounts Receivable,Receipt against INV-4712 Zenith Health Systems,0.0000,65000.0000,REF-80282
+2026-09-24,1010 - Operating Bank Account,Bank deposit receipt 80282,65000.0000,0.0000,REF-80282
+2026-09-11,1200 - Accounts Receivable,Receipt against INV-2888 Apex Logistics India,0.0000,125000.0000,REF-15014
+2026-09-11,1010 - Operating Bank Account,Bank deposit receipt 15014,125000.0000,0.0000,REF-15014
+2026-09-19,1200 - Accounts Receivable,Receipt against INV-5155 Orbit Media Works,0.0000,125000.0000,REF-25157
+2026-09-19,1010 - Operating Bank Account,Bank deposit receipt 25157,125000.0000,0.0000,REF-25157
+2026-09-03,1200 - Accounts Receivable,Receipt against INV-9582 Acme Technologies Pvt Ltd,0.0000,65000.0000,REF-78146
+2026-09-03,1010 - Operating Bank Account,Bank deposit receipt 78146,65000.0000,0.0000,REF-78146
+2026-09-16,1200 - Accounts Receivable,Receipt against INV-9773 Kaveri Enterprises,0.0000,52000.0000,REF-19171
+2026-09-16,1010 - Operating Bank Account,Bank deposit receipt 19171,52000.0000,0.0000,REF-19171
+2026-09-26,1200 - Accounts Receivable,Receipt against INV-6154 BlueStone Analytics,0.0000,18200.0000,REF-49363
+2026-09-26,1010 - Operating Bank Account,Bank deposit receipt 49363,18200.0000,0.0000,REF-49363
+2026-09-20,1200 - Accounts Receivable,Receipt against INV-3571 Orbit Media Works,0.0000,48000.0000,REF-26683
+2026-09-20,1010 - Operating Bank Account,Bank deposit receipt 26683,48000.0000,0.0000,REF-26683
+2026-09-21,1200 - Accounts Receivable,Receipt against INV-5326 Apex Logistics India,0.0000,125000.0000,REF-49446
+2026-09-21,1010 - Operating Bank Account,Bank deposit receipt 49446,125000.0000,0.0000,REF-49446
+2026-09-16,1200 - Accounts Receivable,Receipt against INV-6969 Nexus Retail Solutions,0.0000,36000.0000,REF-86019
+2026-09-16,1010 - Operating Bank Account,Bank deposit receipt 86019,36000.0000,0.0000,REF-86019
+2026-09-19,1200 - Accounts Receivable,Receipt against INV-8502 Trident Infotech,0.0000,36000.0000,REF-72021
+2026-09-19,1010 - Operating Bank Account,Bank deposit receipt 72021,36000.0000,0.0000,REF-72021
+2026-09-19,1200 - Accounts Receivable,Receipt against INV-7185 Zeta Cloud Services,0.0000,48000.0000,REF-97012
+2026-09-19,1010 - Operating Bank Account,Bank deposit receipt 97012,48000.0000,0.0000,REF-97012
+2026-09-09,1200 - Accounts Receivable,Receipt against INV-2200 Nexus Retail Solutions,0.0000,36000.0000,REF-29313
+2026-09-09,1010 - Operating Bank Account,Bank deposit receipt 29313,36000.0000,0.0000,REF-29313
+2026-09-16,1200 - Accounts Receivable,Receipt against INV-6715 Zeta Cloud Services,0.0000,95000.0000,REF-92544
+2026-09-16,1010 - Operating Bank Account,Bank deposit receipt 92544,95000.0000,0.0000,REF-92544
+2026-09-10,1200 - Accounts Receivable,Receipt against INV-7374 Trident Infotech,0.0000,65000.0000,REF-29342
+2026-09-10,1010 - Operating Bank Account,Bank deposit receipt 29342,65000.0000,0.0000,REF-29342
+2026-09-25,1200 - Accounts Receivable,Receipt against INV-5805 Kaveri Enterprises,0.0000,24500.0000,REF-77889
+2026-09-25,1010 - Operating Bank Account,Bank deposit receipt 77889,24500.0000,0.0000,REF-77889
+2026-09-17,1200 - Accounts Receivable,Receipt against INV-6351 Trident Infotech,0.0000,24500.0000,REF-97500
+2026-09-17,1010 - Operating Bank Account,Bank deposit receipt 97500,24500.0000,0.0000,REF-97500
+2026-09-26,1200 - Accounts Receivable,Receipt against INV-5495 Trident Infotech,0.0000,125000.0000,REF-76162
+2026-09-26,1010 - Operating Bank Account,Bank deposit receipt 76162,125000.0000,0.0000,REF-76162
+2026-09-17,1200 - Accounts Receivable,Receipt against INV-8158 Apex Logistics India,0.0000,95000.0000,REF-43972
+2026-09-17,1010 - Operating Bank Account,Bank deposit receipt 43972,95000.0000,0.0000,REF-43972
+2026-09-23,1200 - Accounts Receivable,Receipt against INV-4249 Zenith Health Systems,0.0000,95000.0000,REF-41358
+2026-09-23,1010 - Operating Bank Account,Bank deposit receipt 41358,95000.0000,0.0000,REF-41358
+2026-09-13,1200 - Accounts Receivable,Receipt against INV-9315 Kaveri Enterprises,0.0000,48000.0000,REF-51904
+2026-09-13,1010 - Operating Bank Account,Bank deposit receipt 51904,48000.0000,0.0000,REF-51904
+2026-09-25,1200 - Accounts Receivable,Receipt against INV-7786 Kaveri Enterprises,0.0000,65000.0000,REF-30028
+2026-09-25,1010 - Operating Bank Account,Bank deposit receipt 30028,65000.0000,0.0000,REF-30028
+2026-09-17,1200 - Accounts Receivable,Receipt against INV-2510 BlueStone Analytics,0.0000,110000.0000,REF-64496
+2026-09-17,1010 - Operating Bank Account,Bank deposit receipt 64496,110000.0000,0.0000,REF-64496
+2026-09-27,1200 - Accounts Receivable,Receipt against INV-5116 Bharat FinServ,0.0000,12500.0000,REF-85456
+2026-09-27,1010 - Operating Bank Account,Bank deposit receipt 85456,12500.0000,0.0000,REF-85456
+2026-09-20,1200 - Accounts Receivable,Receipt against INV-8552 Orbit Media Works,0.0000,65000.0000,REF-81582
+2026-09-20,1010 - Operating Bank Account,Bank deposit receipt 81582,65000.0000,0.0000,REF-81582
+2026-09-16,1200 - Accounts Receivable,Receipt against INV-2237 Kaveri Enterprises,0.0000,48000.0000,REF-73654
+2026-09-16,1010 - Operating Bank Account,Bank deposit receipt 73654,48000.0000,0.0000,REF-73654
+2026-09-17,1200 - Accounts Receivable,Receipt against INV-7097 Orbit Media Works,0.0000,24500.0000,REF-26728
+2026-09-17,1010 - Operating Bank Account,Bank deposit receipt 26728,24500.0000,0.0000,REF-26728
+2026-09-05,1200 - Accounts Receivable,Receipt against INV-5511 Bharat FinServ,0.0000,12500.0000,REF-94246
+2026-09-05,1010 - Operating Bank Account,Bank deposit receipt 94246,12500.0000,0.0000,REF-94246
+2026-09-15,1200 - Accounts Receivable,Receipt against INV-3733 Acme Technologies Pvt Ltd,0.0000,48000.0000,REF-52906
+2026-09-15,1010 - Operating Bank Account,Bank deposit receipt 52906,48000.0000,0.0000,REF-52906
+2026-09-11,1200 - Accounts Receivable,Receipt against INV-5852 Nexus Retail Solutions,0.0000,65000.0000,REF-20735
+2026-09-11,1010 - Operating Bank Account,Bank deposit receipt 20735,65000.0000,0.0000,REF-20735
+2026-09-23,1200 - Accounts Receivable,Receipt against INV-8399 BlueStone Analytics,0.0000,36000.0000,REF-18993
+2026-09-23,1010 - Operating Bank Account,Bank deposit receipt 18993,36000.0000,0.0000,REF-18993
+2026-09-03,1200 - Accounts Receivable,Receipt against INV-3248 Kaveri Enterprises,0.0000,36000.0000,REF-91439
+2026-09-03,1010 - Operating Bank Account,Bank deposit receipt 91439,36000.0000,0.0000,REF-91439
+2026-09-09,1200 - Accounts Receivable,Receipt against INV-7730 Zeta Cloud Services,0.0000,125000.0000,REF-70952
+2026-09-09,1010 - Operating Bank Account,Bank deposit receipt 70952,125000.0000,0.0000,REF-70952
+2026-09-26,1200 - Accounts Receivable,Receipt against INV-8371 Bharat FinServ,0.0000,125000.0000,REF-25012
+2026-09-26,1010 - Operating Bank Account,Bank deposit receipt 25012,125000.0000,0.0000,REF-25012
+2026-09-12,1200 - Accounts Receivable,Receipt against INV-7548 Bharat FinServ,0.0000,12500.0000,REF-85470
+2026-09-12,1010 - Operating Bank Account,Bank deposit receipt 85470,12500.0000,0.0000,REF-85470
+2026-09-21,1200 - Accounts Receivable,Receipt against INV-3989 Kaveri Enterprises,0.0000,18200.0000,REF-92213
+2026-09-21,1010 - Operating Bank Account,Bank deposit receipt 92213,18200.0000,0.0000,REF-92213
+2026-09-21,1200 - Accounts Receivable,Receipt against INV-4844 Bharat FinServ,0.0000,18200.0000,REF-15383
+2026-09-21,1010 - Operating Bank Account,Bank deposit receipt 15383,18200.0000,0.0000,REF-15383
+2026-09-23,1200 - Accounts Receivable,Receipt against INV-2103 Zeta Cloud Services,0.0000,110000.0000,REF-54725
+2026-09-23,1010 - Operating Bank Account,Bank deposit receipt 54725,110000.0000,0.0000,REF-54725
+2026-09-23,1200 - Accounts Receivable,Receipt against INV-7794 Orbit Media Works,0.0000,52000.0000,REF-70258
+2026-09-23,1010 - Operating Bank Account,Bank deposit receipt 70258,52000.0000,0.0000,REF-70258
+2026-09-20,1200 - Accounts Receivable,Receipt against INV-5808 Nexus Retail Solutions,0.0000,125000.0000,REF-73372
+2026-09-20,1010 - Operating Bank Account,Bank deposit receipt 73372,125000.0000,0.0000,REF-73372
+2026-09-10,1200 - Accounts Receivable,Receipt against INV-4284 Nexus Retail Solutions,0.0000,52000.0000,REF-21359
+2026-09-10,1010 - Operating Bank Account,Bank deposit receipt 21359,52000.0000,0.0000,REF-21359
+2026-09-24,1200 - Accounts Receivable,Receipt against INV-4755 Bharat FinServ,0.0000,125000.0000,REF-59674
+2026-09-24,1010 - Operating Bank Account,Bank deposit receipt 59674,125000.0000,0.0000,REF-59674
+2026-09-14,1200 - Accounts Receivable,Receipt against INV-4788 Trident Infotech,0.0000,36000.0000,REF-43862
+2026-09-14,1010 - Operating Bank Account,Bank deposit receipt 43862,36000.0000,0.0000,REF-43862
+2026-09-19,1200 - Accounts Receivable,Receipt against INV-2701 Zenith Health Systems,0.0000,12500.0000,REF-35042
+2026-09-19,1010 - Operating Bank Account,Bank deposit receipt 35042,12500.0000,0.0000,REF-35042
+2026-09-25,1200 - Accounts Receivable,Receipt against INV-7291 Zenith Health Systems,0.0000,36000.0000,REF-72402
+2026-09-25,1010 - Operating Bank Account,Bank deposit receipt 72402,36000.0000,0.0000,REF-72402
+2026-09-10,1200 - Accounts Receivable,Receipt against INV-7667 Zeta Cloud Services,0.0000,48000.0000,REF-63005
+2026-09-10,1010 - Operating Bank Account,Bank deposit receipt 63005,48000.0000,0.0000,REF-63005
+2026-09-20,1200 - Accounts Receivable,Receipt against INV-4816 BlueStone Analytics,0.0000,95000.0000,REF-79588
+2026-09-20,1010 - Operating Bank Account,Bank deposit receipt 79588,95000.0000,0.0000,REF-79588
+2026-09-25,1200 - Accounts Receivable,Receipt against INV-4219 BlueStone Analytics,0.0000,52000.0000,REF-69473
+2026-09-25,1010 - Operating Bank Account,Bank deposit receipt 69473,52000.0000,0.0000,REF-69473
+2026-09-06,1200 - Accounts Receivable,Receipt against INV-9789 Kaveri Enterprises,0.0000,52000.0000,REF-80236
+2026-09-06,1010 - Operating Bank Account,Bank deposit receipt 80236,52000.0000,0.0000,REF-80236
+2026-09-11,1200 - Accounts Receivable,Receipt against INV-8227 Kaveri Enterprises,0.0000,95000.0000,REF-87278
+2026-09-11,1010 - Operating Bank Account,Bank deposit receipt 87278,95000.0000,0.0000,REF-87278
+2026-09-10,1200 - Accounts Receivable,Receipt against INV-3469 Kaveri Enterprises,0.0000,48000.0000,REF-57301
+2026-09-10,1010 - Operating Bank Account,Bank deposit receipt 57301,48000.0000,0.0000,REF-57301
+2026-09-04,1200 - Accounts Receivable,Receipt against INV-6533 Apex Logistics India,0.0000,48000.0000,REF-17146
+2026-09-04,1010 - Operating Bank Account,Bank deposit receipt 17146,48000.0000,0.0000,REF-17146
+2026-09-03,1200 - Accounts Receivable,Receipt against INV-4329 Trident Infotech,0.0000,18200.0000,REF-85243
+2026-09-03,1010 - Operating Bank Account,Bank deposit receipt 85243,18200.0000,0.0000,REF-85243
+2026-09-11,1200 - Accounts Receivable,Receipt against INV-2934 Apex Logistics India,0.0000,12500.0000,REF-72616
+2026-09-11,1010 - Operating Bank Account,Bank deposit receipt 72616,12500.0000,0.0000,REF-72616
+2026-09-23,1200 - Accounts Receivable,Receipt against INV-2439 Zeta Cloud Services,0.0000,125000.0000,REF-99974
+2026-09-23,1010 - Operating Bank Account,Bank deposit receipt 99974,125000.0000,0.0000,REF-99974
+2026-09-06,1200 - Accounts Receivable,Receipt against INV-8262 Zeta Cloud Services,0.0000,36000.0000,REF-83147
+2026-09-06,1010 - Operating Bank Account,Bank deposit receipt 83147,36000.0000,0.0000,REF-83147
+2026-09-15,1200 - Accounts Receivable,Receipt against INV-9442 Kaveri Enterprises,0.0000,110000.0000,REF-69049
+2026-09-15,1010 - Operating Bank Account,Bank deposit receipt 69049,110000.0000,0.0000,REF-69049
+2026-09-22,1200 - Accounts Receivable,Receipt against INV-6994 Nexus Retail Solutions,0.0000,125000.0000,REF-17894
+2026-09-22,1010 - Operating Bank Account,Bank deposit receipt 17894,125000.0000,0.0000,REF-17894
+2026-09-24,1200 - Accounts Receivable,Receipt against INV-3286 Kaveri Enterprises,0.0000,48000.0000,REF-20641
+2026-09-24,1010 - Operating Bank Account,Bank deposit receipt 20641,48000.0000,0.0000,REF-20641
+2026-09-16,1200 - Accounts Receivable,Receipt against INV-7647 Apex Logistics India,0.0000,12500.0000,REF-69048
+2026-09-16,1010 - Operating Bank Account,Bank deposit receipt 69048,12500.0000,0.0000,REF-69048
+2026-09-25,1200 - Accounts Receivable,Receipt against INV-7758 Kaveri Enterprises,0.0000,48000.0000,REF-47056
+2026-09-25,1010 - Operating Bank Account,Bank deposit receipt 47056,48000.0000,0.0000,REF-47056
+2026-09-24,1200 - Accounts Receivable,Receipt against INV-5482 Nexus Retail Solutions,0.0000,125000.0000,REF-35928
+2026-09-24,1010 - Operating Bank Account,Bank deposit receipt 35928,125000.0000,0.0000,REF-35928
