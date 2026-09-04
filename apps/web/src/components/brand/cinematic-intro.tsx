@@ -2,27 +2,24 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { useTheme } from "@/lib/theme-context";
 
 const TARGET_WORD = "CLOSE";
 const TYPING_SPEED_MS = 130;
 
 export function CinematicIntro() {
-  const { setTheme } = useTheme();
   const [displayedLetters, setDisplayedLetters] = useState<string>("");
   const [showSubtitle, setShowSubtitle] = useState<boolean>(false);
   const [isDismissed, setIsDismissed] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
 
   useEffect(() => {
-    // 1. Unconditionally enforce Dark Mode immediately on mount
-    setTheme("dark");
-    const root = document.documentElement;
-    root.classList.remove("light");
-    root.classList.add("dark");
-    localStorage.setItem("close_theme", "dark");
+    // Only run on fresh arrival
+    if (sessionStorage.getItem("close_intro_completed")) {
+      setIsDismissed(true);
+      return;
+    }
 
-    // 2. Letter-by-letter typing sequence
+    // Letter-by-letter typing sequence
     let currentIndex = 0;
     const typingInterval = setInterval(() => {
       currentIndex++;
@@ -40,6 +37,7 @@ export function CinematicIntro() {
         // Smoothly dismiss after sequence completes
         setTimeout(() => {
           setIsDismissed(true);
+          sessionStorage.setItem("close_intro_completed", "true");
         }, 1800);
       }
     }, TYPING_SPEED_MS);
@@ -56,10 +54,11 @@ export function CinematicIntro() {
       clearInterval(typingInterval);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [setTheme]);
+  }, []);
 
   const handleSkip = () => {
     setIsDismissed(true);
+    sessionStorage.setItem("close_intro_completed", "true");
   };
 
   return (

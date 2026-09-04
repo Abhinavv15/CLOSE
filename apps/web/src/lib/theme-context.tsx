@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 
 type Theme = "dark" | "light";
 
@@ -20,17 +20,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    // When someone clicks the link / visits the website, it MUST strictly be in dark mode
-    const root = document.documentElement;
-    root.classList.remove("light");
-    root.classList.add("dark");
-    setThemeState("dark");
-    localStorage.setItem("close_theme", "dark");
-  }, []);
-
-  const applyTheme = (t: Theme) => {
+  const applyTheme = useCallback((t: Theme) => {
     const root = document.documentElement;
     if (t === "light") {
       root.classList.remove("dark");
@@ -39,18 +29,49 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.remove("light");
       root.classList.add("dark");
     }
-  };
+  }, []);
 
-  const setTheme = (newTheme: Theme) => {
+  useEffect(() => {
+    setMounted(true);
+    
+    // Check if user already established a session preference
+    const hasInitialized = sessionStorage.getItem("close_theme_initialized");
+    if (!hasInitialized) {
+      // First link click / arrival: ALWAYS start in dark mode
+      sessionStorage.setItem("close_theme_initialized", "true");
+      setThemeState("dark");
+      applyTheme("dark");
+      localStorage.setItem("close_theme", "dark");
+      return;
+    }
+
+    // Active session: respect saved preference
+    const saved = localStorage.getItem("close_theme") as Theme | null;
+    if (saved === "light" || saved === "dark") {
+      setThemeState(saved);
+      applyTheme(saved);
+    } else {
+      setThemeState("dark");
+      applyTheme("dark");
+    }
+  }, [applyTheme]);
+
+  const setTheme = useCallback((newTheme: Theme) => {
     setThemeState(newTheme);
     localStorage.setItem("close_theme", newTheme);
+    sessionStorage.setItem("close_theme_initialized", "true");
     applyTheme(newTheme);
-  };
+  }, [applyTheme]);
 
-  const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-  };
+  const toggleTheme = useCallback(() => {
+    setThemeState((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      localStorage.setItem("close_theme", next);
+      sessionStorage.setItem("close_theme_initialized", "true");
+      applyTheme(next);
+      return next;
+    });
+  }, [applyTheme]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
@@ -62,3 +83,4 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 export function useTheme() {
   return useContext(ThemeContext);
 }
+
